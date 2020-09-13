@@ -30,7 +30,7 @@ class ReadThreadsTest extends TestCase
 
         $thread = Thread::factory()->create();
 
-        $response = $this->get('/threads/' . $thread->id);
+        $response = $this->get($thread->path());
         $response->assertSee($thread->title);
     }
 
@@ -43,7 +43,7 @@ class ReadThreadsTest extends TestCase
 
         $reply = Reply::factory()->create(['thread_id' => $thread->id]);
 
-        $response = $this->get('/threads/' . $thread->id);
+        $response = $this->get($thread->path());
 
         $response->assertSee($reply->body);
     }

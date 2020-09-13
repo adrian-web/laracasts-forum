@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReplyController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ThreadController;
 
@@ -24,3 +25,4 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 Route::get('/threads', [ThreadController::class, 'index']);
 Route::get('/threads/{thread}', [ThreadController::class, 'show']);
+Route::post('/threads/{thread}/replies', [ReplyController::class, 'store']);

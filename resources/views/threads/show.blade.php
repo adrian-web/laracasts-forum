@@ -6,7 +6,7 @@
 
     <div>
         <article>
-            <h4>{{ $thread->title }}</h4>
+            <h4> <a href="#">{{ $thread->owner->name }}</a> {{ ' created ' . $thread->title }}</h4>
             <div class="body">{{ $thread->body }}</div>
         </article>
 

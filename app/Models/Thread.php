@@ -18,4 +18,9 @@ class Thread extends Model
     {
         return $this->hasMany(Reply::class);
     }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
