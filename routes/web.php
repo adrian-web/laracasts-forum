@@ -26,5 +26,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::get('/threads', [ThreadController::class, 'index']);
 Route::get('/threads/create', [ThreadController::class, 'create']);
 Route::post('/threads', [ThreadController::class, 'store']);
-Route::get('/threads/{thread}', [ThreadController::class, 'show']);
-Route::post('/threads/{thread}/replies', [ReplyController::class, 'store']);
+Route::get('/threads/{channel}/{thread}', [ThreadController::class, 'show']);
+
+Route::post('/threads/{channel}/{thread}/replies', [ReplyController::class, 'store']);

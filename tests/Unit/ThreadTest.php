@@ -13,6 +13,14 @@ class ThreadTest extends TestCase
     use WithFaker, RefreshDatabase;
 
     /** @test */
+    public function a_thread_can_make_a_string_path()
+    {
+        $thread = Thread::factory()->create();
+
+        $this->assertEquals($thread->path(), '/threads/' . $thread->channel->slug . '/' . $thread->id);
+    }
+
+    /** @test */
     public function a_thread_has_a_creator()
     {
         $thread = Thread::factory()->create();

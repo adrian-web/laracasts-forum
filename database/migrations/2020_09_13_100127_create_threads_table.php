@@ -16,7 +16,7 @@ class CreateThreadsTable extends Migration
         Schema::create('threads', function (Blueprint $table) {
             $table->id();
             $table->foreignId('owner_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('channel_id')->constrained('channels')->onDelete('cascade');
+            $table->foreignId('channel_id');
             $table->string('title');
             $table->text('body');
             $table->timestamps();
