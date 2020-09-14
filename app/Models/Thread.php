@@ -16,13 +16,18 @@ class Thread extends Model
         return '/threads/' . $this->id;
     }
 
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
+    }
+    
     public function replies()
     {
         return $this->hasMany(Reply::class);
     }
 
-    public function owner()
+    public function channel()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Channel::class);
     }
 }

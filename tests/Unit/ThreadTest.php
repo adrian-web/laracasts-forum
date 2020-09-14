@@ -13,19 +13,19 @@ class ThreadTest extends TestCase
     use WithFaker, RefreshDatabase;
 
     /** @test */
-    public function a_thread_has_replies()
-    {
-        $thread = Thread::factory()->create();
-
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $thread->replies);
-    }
-
-    /** @test */
     public function a_thread_has_a_creator()
     {
         $thread = Thread::factory()->create();
 
         $this->assertInstanceOf(User::class, $thread->owner);
+    }
+
+    /** @test */
+    public function a_thread_has_replies()
+    {
+        $thread = Thread::factory()->create();
+
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $thread->replies);
     }
 
     /** @test */
@@ -39,5 +39,13 @@ class ThreadTest extends TestCase
         ]);
 
         $this->assertCount(1, $thread->replies);
+    }
+
+    /** @test */
+    public function a_thread_has_a_channel()
+    {
+        $thread = Thread::factory()->create();
+        
+        $this->assertInstanceOf('App\Models\Channel', $thread->channel);
     }
 }
