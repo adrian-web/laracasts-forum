@@ -26,7 +26,7 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_view_single_thread()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
 
         $thread = Thread::factory()->create();
 
@@ -37,7 +37,7 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_read_replies_that_are_associated_with_a_thread()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
 
         $thread = Thread::factory()->create();
 
