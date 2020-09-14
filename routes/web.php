@@ -24,5 +24,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('/threads', [ThreadController::class, 'index']);
+Route::post('/threads', [ThreadController::class, 'store']);
 Route::get('/threads/{thread}', [ThreadController::class, 'show']);
 Route::post('/threads/{thread}/replies', [ReplyController::class, 'store']);
