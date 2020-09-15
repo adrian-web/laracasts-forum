@@ -28,9 +28,9 @@ class CreateThreadsTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $thread = Thread::factory()->create();
-        $this->post("/threads", $thread->toArray());
+        $thread = Thread::factory()->make();
+        $respone = $this->post("/threads", $thread->toArray());
 
-        $this->get($thread->path())->assertSee($thread->title);
+        $this->get($respone->headers->get('Location'))->assertSee($thread->title);
     }
 }
