@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Models\Channel;
 use App\Models\Reply;
 use App\Models\Thread;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -46,5 +48,20 @@ class ReadThreadsTest extends TestCase
         $response = $this->get($thread->path());
 
         $response->assertSee($reply->body);
+    }
+
+    /** @test */
+    public function a_user_can_filter_threads_according_to_a_channel()
+    {
+        $this->withoutExceptionHandling();
+
+        $channel = Channel::factory()->create();
+
+        $threadInChannel = Thread::factory()->create(['channel_id' => $channel->id]);
+        $threadNotInChannel = Thread::factory()->create();
+    
+        $this->get('/threads/' . $channel->slug)
+                ->assertSee($threadInChannel->title)
+                ->assertDontSee($threadNotInChannel->title);
     }
 }
