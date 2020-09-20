@@ -23,7 +23,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::get('/threads', [ThreadController::class, 'index']);
+Route::get('/threads', [ThreadController::class, 'index'])->name('threads');
 Route::get('/threads/create', [ThreadController::class, 'create']);
 Route::post('/threads', [ThreadController::class, 'store']);
 Route::get('/threads/{channel}', [ThreadController::class, 'index']);
