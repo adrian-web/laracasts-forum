@@ -22,12 +22,12 @@ class ThreadController extends Controller
     {
         if ($channel->exists) {
             // $threads = Thread::where('channel_id', $channel->id)->latest()->get();
-            $threads = $channel->threads()->latest()->get();
+            $threads = $channel->threads()->latest();
         } else {
-            $threads = Thread::latest()->get();
+            $threads = Thread::latest();
         }
 
-        return view('threads.index', compact('threads'));
+        return view('threads.index', ['threads' => $threads->paginate(10)]);
     }
 
     /**

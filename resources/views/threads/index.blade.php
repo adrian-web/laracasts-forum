@@ -48,9 +48,13 @@
                     @endif
                     @endforeach
 
+                    {{ $threads->links() }}
+
                 </div>
             </div>
         </div>
     </div>
+
+
 
 </x-app-layout>
