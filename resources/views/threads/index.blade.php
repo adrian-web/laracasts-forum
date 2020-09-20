@@ -1,10 +1,32 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <a href="/threads" class="mr-5">{{ __('Threads') }}</a>
-            <a href="/threads/create" class="mr-5">{{ __('Create') }}</a>
-        </h2>
+        <div class="flex">
+            <x-jet-nav-link href="/threads" :active=false class="mr-5">
+                {{ __('Threads') }}
+            </x-jet-nav-link>
+            <x-jet-dropdown align="top" width="48" class="">
+                <x-slot name="trigger">
+                    <x-jet-nav-link href="#" :active=false class="mr-5">
+                        {{ __('Channels') }}
+                    </x-jet-nav-link>
+                </x-slot>
+
+                <x-slot name="content">
+
+                    @foreach (App\Models\Channel::all() as $channel)
+                    <x-jet-dropdown-link href="/threads/{{$channel->slug}}">
+                        {{ $channel->name }}
+                    </x-jet-dropdown-link>
+                    <div class="border-t border-gray-100"></div>
+                    @endforeach
+
+                </x-slot>
+            </x-jet-dropdown>
+            <x-jet-nav-link href="/threads/create" :active=false class="mr-5">
+                {{ __('Create') }}
+            </x-jet-nav-link>
+        </div>
     </x-slot>
 
     <div class="py-12">
