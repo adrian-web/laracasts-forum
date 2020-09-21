@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Filters\ThreadFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,5 +31,17 @@ class Thread extends Model
     public function channel()
     {
         return $this->belongsTo(Channel::class);
+    }
+
+    /**
+     * Apply all relevant thread filters.
+     *
+     * @param  Builder       $query
+     * @param  ThreadFilters $filters
+     * @return Builder
+     */
+    public function scopeFilter($query, ThreadFilter $filters)
+    {
+        return $filters->apply($query);
     }
 }
