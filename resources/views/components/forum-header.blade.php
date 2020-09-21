@@ -1,7 +1,25 @@
 <div class="flex">
-    <x-jet-nav-link href="/threads" :active=false class="mr-5">
-        {{ __('Threads') }}
-    </x-jet-nav-link>
+    <x-jet-dropdown align="top" width="48" class="">
+        <x-slot name="trigger">
+            <x-jet-nav-link href="#" :active=false class="mr-5">
+                {{ __('Browse') }}
+            </x-jet-nav-link>
+        </x-slot>
+
+        <x-slot name="content">
+
+            <x-jet-dropdown-link href="/threads">
+                {{ __('All Threads') }}
+            </x-jet-dropdown-link>
+            <div class="border-t border-gray-100"></div>
+            @if (auth()->check())
+            <x-jet-dropdown-link href="{{ '/threads?by=' . auth()->user()->name }}">
+                {{ __('My Threads') }}
+            </x-jet-dropdown-link>
+            @endif
+
+        </x-slot>
+    </x-jet-dropdown>
     <x-jet-dropdown align="top" width="48" class="">
         <x-slot name="trigger">
             <x-jet-nav-link href="#" :active=false class="mr-5">
