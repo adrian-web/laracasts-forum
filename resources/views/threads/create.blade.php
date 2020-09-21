@@ -46,16 +46,33 @@
                         <div class="shadow overflow-hidden sm:rounded-md">
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 <div class="grid grid-cols-6 gap-6">
+
+                                    <div class="col-span-6 sm:col-span-4">
+                                        <x-jet-label for="channel_id" value="{{ __('Choose a channel') }}" />
+                                        <select name="channel_id" id="channel_id"
+                                            class="form-select rounded-md shadow-sm mt-1 block w-full" required>
+                                            <option value="">Choose a channel...</option>
+                                            @foreach (App\Models\Channel::all() as $channel)
+                                            <option value="{{ $channel->id }}"
+                                                {{ old('channel_id') == $channel->id ? 'selected' : ''}}>
+                                                {{ $channel->slug }}</option>
+                                            @endforeach
+                                        </select>
+                                        <x-jet-input-error for="channel_id" class="mt-2" />
+                                    </div>
+
                                     <div class="col-span-6 sm:col-span-4">
                                         <x-jet-label for="title" value="{{ __('Title') }}" />
-                                        <x-jet-input type="text" id="title" name="title" class="mt-1 block w-full" />
+                                        <x-jet-input type="text" id="title" name="title" class="mt-1 block w-full"
+                                            value="{{ old('title') }}" required />
                                         <x-jet-input-error for="title" class="mt-2" />
                                     </div>
 
                                     <div class="col-span-6 sm:col-span-4">
                                         <x-jet-label for="body" value="{{ __('Body') }}" />
                                         <textarea name="body" id="body" rows="10"
-                                            class="form-input rounded-md shadow-sm mt-1 block w-full"></textarea>
+                                            class="form-textarea rounded-md shadow-sm mt-1 block w-full"
+                                            required>{{ old('body') }}</textarea>
                                         <x-jet-input-error for="body" class="mt-2" />
 
                                     </div>
@@ -67,13 +84,21 @@
                                     {{ __('Publish') }}
                                 </x-jet-button>
                             </div>
+
+                            @if (count($errors))
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li>
+                                    <p class='text-sm text-red-600 ml-6 mt-2'>{{ $error }}</p>
+                                </li>
+                                @endforeach
+                            </ul>
+                            @endif
+
                         </div>
                     </div>
 
                 </form>
-                {{-- @else
-                    <a href="{{ route('login') }}">Please sign in</a> --}}
-
                 @endif
 
             </div>

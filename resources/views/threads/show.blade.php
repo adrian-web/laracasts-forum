@@ -45,7 +45,7 @@
                         {{ __('Replies') }}
                     </h3>
 
-                    <div>
+                    <div class="mt-6">
                         @foreach ($thread->replies as $reply)
                         <h4 class="mt-6 text-gray-500">
                             <a href="#">{{ $reply->owner->name }}</a>
@@ -73,7 +73,7 @@
                                         <div class="col-span-6 sm:col-span-4">
                                             <x-jet-label for="body" value="{{ __('Body') }}" />
                                             <textarea name="body" id="body" rows="10"
-                                                class="form-input rounded-md shadow-sm mt-1 block w-full"></textarea>
+                                                class="form-textarea rounded-md shadow-sm mt-1 block w-full"></textarea>
                                             <x-jet-input-error for="body" class="mt-2" />
                                         </div>
 
