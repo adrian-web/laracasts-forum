@@ -9,7 +9,7 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
 
-                    @foreach ($threads as $thread)
+                    @forelse ($threads as $thread)
                     <article>
                         <div class="flex">
                             <h4 class="flex-1 mt-6 text-xl text-gray-500">
@@ -35,7 +35,14 @@
                     @else
                     <hr>
                     @endif
-                    @endforeach
+
+                    @empty
+                    <div class="mt-6 text-gray-500">
+                        <p>
+                            There's no threads...
+                        </p>
+                    </div>
+                    @endforelse
 
                     {{ $threads->links() }}
 

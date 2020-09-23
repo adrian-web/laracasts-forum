@@ -15,7 +15,7 @@
                     <div class="mt-6"></div>
                     <hr>
 
-                    @foreach ($threads as $thread)
+                    @forelse ($threads as $thread)
                     <article>
                         <div class="flex">
                             <h4 class="flex-1 mt-6 text-xl text-gray-500">
@@ -41,7 +41,14 @@
                     @else
                     <hr>
                     @endif
-                    @endforeach
+
+                    @empty
+                    <div class="mt-6 text-gray-500">
+                        <p>
+                            There's no threads...
+                        </p>
+                    </div>
+                    @endforelse
 
                     {{ $threads->links() }}
 

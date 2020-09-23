@@ -21,6 +21,8 @@
                                     {{ $thread->title }}
                                 </a>
                             </h4>
+
+                            @can('delete', $thread)
                             <form action="{{ $thread->path() }}" method="POST">
                                 @csrf
                                 @method('DELETE')
@@ -29,6 +31,8 @@
                                         {{ __('Delete') }}
                                     </x-jet-button>
                                 </div>
+                            </form>
+                            @endcan
                         </div>
                         <div class="mt-6 text-gray-500">{{ $thread->body }}</div>
                     </article>

@@ -37,7 +37,7 @@ class CreateThreadsTest extends TestCase
     }
 
     /** @test */
-    public function a_guest_cannot_delete_a_forum_thread()
+    public function an_unauthenticated_user_cannot_delete_a_forum_thread()
     {
         $this->withExceptionHandling();
         
@@ -45,6 +45,12 @@ class CreateThreadsTest extends TestCase
 
         $this->delete($thread->path())
                 ->assertRedirect('/login');
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $this->delete($thread->path())
+                ->assertStatus(403);
     }
 
     /** @test */
@@ -55,7 +61,7 @@ class CreateThreadsTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $thread = Thread::factory()->create();
+        $thread = Thread::factory()->create(['creator_id' => $user->id]);
 
         $reply = Reply::factory()->create(['thread_id' => $thread->id]);
         

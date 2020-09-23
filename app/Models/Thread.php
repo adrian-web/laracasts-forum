@@ -17,6 +17,15 @@ class Thread extends Model
 
     protected $withCount = ['replies'];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($thread) {
+            $thread->replies()->delete();
+        });
+    }
+
     public function path()
     {
         return '/threads/' . $this->channel->slug . '/' . $this->id;
