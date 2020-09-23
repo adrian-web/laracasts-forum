@@ -7,54 +7,67 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## About Laravel
+## About a project
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Simple forum thread app, complete with MySQL database, PHP API and HTML form to add and edit entities.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Data structure
+1. Thread entity with at least title, text and creation date fields.
+2. User entity with at least name field.
+3. Threads can have multiple replies.
+4. A reply can be liked by users.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+API Endpoints
+1. Get a thread by some id.
+2. Get all threads for given user.
+3. Sort threads by most popular (most replies).
+4. Get all threads for a given channel.
 
-## Learning Laravel
+## How to navigate a project
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+To visit forum page, manually add '/threads' route or click 'Forum' hyperlink (visible on default '/' page or on '/dashboard' page upon login in to a site).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+A guest can freely view and explore threads but to edit/create/delete threads you have to be logged in (registration required).
 
-## Laravel Sponsors
+To login/register, look up to top right corner of a website (visible only to guests) or manually visit '/login' or '/register'. While logged in, profile dropdown menu appears. 
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+To update a specific thread you have to be authorized (ex. you cannot delete others' people threads).
 
-### Premium Partners
+From a main route '/threads' you can visit specific routes:
+- explore all threads,
+- visit a specific thread,
+- visit users' threads,
+- submit edits to a thread or create a new thread or delete a thread,
+- see a list of most popular threads (by most replies metric),
+- see and add a reply to a given thread.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+## How to setup a Laravel project from github repository
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Download .zip file from a given github repository.
+2. Unpack .zip file and move terminal working location to the project folder.
+3. Run commands:
+- composer install
+- npm install && npm run dev
+4. Copy .env.example file and rename it to .env file (projects' main folder).
+5. Generate an app encryption key:
+- php artisan key:generate
+- (it should update an APP_KEY value in you .env file) 
+6. Create an empty database for a project (recommended coalition: utfmb4_unicode_ci).
+7. Add database information in .env file:
+- DB_HOST
+- DB_PORT
+- DB_DATABASE
+- DB_USERNAME
+- DB_PASSWORD
+8. Migrate the database:
+- php artisan migrate
+- (it will create all necessary tables to run an application)
+9. Seed the database:
+- php artisan db:seed
+- (located in /database/seeders, it will populate the database with test data)
+10. [Optional] How to start Laravel development server:
+- php artisan serve
+- (check created URL with APP_URL value in .env file)
 
 ## License
 
