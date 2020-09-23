@@ -11,10 +11,18 @@
 
                     @foreach ($threads as $thread)
                     <article>
-                        <h4 class="mt-6 text-gray-500">
-                            <a href="{{ $thread->path() }}">{{ $thread->title }}</a>
-                        </h4>
-                        <div class="mt-6 text-gray-500">{{ $thread->body }}</div>
+                        <div class="flex">
+                            <h4 class="flex-1 mt-6 text-xl text-gray-500">
+                                <a href="{{ $thread->path() }}">{{ $thread->title }}</a>
+                            </h4>
+
+                            <strong class="mt-6 text-gray-500">
+                                <a href="{{ $thread->path() }}">{{ $thread->replies_count }}
+                                    {{ Str::plural('reply', $thread->replies_count) }}</a>
+                            </strong>
+
+                        </div>
+                        <div class="mt-6 text-sm text-gray-500">{{ $thread->body }}</div>
                     </article>
                     <div class="mt-6"></div>
                     @if ( $loop->last )

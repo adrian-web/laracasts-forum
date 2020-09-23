@@ -6,6 +6,7 @@ use App\Models\Channel;
 use App\Models\Reply;
 use App\Models\Thread;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -79,5 +80,27 @@ class ReadThreadsTest extends TestCase
         $this->get('/threads?by=Janek')
                 ->assertSee($threadByJanek->title)
                 ->assertDontSee($threadNotByJanek->title);
+    }
+    
+    /** @test */
+    public function a_user_can_filter_threads_by_popularity()
+    {
+        $threadWithTwoReplies = Thread::factory()->create();
+        Reply::factory()->count(2)->create(['created_at' => new Carbon('-2 minute'),
+                                            'thread_id' => $threadWithTwoReplies->id]);
+
+        $threadWithThreeReplies = Thread::factory()->create();
+        Reply::factory()->count(3)->create(['created_at' => new Carbon('-1 minute'),
+                                            'thread_id' => $threadWithThreeReplies->id]);
+
+        $threadWithNoReplies = Thread::factory()->create();
+
+        $response = $this->get('threads?popular=1');
+
+        $response->assertSeeInOrder([
+            $threadWithThreeReplies->title,
+            $threadWithTwoReplies->title,
+            $threadWithNoReplies->title
+        ]);
     }
 }
