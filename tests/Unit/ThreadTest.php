@@ -25,7 +25,7 @@ class ThreadTest extends TestCase
     {
         $thread = Thread::factory()->create();
 
-        $this->assertInstanceOf(User::class, $thread->owner);
+        $this->assertInstanceOf(User::class, $thread->creator);
     }
 
     /** @test */

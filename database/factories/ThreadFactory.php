@@ -25,7 +25,7 @@ class ThreadFactory extends Factory
     public function definition()
     {
         return [
-            'owner_id' => User::factory(),
+            'creator_id' => User::factory(),
             'channel_id' => Channel::factory(),
             'title' => $this->faker->sentence,
             'body' => $this->faker->paragraph,

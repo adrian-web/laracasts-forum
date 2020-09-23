@@ -9,6 +9,12 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
 
+                    <h4 class="text-xl text-gray-500">
+                        {{ $profileUser->name . "'s profile page" }}
+                    </h4>
+                    <div class="mt-6"></div>
+                    <hr>
+
                     @foreach ($threads as $thread)
                     <article>
                         <div class="flex">
@@ -23,8 +29,8 @@
                             </h4>
 
                             <strong class="mt-6 text-gray-500">
-                                <a href="{{ $thread->path() }}">{{ $thread->replies_count }}
-                                    {{ Str::plural('reply', $thread->replies_count) }}</a>
+                                <a href="{{ $thread->path() }}">{{ $thread->created_at->diffForHumans() }}
+                                </a>
                             </strong>
 
                         </div>

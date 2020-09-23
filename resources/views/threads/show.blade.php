@@ -12,7 +12,13 @@
 
                     <article>
                         <h4 class="mt-6 text-gray-500">
-                            <a href="#">{{ $thread->owner->name }}</a> {{ ' created ' . $thread->title }}
+                            <a href="{{ '/profiles/' . $thread->creator->name }}">
+                                {{ $thread->creator->name }}
+                            </a>
+                            {{ ' created ' }}
+                            <a href="{{ $thread->path() }}">
+                                {{ $thread->title }}
+                            </a>
                         </h4>
                         <div class="mt-6 text-gray-500">{{ $thread->body }}</div>
                     </article>
@@ -21,11 +27,11 @@
                         {{ __('Replies') }}
                     </h3>
 
-                    <div class="mt-6">
+                    <div>
                         @foreach ($replies as $reply)
                         <div class="flex ">
                             <h4 class="flex-1 items-center mt-6 text-gray-500">
-                                <a href="#">{{ $reply->owner->name }}</a>
+                                <a href="{{ '/profiles/' . $reply->owner->name }}">{{ $reply->owner->name }}</a>
                                 {{ ' replied ' . $reply->created_at->diffForHumans() }}
                             </h4>
 
@@ -99,8 +105,8 @@
         <div class="lg:flex-1 sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-                    <p>This thread was published {{ $thread->created_at->diffForHumans() }} by <a
-                            href="#">{{ $thread->owner->name }}</a>,
+                    <p class="text-gray-500">This thread was published {{ $thread->created_at->diffForHumans() }} by <a
+                            href="{{ '/profiles/' . $thread->creator->name }}">{{ $thread->creator->name }}</a>,
                         and currently has {{ $thread->replies_count }}
                         {{ Str::plural('comment', $thread->replies_count) }}.</p>
                 </div>

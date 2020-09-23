@@ -23,7 +23,7 @@ class ThreadFilter extends Filter
     {
         $user = User::where('name', $username)->firstOrFail();
 
-        return $this->builder->where('owner_id', $user->id);
+        return $this->builder->where('creator_id', $user->id);
     }
 
     /**

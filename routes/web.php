@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\ReplyController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\ProfileController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -33,3 +35,5 @@ Route::get('/threads/{channel}/{thread}', [ThreadController::class, 'show']);
 Route::post('/threads/{channel}/{thread}/replies', [ReplyController::class, 'store']);
 
 Route::post('/replies/{reply}/favorites', [FavoriteController::class, 'store']);
+
+Route::get('/profiles/{user}', [ProfileController::class, 'show']);

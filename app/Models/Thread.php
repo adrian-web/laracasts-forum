@@ -13,7 +13,7 @@ class Thread extends Model
 
     protected $guarded = [];
 
-    protected $with = ['owner', 'channel'];
+    protected $with = ['creator', 'channel'];
 
     protected $withCount = ['replies'];
 
@@ -22,7 +22,7 @@ class Thread extends Model
         return '/threads/' . $this->channel->slug . '/' . $this->id;
     }
 
-    public function owner()
+    public function creator()
     {
         return $this->belongsTo(User::class);
     }
