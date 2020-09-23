@@ -7,6 +7,8 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
+## ONGOING
+
 ## About a project
 
 Simple forum thread app, complete with MySQL database, PHP API and HTML form to add and edit entities.
