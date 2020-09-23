@@ -4,8 +4,9 @@
         <x-forum-header />
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="lg:flex py-12">
+
+        <div class="lg:flex-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
 
@@ -21,7 +22,7 @@
                     </h3>
 
                     <div class="mt-6">
-                        @foreach ($thread->replies as $reply)
+                        @foreach ($replies as $reply)
                         <h4 class="mt-6 text-gray-500">
                             <a href="#">{{ $reply->owner->name }}</a>
                             {{ ' replied ' . $reply->created_at->diffForHumans() }}
@@ -33,6 +34,8 @@
                         <hr>
                         @endif
                         @endforeach
+
+                        {{ $replies->links() }}
                     </div>
 
                     @if (auth()->check())
@@ -72,6 +75,18 @@
                 </div>
             </div>
         </div>
+
+        <div class="lg:flex-1 sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+                    <p>This thread was published {{ $thread->created_at->diffForHumans() }} by <a
+                            href="#">{{ $thread->owner->name }}</a>,
+                        and currently has {{ $thread->replies_count }}
+                        {{ Str::plural('comment', $thread->replies_count) }}.</p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </x-app-layout>

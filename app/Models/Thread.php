@@ -13,6 +13,8 @@ class Thread extends Model
 
     protected $guarded = [];
 
+    protected $withCount = ['replies'];
+
     public function path()
     {
         return '/threads/' . $this->channel->slug . '/' . $this->id;
