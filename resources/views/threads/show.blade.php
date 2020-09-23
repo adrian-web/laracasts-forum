@@ -23,10 +23,30 @@
 
                     <div class="mt-6">
                         @foreach ($replies as $reply)
-                        <h4 class="mt-6 text-gray-500">
-                            <a href="#">{{ $reply->owner->name }}</a>
-                            {{ ' replied ' . $reply->created_at->diffForHumans() }}
-                        </h4>
+                        <div class="flex ">
+                            <h4 class="flex-1 items-center mt-6 text-gray-500">
+                                <a href="#">{{ $reply->owner->name }}</a>
+                                {{ ' replied ' . $reply->created_at->diffForHumans() }}
+                            </h4>
+
+                            <form action="{{ '/replies/' . $reply->id . '/favorites' }}" method="POST">
+                                @csrf
+                                <div class="mt-6">
+                                    @if ($reply->isFavorited())
+                                    <x-jet-button disabled>
+                                        {{ $reply->favorites()->count() }}
+                                        {{ Str::plural('Favorite', $reply->favorites()->count()) }}
+                                    </x-jet-button>
+                                    @else
+                                    <x-jet-button>
+                                        {{ $reply->favorites()->count() }}
+                                        {{ Str::plural('Favorite', $reply->favorites()->count()) }}
+                                    </x-jet-button>
+                                    @endif
+                                </div>
+                            </form>
+                        </div>
+
                         <div class="mt-6 text-gray-500">{{ $reply->body }}</div>
                         <div class="mt-6"></div>
                         @if ( $loop->last )
