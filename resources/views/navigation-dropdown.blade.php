@@ -18,6 +18,9 @@
                     <x-jet-nav-link href="/threads" :active="request()->routeIs('threads')">
                         {{ __('Forum') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="/profiles/{{ Auth::user()->name }}" :active="request()->routeIs('profile')">
+                        {{ __('Profile') }}
+                    </x-jet-nav-link>
                 </div>
             </div>
 

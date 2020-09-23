@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Channel;
+use App\Models\Reply;
 use App\Models\Thread;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -33,6 +34,36 @@ class CreateThreadsTest extends TestCase
         $respone = $this->post("/threads", $thread->toArray());
 
         $this->get($respone->headers->get('Location'))->assertSee($thread->title);
+    }
+
+    /** @test */
+    public function a_guest_cannot_delete_a_forum_thread()
+    {
+        $this->withExceptionHandling();
+        
+        $thread = Thread::factory()->create();
+
+        $this->delete($thread->path())
+                ->assertRedirect('/login');
+    }
+
+    /** @test */
+    public function an_authenticated_user_can_delete_a_forum_thread()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $thread = Thread::factory()->create();
+
+        $reply = Reply::factory()->create(['thread_id' => $thread->id]);
+        
+        $this->delete($thread->path())
+                ->assertRedirect('/threads');
+
+        $this->assertDatabaseMissing('threads', $thread->only('id'))
+                ->assertDatabaseMissing('replies', $reply->only('id'));
     }
 
     /** @test */

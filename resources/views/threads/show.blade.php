@@ -11,15 +11,25 @@
                 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
 
                     <article>
-                        <h4 class="mt-6 text-gray-500">
-                            <a href="{{ '/profiles/' . $thread->creator->name }}">
-                                {{ $thread->creator->name }}
-                            </a>
-                            {{ ' created ' }}
-                            <a href="{{ $thread->path() }}">
-                                {{ $thread->title }}
-                            </a>
-                        </h4>
+                        <div class="flex">
+                            <h4 class="flex-1 items-center mt-6 text-gray-500">
+                                <a href="{{ '/profiles/' . $thread->creator->name }}">
+                                    {{ $thread->creator->name }}
+                                </a>
+                                {{ ' created ' }}
+                                <a href="{{ $thread->path() }}">
+                                    {{ $thread->title }}
+                                </a>
+                            </h4>
+                            <form action="{{ $thread->path() }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <div class="mt-6">
+                                    <x-jet-button>
+                                        {{ __('Delete') }}
+                                    </x-jet-button>
+                                </div>
+                        </div>
                         <div class="mt-6 text-gray-500">{{ $thread->body }}</div>
                     </article>
 

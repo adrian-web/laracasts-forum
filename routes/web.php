@@ -6,7 +6,6 @@ use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ProfileController;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,9 +30,10 @@ Route::get('/threads/create', [ThreadController::class, 'create']);
 Route::post('/threads', [ThreadController::class, 'store']);
 Route::get('/threads/{channel}', [ThreadController::class, 'index']);
 Route::get('/threads/{channel}/{thread}', [ThreadController::class, 'show']);
+Route::delete('/threads/{channel}/{thread}', [ThreadController::class, 'destroy']);
 
 Route::post('/threads/{channel}/{thread}/replies', [ReplyController::class, 'store']);
 
 Route::post('/replies/{reply}/favorites', [FavoriteController::class, 'store']);
 
-Route::get('/profiles/{user}', [ProfileController::class, 'show']);
+Route::get('/profiles/{user}', [ProfileController::class, 'show'])->name('profile');
