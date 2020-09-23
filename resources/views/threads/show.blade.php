@@ -34,13 +34,13 @@
                                 <div class="mt-6">
                                     @if ($reply->isFavorited())
                                     <x-jet-button disabled>
-                                        {{ $reply->favorites()->count() }}
-                                        {{ Str::plural('Favorite', $reply->favorites()->count()) }}
+                                        {{ $reply->favorites_count }}
+                                        {{ Str::plural('Favorite', $reply->favorites_count) }}
                                     </x-jet-button>
                                     @else
                                     <x-jet-button>
-                                        {{ $reply->favorites()->count() }}
-                                        {{ Str::plural('Favorite', $reply->favorites()->count()) }}
+                                        {{ $reply->favorites_count }}
+                                        {{ Str::plural('Favorite', $reply->favorites_count) }}
                                     </x-jet-button>
                                     @endif
                                 </div>
