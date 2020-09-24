@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 trait Favorable
 {
+    protected static function bootFavorable()
+    {
+        static::deleting(function ($model) {
+            $model->favorites()->delete();
+        });
+    }
+
     public function favorites()
     {
         return $this->morphMany(Favorite::class, 'favorited');

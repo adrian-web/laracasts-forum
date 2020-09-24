@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\Activity;
 use App\Models\Channel;
+use App\Models\Favorite;
 use App\Models\Reply;
 use App\Models\Thread;
 use App\Models\User;
@@ -61,15 +63,21 @@ class CreateThreadsTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $thread = Thread::factory()->create(['creator_id' => $user->id]);
+        $thread = Thread::factory()->create(['creator_id' => auth()->id()]);
 
         $reply = Reply::factory()->create(['thread_id' => $thread->id]);
+
+        $this->post('replies/' . $reply->id . '/favorites');
         
         $this->delete($thread->path())
                 ->assertRedirect('/threads');
 
         $this->assertDatabaseMissing('threads', $thread->only('id'))
                 ->assertDatabaseMissing('replies', $reply->only('id'));
+
+        $this->assertEquals(0, Favorite::count());
+
+        $this->assertEquals(0, Activity::count());
     }
 
     /** @test */
