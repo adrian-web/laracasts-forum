@@ -29,10 +29,11 @@ class ProfileTest extends TestCase
         $this->withoutExceptionHandling();
 
         $user = User::factory()->create();
+        $this->actingAs($user);
 
-        $thread = Thread::factory()->create(['creator_id' => $user->id]);
+        $thread = Thread::factory()->create(['creator_id' => auth()->id()]);
 
-        $this->get('/profiles/' . $user->name)
+        $this->get('/profiles/' . auth()->user()->name)
                 ->assertSee($thread->title)
                 ->assertSee($thread->body);
     }
