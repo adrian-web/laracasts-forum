@@ -17,11 +17,10 @@
                 <form action="/threads" method="POST">
                     @csrf
 
-                    <div class="mt-5 md:mt-0 md:col-span-2">
+                    <div class="lg:mt-5 md:mt-0 md:col-span-2">
                         <div class="shadow overflow-hidden sm:rounded-md">
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 <div class="grid grid-cols-6 gap-6">
-
                                     <div class="col-span-6 sm:col-span-4">
                                         <x-jet-label for="channel_id" value="{{ __('Choose a channel') }}" />
                                         <select name="channel_id" id="channel_id"
@@ -63,6 +62,7 @@
                     </div>
 
                 </form>
+
                 @endif
 
             </div>

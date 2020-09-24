@@ -41,49 +41,48 @@
                         {{ __('Replies') }}
                     </h3>
 
-                    <div>
-                        @foreach ($replies as $reply)
-                        <div class="flex ">
-                            <h4 class="flex-1 items-center mt-6 text-gray-500">
-                                <a href="{{ '/profiles/' . $reply->owner->name }}">{{ $reply->owner->name }}</a>
-                                {{ ' replied ' . $reply->created_at->diffForHumans() }}
-                            </h4>
+                    @foreach ($replies as $reply)
+                    <div class="flex ">
+                        <h4 class="flex-1 items-center mt-6 text-gray-500">
+                            <a href="{{ '/profiles/' . $reply->owner->name }}">{{ $reply->owner->name }}</a>
+                            {{ ' replied ' . $reply->created_at->diffForHumans() }}
+                        </h4>
 
-                            <form action="{{ '/replies/' . $reply->id . '/favorites' }}" method="POST">
-                                @csrf
-                                <div class="mt-6">
-                                    @if ($reply->isFavorited())
-                                    <x-jet-button disabled>
-                                        {{ $reply->favorites_count }}
-                                        {{ Str::plural('Favorite', $reply->favorites_count) }}
-                                    </x-jet-button>
-                                    @else
-                                    <x-jet-button>
-                                        {{ $reply->favorites_count }}
-                                        {{ Str::plural('Favorite', $reply->favorites_count) }}
-                                    </x-jet-button>
-                                    @endif
-                                </div>
-                            </form>
-                        </div>
-
-                        <div class="mt-6 text-gray-500">{{ $reply->body }}</div>
-                        <div class="mt-6"></div>
-                        @if ( $loop->last )
-                        @else
-                        <hr>
-                        @endif
-                        @endforeach
-
-                        {{ $replies->links() }}
+                        <form action="{{ '/replies/' . $reply->id . '/favorites' }}" method="POST">
+                            @csrf
+                            <div class="mt-6">
+                                @if ($reply->isFavorited())
+                                <x-jet-button disabled>
+                                    {{ $reply->favorites_count }}
+                                    {{ Str::plural('Favorite', $reply->favorites_count) }}
+                                </x-jet-button>
+                                @else
+                                <x-jet-button>
+                                    {{ $reply->favorites_count }}
+                                    {{ Str::plural('Favorite', $reply->favorites_count) }}
+                                </x-jet-button>
+                                @endif
+                            </div>
+                        </form>
                     </div>
+
+                    <div class="mt-6 text-gray-500">{{ $reply->body }}</div>
+
+                    @if ( $loop->last )
+                    @else
+                    <hr class="mt-6">
+                    @endif
+
+                    @endforeach
+
+                    {{ $replies->links() }}
 
                     @if (auth()->check())
 
                     <form action="{{ $thread->path() . '/replies' }}" method="POST">
                         @csrf
 
-                        <div class="mt-5 md:mt-0 md:col-span-2">
+                        <div class="lg:mt-5 md:mt-0 md:col-span-2">
                             <div class="shadow overflow-hidden sm:rounded-md">
                                 <div class="px-4 py-5 bg-white sm:p-6">
                                     <div class="grid grid-cols-6 gap-6">

@@ -30,18 +30,16 @@
                         </div>
                         <div class="mt-6 text-sm text-gray-500">{{ $thread->body }}</div>
                     </article>
-                    <div class="mt-6"></div>
+
                     @if ( $loop->last )
                     @else
-                    <hr>
+                    <hr class="mt-6">
                     @endif
 
                     @empty
-                    <div class="mt-6 text-gray-500">
-                        <p>
-                            There's no threads...
-                        </p>
-                    </div>
+                    <p class="mt-6 text-gray-500">
+                        There's no threads...
+                    </p>
                     @endforelse
 
                     {{ $threads->links() }}

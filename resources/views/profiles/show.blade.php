@@ -12,45 +12,24 @@
                     <h4 class="text-xl text-gray-500">
                         {{ $profileUser->name . "'s profile page" }}
                     </h4>
-                    <div class="mt-6"></div>
-                    <hr>
 
-                    @forelse ($threads as $thread)
-                    <article>
-                        <div class="flex">
-                            <h4 class="flex-1 mt-6 text-xl text-gray-500">
-                                <a href="{{ '/profiles/' . $thread->creator->name }}">
-                                    {{ $thread->creator->name }}
-                                </a>
-                                {{ ' created ' }}
-                                <a href="{{ $thread->path() }}">
-                                    {{ $thread->title }}
-                                </a>
-                            </h4>
+                    @forelse ($activities as $date => $activity)
+                    <hr class="my-6">
+                    <h4 class="text-xl text-gray-500">{{ $date }}</h4>
 
-                            <strong class="mt-6 text-gray-500">
-                                <a href="{{ $thread->path() }}">{{ $thread->created_at->diffForHumans() }}
-                                </a>
-                            </strong>
-
-                        </div>
-                        <div class="mt-6 text-sm text-gray-500">{{ $thread->body }}</div>
-                    </article>
-                    <div class="mt-6"></div>
+                    @foreach ($activity as $record)
+                    @include ("profiles.activities.{$record->type}", ['activity' => $record])
                     @if ( $loop->last )
                     @else
-                    <hr>
+                    <hr class="mt-6">
                     @endif
+                    @endforeach
 
                     @empty
-                    <div class="mt-6 text-gray-500">
-                        <p>
-                            There's no threads...
-                        </p>
-                    </div>
+                    <p class="mt-6 text-gray-500">
+                        There's no activities...
+                    </p>
                     @endforelse
-
-                    {{ $threads->links() }}
 
                 </div>
             </div>
