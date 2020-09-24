@@ -11,7 +11,7 @@
 
 ## About a project
 
-Simple forum thread app, complete with MySQL database, PHP API and HTML form to add and edit entities.
+Forum with Laravel and TDD.
 
 Data structure
 1. Thread entity with at least title, text and creation date fields.
@@ -19,7 +19,7 @@ Data structure
 3. Threads can have multiple replies.
 4. A reply can be liked by users.
 
-API Endpoints
+Routes endpoints
 1. Get a thread by some id.
 2. Get all threads for given user.
 3. Sort threads by most popular (most replies).
