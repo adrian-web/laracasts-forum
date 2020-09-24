@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Filters\ThreadFilter;
+use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Thread extends Model
 {
     use HasFactory;
+    use RecordsActivity;
 
     protected $guarded = [];
 
