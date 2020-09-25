@@ -128,4 +128,10 @@
 
     </div>
 
+    @if (session()->has('message'))
+
+    @livewire('flash-message')
+
+    @endif
+
 </x-app-layout>

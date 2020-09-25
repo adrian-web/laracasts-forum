@@ -43,7 +43,8 @@ class FavoriteController extends Controller
     {
         $reply->favorite();
 
-        return back();
+        return back()
+                ->with('message', 'You favorited a reply');
     }
 
     /**

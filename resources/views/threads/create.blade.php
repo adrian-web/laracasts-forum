@@ -12,8 +12,6 @@
                     {{ __('Create a thread') }}
                 </h3>
 
-                @if (auth()->check())
-
                 <form action="/threads" method="POST">
                     @csrf
 
@@ -58,12 +56,11 @@
                                     {{ __('Publish') }}
                                 </x-jet-button>
                             </div>
+
                         </div>
                     </div>
 
                 </form>
-
-                @endif
 
             </div>
         </div>

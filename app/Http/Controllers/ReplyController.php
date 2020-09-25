@@ -24,6 +24,7 @@ class ReplyController extends Controller
             'owner_id' => auth()->id()
         ]);
 
-        return back();
+        return back()
+                 ->with('message', 'You replied to thread');
     }
 }
