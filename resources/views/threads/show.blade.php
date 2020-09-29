@@ -64,6 +64,18 @@
                                 @endif
                             </div>
                         </form>
+
+                        @can('delete', $reply)
+                        <form action={{ '/replies/' . $reply->id }} method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <div class="ml-6 mt-6">
+                                <x-jet-button>
+                                    {{ __('Delete') }}
+                                </x-jet-button>
+                            </div>
+                        </form>
+                        @endcan
                     </div>
 
                     <div class="mt-6 text-gray-500">{{ $reply->body }}</div>
