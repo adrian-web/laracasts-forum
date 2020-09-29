@@ -18,7 +18,10 @@
                     <h4 class="text-xl text-gray-500">{{ $date }}</h4>
 
                     @foreach ($activity as $record)
+                    @if (view()->exists("profiles.activities.{$record->type}"))
                     @include ("profiles.activities.{$record->type}", ['activity' => $record])
+                    @endif
+
                     @if ( $loop->last )
                     @else
                     <hr class="mt-6">
