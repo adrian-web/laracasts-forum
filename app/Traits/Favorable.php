@@ -10,7 +10,7 @@ trait Favorable
     protected static function bootFavorable()
     {
         static::deleting(function ($model) {
-            $model->favorites()->delete();
+            $model->favorites->each->delete();
         });
     }
 
@@ -28,8 +28,20 @@ trait Favorable
         }
     }
 
+    public function unfavorite()
+    {
+        $attributes = ['user_id' => auth()->id()];
+
+        $this->favorites()->where($attributes)->get()->each->delete();
+    }
+
     public function isFavorited()
     {
         return !! $this->favorites->where('user_id', auth()->id())->count();
+    }
+
+    public function getIsFavoritedAttribute()
+    {
+        return $this->isFavorited();
     }
 }

@@ -42,48 +42,8 @@
                     </h3>
 
                     @foreach ($replies as $reply)
-                    <div class="flex ">
-                        <h4 class="flex-1 items-center mt-6 text-gray-500">
-                            <a href="{{ '/profiles/' . $reply->owner->name }}">{{ $reply->owner->name }}</a>
-                            {{ ' replied ' . $reply->created_at->diffForHumans() }}
-                        </h4>
 
-                        <form action="{{ '/replies/' . $reply->id . '/favorites' }}" method="POST">
-                            @csrf
-                            <div class="mt-6">
-                                @if ($reply->isFavorited())
-                                <x-jet-button disabled>
-                                    {{ $reply->favorites_count }}
-                                    {{ Str::plural('Favorite', $reply->favorites_count) }}
-                                </x-jet-button>
-                                @else
-                                <x-jet-button>
-                                    {{ $reply->favorites_count }}
-                                    {{ Str::plural('Favorite', $reply->favorites_count) }}
-                                </x-jet-button>
-                                @endif
-                            </div>
-                        </form>
-
-                        @can('delete', $reply)
-                        <form action={{ '/replies/' . $reply->id }} method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <div class="ml-6 mt-6">
-                                <x-jet-button>
-                                    {{ __('Delete') }}
-                                </x-jet-button>
-                            </div>
-                        </form>
-                        @endcan
-                    </div>
-
-                    <div class="mt-6 text-gray-500">{{ $reply->body }}</div>
-
-                    @if ( $loop->last )
-                    @else
-                    <hr class="mt-6">
-                    @endif
+                    @livewire('manage-reply', ['reply' => $reply], key($loop->index))
 
                     @endforeach
 
@@ -139,11 +99,5 @@
         </div>
 
     </div>
-
-    @if (session()->has('message'))
-
-    @livewire('flash-message')
-
-    @endif
 
 </x-app-layout>
