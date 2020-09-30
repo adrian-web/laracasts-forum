@@ -40,7 +40,7 @@
             <form wire:submit.prevent="update">
                 @csrf
                 <textarea class="form-textarea rounded-md shadow-sm mt-1 mb-1 block w-full"
-                    wire:model.defer="reply.body"></textarea>
+                    wire:model.defer="reply.body" required></textarea>
                 <x-jet-button>Update</x-jet-button>
                 <x-jet-danger-button class="ml-3" wire:click="return">Cancel</x-jet-danger-button>
             </form>

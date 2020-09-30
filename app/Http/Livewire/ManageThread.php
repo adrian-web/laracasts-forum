@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Reply;
 use App\Models\Thread;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
@@ -44,6 +43,8 @@ class ManageThread extends Component
 
         $this->emitSelf('created');
 
+        $this->emit('flash', 'created');
+
         $this->body = '';
     }
 
@@ -58,13 +59,13 @@ class ManageThread extends Component
 
     public function resetPagination()
     {
-        $this->resetPage();
+        // $this->resetPage();
     }
 
     public function render()
     {
         return view('livewire.manage-thread', [
-            'replies' => $this->thread->replies()->paginate(3)
+            'replies' => $this->thread->replies()->paginate(5)
         ]);
     }
 }

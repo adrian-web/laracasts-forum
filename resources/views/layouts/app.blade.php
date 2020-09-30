@@ -52,6 +52,8 @@
         <!-- Page Content -->
         <main>
             {{ $slot }}
+
+            @livewire('flash-message')
         </main>
     </div>
 

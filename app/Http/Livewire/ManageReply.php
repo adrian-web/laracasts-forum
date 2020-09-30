@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use App\Models\Reply;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
-use phpDocumentor\Reflection\Types\This;
 
 class ManageReply extends Component
 {
@@ -40,6 +39,8 @@ class ManageReply extends Component
         
         $this->reply->update();
 
+        $this->emit('flash', 'updated');
+
         $this->editState = false;
 
         $this->bodyCache = $this->reply->body;
@@ -52,6 +53,8 @@ class ManageReply extends Component
         $this->reply->delete();
 
         $this->emitUp('deleted');
+
+        $this->emit('flash', 'deleted');
     }
 
     public function favorite()
@@ -62,10 +65,12 @@ class ManageReply extends Component
 
         if ($this->reply->isFavorited) {
             $this->reply->unfavorite();
+            $this->emit('flash', 'liked');
             $this->reply->favorites_count--;
             $this->favoriteState = false;
         } else {
             $this->reply->favorite();
+            $this->emit('flash', 'unliked');
             $this->reply->favorites_count++;
             $this->favoriteState = true;
         }

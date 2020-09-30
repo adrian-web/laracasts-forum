@@ -54,7 +54,8 @@
                                     <div class="col-span-6 sm:col-span-4">
                                         <x-jet-label for="body" value="{{ __('Body') }}" />
                                         <textarea name="body" id="body" rows="10" wire:model.defer="body"
-                                            class="form-textarea rounded-md shadow-sm mt-1 block w-full"></textarea>
+                                            class="form-textarea rounded-md shadow-sm mt-1 block w-full"
+                                            required></textarea>
                                         <x-jet-input-error for="body" class="mt-2" />
                                     </div>
 
