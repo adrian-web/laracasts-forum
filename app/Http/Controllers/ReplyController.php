@@ -28,4 +28,24 @@ class ReplyController extends Controller
         return back()
                  ->with('message', 'You replied to thread');
     }
+
+    public function destroy(Reply $reply)
+    {
+        $this->authorize('delete', $reply);
+
+        $reply->delete();
+
+        return back();
+    }
+
+    public function update(Reply $reply)
+    {
+        $this->authorize('update', $reply);
+        
+        $this->validate(request(), [
+            'body' => 'required'
+        ]);
+
+        $reply->update(request(['body']));
+    }
 }
