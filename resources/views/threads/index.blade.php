@@ -32,12 +32,13 @@
                     </article>
 
                     @if ( $loop->last )
+                    <div class="mt-6"></div>
                     @else
                     <hr class="mt-6">
                     @endif
 
                     @empty
-                    <p class="mt-6 text-gray-500">
+                    <p class="mt-6 mb-6 text-gray-500">
                         There's no threads...
                     </p>
                     @endforelse

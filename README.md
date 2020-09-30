@@ -11,7 +11,13 @@
 
 ## About a project
 
-Forum with Laravel and TDD.
+Forum with Laravel and TDD (w/ Livewire & Alpine.js).
+
+Important features
+- filter threads (ex. most replies, unanswered, author, channel)
+- create/edit/delete replies to a thread (AJAX)
+- like/unlike a reply (AJAX)
+- activity feed for a user (ex. created a thread, replied to a thread, liked/unliked a reply)
 
 Data structure
 1. Thread entity with at least title, text and creation date fields.
