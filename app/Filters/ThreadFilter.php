@@ -11,7 +11,7 @@ class ThreadFilter extends Filter
      *
      * @var array
      */
-    protected $filters = ['by', 'popular'];
+    protected $filters = ['by', 'popular', 'unanswered'];
 
     /**
      * Filter the query by a given username.
@@ -34,5 +34,15 @@ class ThreadFilter extends Filter
     protected function popular()
     {
         return $this->builder->orderBy('replies_count', 'desc');
+    }
+
+    /**
+     * Filter the query according to unanswered threads.
+     *
+     * @return $this
+     */
+    protected function unanswered()
+    {
+        return $this->builder->doesntHave('replies');
     }
 }

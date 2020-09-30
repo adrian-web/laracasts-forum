@@ -21,6 +21,10 @@
             <x-jet-dropdown-link href="/threads?popular=1">
                 {{ __('Popular Threads') }}
             </x-jet-dropdown-link>
+            <div class="border-t border-gray-100"></div>
+            <x-jet-dropdown-link href="/threads?unanswered=1">
+                {{ __('Unanswered Threads') }}
+            </x-jet-dropdown-link>
 
         </x-slot>
     </x-jet-dropdown>

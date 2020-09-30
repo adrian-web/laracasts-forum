@@ -103,4 +103,20 @@ class ReadThreadsTest extends TestCase
             $threadWithNoReplies->title
         ]);
     }
+
+    /** @test */
+    public function a_user_can_filter_by_unanswered_threads()
+    {
+        $this->withoutExceptionHandling();
+        
+        $threadWithoutReply = Thread::factory()->create();
+
+        $threadWithReply = Thread::factory()->create();
+        Reply::factory()->count(1)->create(['thread_id' => $threadWithReply->id]);
+
+        $response = $this->get('threads?unanswered=1');
+
+        $response->assertSee($threadWithoutReply->title)
+                    ->assertDontSee($threadWithReply->title);
+    }
 }
