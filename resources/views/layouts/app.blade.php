@@ -53,10 +53,6 @@
         <main>
             {{ $slot }}
         </main>
-
-        @if (session()->has('message'))
-        @livewire('flash-message')
-        @endif
     </div>
 
     @stack('modals')

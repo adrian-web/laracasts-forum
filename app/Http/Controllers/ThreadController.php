@@ -59,8 +59,7 @@ class ThreadController extends Controller
             ]
         );
 
-        return redirect($thread->path())
-                    ->with('message', 'You published a thread');
+        return redirect($thread->path());
     }
 
     /**
@@ -73,7 +72,7 @@ class ThreadController extends Controller
     {
         return view('threads.show', [
             'thread' => $thread,
-            'replies' => $thread->replies()->paginate(10)
+            // 'replies' => $thread->replies()->paginate(10)
         ]);
     }
 

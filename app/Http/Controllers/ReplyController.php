@@ -25,8 +25,7 @@ class ReplyController extends Controller
             'owner_id' => auth()->id()
         ]);
 
-        return back()
-                 ->with('message', 'You replied to thread');
+        return back();
     }
 
     public function destroy(Reply $reply)
