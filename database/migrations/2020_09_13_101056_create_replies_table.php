@@ -15,7 +15,7 @@ class CreateRepliesTable extends Migration
     {
         Schema::create('replies', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('owner_id');
+            $table->foreignId('user_id');
             $table->foreignId('thread_id');
             $table->text('body');
             $table->timestamps();

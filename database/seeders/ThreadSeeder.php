@@ -28,7 +28,7 @@ class ThreadSeeder extends Seeder
         foreach ($users as $user) {
             Thread::factory()
                         ->times(rand(1, 9))
-                        ->create(['creator_id' => $user->id, 'channel_id' => last($channels->toArray())['id']]);
+                        ->create(['user_id' => $user->id, 'channel_id' => last($channels->toArray())['id']]);
             Arr::pull($channels, count($channels->toArray()) - 1);
         }
     }

@@ -59,7 +59,7 @@ class ActivityTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        Thread::factory()->times(2)->create(['creator_id' => auth()->id()]);
+        Thread::factory()->times(2)->create(['user_id' => auth()->id()]);
 
         auth()->user()->activity()->first()->update(['created_at' => Carbon::now()->subWeek()]);
 

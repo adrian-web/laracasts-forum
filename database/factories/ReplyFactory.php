@@ -25,7 +25,7 @@ class ReplyFactory extends Factory
     public function definition()
     {
         return [
-            'owner_id' => User::factory(),
+            'user_id' => User::factory(),
             'thread_id' => Thread::factory(),
             'body' => $this->faker->paragraph,
         ];

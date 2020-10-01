@@ -22,7 +22,7 @@ class ReplyController extends Controller
 
         $thread->replies()->create([
             'body' => request('body'),
-            'owner_id' => auth()->id()
+            'user_id' => auth()->id()
         ]);
 
         return back();

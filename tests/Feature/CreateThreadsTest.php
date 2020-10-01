@@ -63,7 +63,7 @@ class CreateThreadsTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $thread = Thread::factory()->create(['creator_id' => auth()->id()]);
+        $thread = Thread::factory()->create(['user_id' => auth()->id()]);
 
         $reply = Reply::factory()->create(['thread_id' => $thread->id]);
 

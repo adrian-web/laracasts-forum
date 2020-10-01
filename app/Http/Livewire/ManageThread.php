@@ -38,7 +38,7 @@ class ManageThread extends Component
 
         $this->thread->replies()->create([
             'body' => $this->body,
-            'owner_id' => auth()->id()
+            'user_id' => auth()->id()
         ]);
 
         $this->emitSelf('created');

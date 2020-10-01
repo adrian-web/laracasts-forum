@@ -43,7 +43,7 @@ class ThreadTest extends TestCase
         
         $thread->replies()->create([
             'body' => 'Foobar',
-            'owner_id' => 1
+            'user_id' => 1
         ]);
 
         $this->assertCount(1, $thread->replies);

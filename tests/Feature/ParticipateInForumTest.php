@@ -79,7 +79,7 @@ class ParticipateInForumTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $reply = Reply::factory()->create(['owner_id' => auth()->id()]);
+        $reply = Reply::factory()->create(['user_id' => auth()->id()]);
 
         $this->delete("/replies/{$reply->id}")
                 ->assertStatus(302);
@@ -109,7 +109,7 @@ class ParticipateInForumTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
     
-        $reply = Reply::factory()->create(['owner_id' => auth()->id()]);
+        $reply = Reply::factory()->create(['user_id' => auth()->id()]);
     
         $updatedReply = 'Changed.';
 

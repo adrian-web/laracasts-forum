@@ -31,7 +31,7 @@ class ProfileTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $thread = Thread::factory()->create(['creator_id' => auth()->id()]);
+        $thread = Thread::factory()->create(['user_id' => auth()->id()]);
 
         $this->get('/profiles/' . auth()->user()->name)
                 ->assertSee($thread->title)
