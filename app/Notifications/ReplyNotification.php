@@ -59,7 +59,8 @@ class ReplyNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => $this->reply->owner->name . ' ' .  $this->event . ' a reply in ' . $this->reply->thread->title . '.'
+            'message' => $this->reply->owner->name . ' ' .  $this->event . ' a reply in ' . $this->reply->thread->title . '.',
+            'link' => $this->reply->path(),
         ];
     }
 }
