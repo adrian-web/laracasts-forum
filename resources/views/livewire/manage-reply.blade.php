@@ -16,7 +16,6 @@
 
         @can('delete', $reply)
         <form wire:submit.prevent="delete">
-            @csrf
             <div class="ml-6">
                 <x-jet-button>
                     {{ __('Delete') }}
@@ -38,7 +37,6 @@
 
         <div x-show="edit">
             <form wire:submit.prevent="update">
-                @csrf
                 <textarea class="form-textarea rounded-md shadow-sm mt-1 mb-1 block w-full"
                     wire:model.defer="reply.body" required></textarea>
                 <x-jet-button>Update</x-jet-button>
@@ -48,8 +46,8 @@
     </div>
 </div>
 
-@if (auth()->guest())
+@guest
 <script>
     document.getElementById("{{'favorite' . $reply->id}}").disabled = true; 
 </script>
-@endif
+@endguest

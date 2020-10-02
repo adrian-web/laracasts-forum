@@ -16,9 +16,9 @@ class ProfileController extends Controller
 
     public function show(User $user)
     {
-        if (Gate::forUser($user)->authorize('activity-feed')) {
+        if (Gate::forUser($user)->authorize('profiles-page')) {
             return view('profiles.show', [
-                'profileUser' => $user,
+                'user' => $user,
                 'activities' => Activity::feed($user)
             ]);
         }

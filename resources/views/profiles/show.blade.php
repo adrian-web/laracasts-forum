@@ -10,7 +10,7 @@
                 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
 
                     <h4 class="text-xl text-gray-500">
-                        {{ $profileUser->name . "'s profile page" }}
+                        {{ $user->name . "'s profile page" }}
                     </h4>
 
                     @forelse ($activities as $date => $activity)
@@ -23,6 +23,7 @@
                     @endif
 
                     @if ( $loop->last )
+                    <div class="mt-6"></div>
                     @else
                     <hr class="mt-6">
                     @endif

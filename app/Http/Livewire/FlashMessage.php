@@ -17,7 +17,7 @@ class FlashMessage extends Component
 
     public function flash($message)
     {
-        $this->message = 'Success! You ' . $message . ' a reply.';
+        $this->message = 'Success! You ' . $message . '.';
 
         $this->shown = true;
     }

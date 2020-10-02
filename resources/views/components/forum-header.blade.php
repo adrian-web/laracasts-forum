@@ -12,11 +12,11 @@
                 {{ __('All Threads') }}
             </x-jet-dropdown-link>
             <div class="border-t border-gray-100"></div>
-            @if (auth()->check())
+            @auth
             <x-jet-dropdown-link href="{{ '/threads?by=' . auth()->user()->name }}">
                 {{ __('My Threads') }}
             </x-jet-dropdown-link>
-            @endif
+            @endauth
             <div class="border-t border-gray-100"></div>
             <x-jet-dropdown-link href="/threads?popular=1">
                 {{ __('Popular Threads') }}

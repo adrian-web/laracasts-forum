@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('activity-feed', function ($user) {
+        Gate::define('profiles-page', function ($user) {
             return $user->id == auth()->id();
         });
 

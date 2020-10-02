@@ -39,7 +39,7 @@ class ManageReply extends Component
         
         $this->reply->update();
 
-        $this->emit('flash', 'updated');
+        $this->emit('flash', 'updated a reply');
 
         $this->editState = false;
 
@@ -52,26 +52,32 @@ class ManageReply extends Component
 
         $this->reply->delete();
 
-        $this->emitUp('deleted');
+        $this->emitUp('deleted a reply');
 
         $this->emit('flash', 'deleted');
     }
 
     public function favorite()
     {
-        if (! auth()->check()) {
+        if (auth()->guest()) {
             return;
         }
 
         if ($this->reply->isFavorited) {
             $this->reply->unfavorite();
-            $this->emit('flash', 'unliked');
+            
+            $this->emit('flash', 'unliked a reply');
+            
             $this->reply->favorites_count--;
+            
             $this->favoriteState = false;
         } else {
             $this->reply->favorite();
-            $this->emit('flash', 'liked');
+            
+            $this->emit('flash', 'liked a reply');
+
             $this->reply->favorites_count++;
+
             $this->favoriteState = true;
         }
     }

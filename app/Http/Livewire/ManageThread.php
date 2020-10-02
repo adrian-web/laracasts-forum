@@ -17,6 +17,8 @@ class ManageThread extends Component
 
     public $body;
 
+    public $subscribedState;
+
     protected $rules = [
         'body' => 'required',
     ];
@@ -26,11 +28,13 @@ class ManageThread extends Component
     public function mount(Thread $thread)
     {
         $this->thread = $thread;
+
+        $this->subscribedState = $thread->isSubscribed;
     }
 
     public function create()
     {
-        if (! auth()->check()) {
+        if (auth()->guest()) {
             return;
         }
 
@@ -43,7 +47,7 @@ class ManageThread extends Component
 
         $this->emitSelf('created');
 
-        $this->emit('flash', 'created');
+        $this->emit('flash', 'created a reply');
 
         $this->body = '';
     }
@@ -54,7 +58,30 @@ class ManageThread extends Component
 
         $this->thread->delete();
 
+        $this->emit('flash', 'deleted a thread');
+
         return redirect()->route('threads');
+    }
+
+    public function subscribe()
+    {
+        if (auth()->guest()) {
+            return;
+        }
+
+        if ($this->thread->isSubscribed) {
+            $this->thread->unsubscribe();
+
+            $this->subscribedState = false;
+    
+            $this->emit('flash', 'unsubscribed to a thread');
+        } else {
+            $this->thread->subscribe();
+
+            $this->subscribedState = true;
+    
+            $this->emit('flash', 'subscribed to a thread');
+        }
     }
 
     public function resetPagination()

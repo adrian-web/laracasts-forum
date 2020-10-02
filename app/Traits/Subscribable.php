@@ -14,7 +14,7 @@ trait Subscribable
 
     public function subscribe()
     {
-        if (! auth()->check()) {
+        if (auth()->guest()) {
             return;
         }
 
@@ -27,12 +27,22 @@ trait Subscribable
 
     public function unsubscribe()
     {
-        if (! auth()->check()) {
+        if (auth()->guest()) {
             return;
         }
 
         $attributes = ['user_id' => auth()->id()];
 
         $this->subscriptions()->where($attributes)->get()->each->delete();
+    }
+
+    public function isSubscribed()
+    {
+        return !! $this->subscriptions->where('user_id', auth()->id())->count();
+    }
+
+    public function getIsSubscribedAttribute()
+    {
+        return $this->isSubscribed();
     }
 }

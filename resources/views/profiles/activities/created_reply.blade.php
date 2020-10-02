@@ -1,7 +1,7 @@
 @component('profiles.activities.activity')
 
 @slot('activityHeader')
-{{ $profileUser->name }}
+{{ $user->name }}
 {{ ' replied to ' }}
 <a href="{{ $activity->subject->thread->path() }}">
     {{ $activity->subject->thread->title }}
