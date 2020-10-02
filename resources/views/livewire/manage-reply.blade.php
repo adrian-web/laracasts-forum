@@ -6,7 +6,7 @@
         </h4>
 
         <form wire:submit.prevent="favorite">
-            <x-jet-button class="{{ $favoriteState ? 'text-red-600' : '' }}">
+            <x-jet-button class="{{ $favoriteState ? 'text-red-600' : '' }}" id="{{'favorite' . $reply->id}}">
                 <div class="">
                     <span class="fa fa-heart" aria-hidden="true"></span>
                     <span class="ml-1">{{ $reply->favorites_count }}</span>
@@ -47,3 +47,9 @@
         </div>
     </div>
 </div>
+
+@if (auth()->guest())
+<script>
+    document.getElementById("{{'favorite' . $reply->id}}").disabled = true; 
+</script>
+@endif

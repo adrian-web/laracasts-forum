@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class FlashMessage extends Component
 {
-    public $message;
+    public $message = null;
 
     public $shown = false;
 
@@ -24,8 +24,6 @@ class FlashMessage extends Component
 
     public function hide()
     {
-        $this->message = null;
-
         $this->shown = false;
     }
 

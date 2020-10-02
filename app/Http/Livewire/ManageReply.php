@@ -65,12 +65,12 @@ class ManageReply extends Component
 
         if ($this->reply->isFavorited) {
             $this->reply->unfavorite();
-            $this->emit('flash', 'liked');
+            $this->emit('flash', 'unliked');
             $this->reply->favorites_count--;
             $this->favoriteState = false;
         } else {
             $this->reply->favorite();
-            $this->emit('flash', 'unliked');
+            $this->emit('flash', 'liked');
             $this->reply->favorites_count++;
             $this->favoriteState = true;
         }
