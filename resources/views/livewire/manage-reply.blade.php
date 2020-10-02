@@ -6,12 +6,12 @@
         </h4>
 
         <form wire:submit.prevent="favorite">
-            @csrf
-            <div class="">
-                <x-jet-button class="{{ $favoriteState ? 'text-blue-400' : '' }}">
-                    {{ $reply->favorites_count }}
-                </x-jet-button>
-            </div>
+            <x-jet-button class="{{ $favoriteState ? 'text-red-600' : '' }}">
+                <div class="">
+                    <span class="fa fa-heart" aria-hidden="true"></span>
+                    <span class="ml-1">{{ $reply->favorites_count }}</span>
+                </div>
+            </x-jet-button>
         </form>
 
         @can('delete', $reply)

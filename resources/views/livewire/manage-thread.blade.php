@@ -17,7 +17,6 @@
 
                         @can('delete', $thread)
                         <form wire:submit.prevent="delete">
-                            @csrf
                             <div class="mt-6">
                                 <x-jet-button>
                                     {{ __('Delete') }}
@@ -44,8 +43,6 @@
                 @if (auth()->check())
 
                 <form wire:submit.prevent="create">
-                    @csrf
-
                     <div class="lg:mt-5 md:mt-0 md:col-span-2">
                         <div class="shadow overflow-hidden sm:rounded-md">
                             <div class="px-4 py-5 bg-white sm:p-6">

@@ -13,8 +13,6 @@
                 </h3>
 
                 <form action="/threads" method="POST">
-                    @csrf
-
                     <div class="lg:mt-5 md:mt-0 md:col-span-2">
                         <div class="shadow overflow-hidden sm:rounded-md">
                             <div class="px-4 py-5 bg-white sm:p-6">
