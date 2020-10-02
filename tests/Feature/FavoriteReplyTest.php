@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class FavoriteTest extends TestCase
+class FavoriteReplyTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
