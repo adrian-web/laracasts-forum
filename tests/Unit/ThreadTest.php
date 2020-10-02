@@ -56,4 +56,19 @@ class ThreadTest extends TestCase
         
         $this->assertInstanceOf('App\Models\Channel', $thread->channel);
     }
+
+    /** @test */
+    public function it_can_be_subscribed_to()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $thread = Thread::factory()->create();
+
+        $this->assertFalse($thread->isSubscribed);
+
+        $thread->subscribe();
+
+        $this->assertTrue($thread->fresh()->isSubscribed);
+    }
 }

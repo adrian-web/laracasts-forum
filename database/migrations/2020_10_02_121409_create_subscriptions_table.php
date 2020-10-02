@@ -16,8 +16,9 @@ class CreateSubscriptionsTable extends Migration
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->unsignedInteger('subscribed_id');
-            $table->string('subscribed_type');
+            $table->morphs('subscribed');
+            // $table->unsignedInteger('subscribed_id');
+            // $table->string('subscribed_type');
             $table->timestamps();
 
             $table->unique(['user_id', 'subscribed_id', 'subscribed_type']);

@@ -54,6 +54,28 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
+    public function a_reply_favoriting_records_an_activity()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $reply = Reply::factory()->create();
+
+        $this->assertEquals(2, Activity::count());
+
+        $favorite = $reply->favorite();
+
+        $this->assertEquals(3, Activity::count());
+
+        $this->assertDatabaseHas('activities', [
+            'user_id' => auth()->id(),
+            'type' => 'created_favorite',
+            'subject_id' => $favorite->id,
+            'subject_type' => 'App\Models\Favorite'
+        ]);
+    }
+
+    /** @test */
     public function it_fetches_an_activity_feed_for_a_given_user()
     {
         $user = User::factory()->create();

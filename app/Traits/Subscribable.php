@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use App\Models\Subscription;
-use Illuminate\Database\Eloquent\Model;
 
 trait Subscribable
 {

@@ -17,9 +17,12 @@ class CreateActivitiesTable extends Migration
             $table->id();
             $table->foreignId('user_id')->index();
             $table->string('type');
-            $table->unsignedInteger('subject_id');
-            $table->string('subject_type');
+            $table->morphs('subject');
+            // $table->unsignedInteger('subject_id');
+            // $table->string('subject_type');
             $table->timestamps();
+
+            $table->unique(['user_id', 'subject_id', 'subject_type']);
         });
     }
 

@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use App\Models\Favorite;
-use Illuminate\Database\Eloquent\Model;
 
 trait Favorable
 {

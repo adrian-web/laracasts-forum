@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use App\Traits\Favorable;
-use App\Traits\RecordsActivity;
+use App\Traits\NotifySubscriber;
+use App\Traits\RecordActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +12,8 @@ class Reply extends Model
 {
     use HasFactory;
     use Favorable;
-    use RecordsActivity;
+    use RecordActivity;
+    use NotifySubscriber;
 
     protected $guarded = [];
 

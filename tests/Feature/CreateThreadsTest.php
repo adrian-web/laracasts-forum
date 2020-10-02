@@ -39,7 +39,7 @@ class CreateThreadsTest extends TestCase
     }
 
     /** @test */
-    public function an_unauthenticated_user_cannot_delete_a_forum_thread()
+    public function an_unauthorized_user_cannot_delete_a_forum_thread()
     {
         $this->withExceptionHandling();
         
@@ -56,7 +56,7 @@ class CreateThreadsTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_can_delete_a_forum_thread()
+    public function an_authorized_user_can_delete_a_forum_thread()
     {
         $this->withoutExceptionHandling();
 

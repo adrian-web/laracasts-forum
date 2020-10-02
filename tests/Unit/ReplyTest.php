@@ -21,4 +21,25 @@ class ReplyTest extends TestCase
 
         $this->assertInstanceOf(User::class, $reply->owner);
     }
+
+    /** @test */
+    public function a_reply_has_favorites()
+    {
+        $reply = Reply::factory()->create();
+
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $reply->favorites);
+    }
+
+    /** @test */
+    public function a_reply_can_be_favorited()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $reply = Reply::factory()->create();
+        
+        $reply->favorite();
+
+        $this->assertCount(1, $reply->favorites);
+    }
 }

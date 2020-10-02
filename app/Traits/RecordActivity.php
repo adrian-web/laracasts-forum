@@ -2,12 +2,9 @@
 
 namespace App\Traits;
 
-use App\Models\Activity;
-use Illuminate\Database\Eloquent\Model;
-
-trait RecordsActivity
+trait RecordActivity
 {
-    protected static function bootRecordsActivity()
+    protected static function bootRecordActivity()
     {
         if (auth()->guest()) {
             return;
