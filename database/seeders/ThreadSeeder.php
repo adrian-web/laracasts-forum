@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Channel;
+use App\Models\Reply;
 use App\Models\Thread;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -31,5 +32,18 @@ class ThreadSeeder extends Seeder
                         ->create(['user_id' => $user->id, 'channel_id' => last($channels->toArray())['id']]);
             Arr::pull($channels, count($channels->toArray()) - 1);
         }
+
+        $threads = Thread::get();
+
+        foreach ($threads as $thread) {
+            for ($i=0; $i < rand(0, 9); $i++) {
+                $id = Arr::random($users->toArray())['id'];
+                Reply::factory()
+                        ->create(['user_id' => $id, 'thread_id' => $thread->id]);
+            }
+        }
+
+        User::factory()
+                ->create(['name' => 'adrian', 'email' => 'adrian@test.com', 'password' => '$2a$04$MJL4ZpY4Nrt1g8tjftUHB.ZOnJkTZstr5SEpwpJLMhdMDEjgYoK3O']);
     }
 }
