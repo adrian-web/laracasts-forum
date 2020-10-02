@@ -52,9 +52,9 @@ class ManageReply extends Component
 
         $this->reply->delete();
 
-        $this->emitUp('deleted a reply');
+        $this->emitUp('deleted');
 
-        $this->emit('flash', 'deleted');
+        $this->emit('flash', 'deleted a reply');
     }
 
     public function favorite()
