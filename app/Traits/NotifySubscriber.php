@@ -8,9 +8,9 @@ trait NotifySubscriber
 {
     protected static function bootNotifySubscriber()
     {
-        if (auth()->guest()) {
-            return;
-        }
+        // if (auth()->guest()) {
+        //     return;
+        // }
 
         foreach (static::getEventsToNotify() as $event) {
             static::$event(function ($model) use ($event) {

@@ -12,7 +12,7 @@ class FlashMessage extends Component
 
     protected function getListeners()
     {
-        return ['flash'];
+        return ['flash', 'hide'];
     }
 
     public function flash($message)
@@ -20,11 +20,15 @@ class FlashMessage extends Component
         $this->message = 'Success! You ' . $message . '.';
 
         $this->shown = true;
+
+        $this->emit('auto');
     }
 
     public function hide()
     {
         $this->shown = false;
+
+        $this->emit('clear');
     }
 
     public function render()

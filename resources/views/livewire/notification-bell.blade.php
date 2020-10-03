@@ -8,9 +8,10 @@
 
         <x-slot name="content">
 
-            @forelse ($user->unreadNotifications as $notification)
-            <x-jet-dropdown-link href="{{ $notification->data['link'] }}" wire:click="confirm({{$notification}})">
-                {{ $notification->data['message'] }}
+            @forelse ($unreadNotificationsUnique as $unreadNotificationUnique)
+            <x-jet-dropdown-link href="{{ $unreadNotificationUnique->data['link'] }}"
+                wire:click.prevent="confirm({{$unreadNotificationUnique}})">
+                {{ $unreadNotificationUnique->data['message'] }}
             </x-jet-dropdown-link>
 
             @if ( $loop->last )

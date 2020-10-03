@@ -59,7 +59,7 @@ class ReplyNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => $this->reply->thread->title . ' was updated ',
+            'message' => $this->reply->thread->title . ' was updated.',
             'link' => $this->reply->path(),
         ];
     }
