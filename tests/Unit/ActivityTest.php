@@ -3,9 +3,6 @@
 namespace Tests\Unit;
 
 use App\Models\Activity;
-use App\Models\Reply;
-use App\Models\Thread;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -18,10 +15,9 @@ class ActivityTest extends TestCase
     /** @test */
     public function a_thread_creation_records_an_activity()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
+        $this->signIn();
 
-        $thread = Thread::factory()->create();
+        $thread = create('Thread');
         
         $this->assertDatabaseHas('activities', [
             'user_id' => auth()->id(),
@@ -38,10 +34,9 @@ class ActivityTest extends TestCase
     /** @test */
     public function a_reply_creation_records_an_activity()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
+        $this->signIn();
 
-        $reply = Reply::factory()->create();
+        $reply = create('Reply');
 
         $this->assertEquals(2, Activity::count());
 
@@ -56,10 +51,9 @@ class ActivityTest extends TestCase
     /** @test */
     public function a_reply_favoriting_records_an_activity()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
+        $this->signIn();
 
-        $reply = Reply::factory()->create();
+        $reply = create('Reply');
 
         $this->assertEquals(2, Activity::count());
 
@@ -78,10 +72,9 @@ class ActivityTest extends TestCase
     /** @test */
     public function it_fetches_an_activity_feed_for_a_given_user()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
+        $this->signIn();
 
-        Thread::factory()->times(2)->create(['user_id' => auth()->id()]);
+        create('Thread', ['user_id' => auth()->id()], 2);
 
         auth()->user()->activity()->first()->update(['created_at' => Carbon::now()->subWeek()]);
 

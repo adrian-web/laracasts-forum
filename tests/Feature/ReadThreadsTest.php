@@ -2,10 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Channel;
-use App\Models\Reply;
-use App\Models\Thread;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -18,48 +14,39 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_view_all_threads()
     {
-        $this->withoutExceptionHandling();
+        $thread = create('Thread');
 
-        $thread = Thread::factory()->create();
-
-        $response = $this->get('/threads');
-        $response->assertSee($thread->title);
+        $this->get('/threads')
+                ->assertSee($thread->title);
     }
 
     /** @test */
     public function a_user_can_view_single_thread()
     {
-        // $this->withoutExceptionHandling();
+        $thread = create('Thread');
 
-        $thread = Thread::factory()->create();
-
-        $response = $this->get($thread->path());
-        $response->assertSee($thread->title);
+        $this->get($thread->path())
+                ->assertSee($thread->title);
     }
 
     /** @test */
     public function a_user_can_read_replies_that_are_associated_with_a_thread()
     {
-        // $this->withoutExceptionHandling();
+        $thread = create('Thread');
 
-        $thread = Thread::factory()->create();
+        $reply = create('Reply', ['thread_id' => $thread->id]);
 
-        $reply = Reply::factory()->create(['thread_id' => $thread->id]);
-
-        $response = $this->get($thread->path());
-
-        $response->assertSee($reply->body);
+        $this->get($thread->path())
+                ->assertSee($reply->body);
     }
 
     /** @test */
     public function a_user_can_filter_threads_according_to_a_channel()
     {
-        $this->withoutExceptionHandling();
+        $channel = create('Channel');
 
-        $channel = Channel::factory()->create();
-
-        $threadInChannel = Thread::factory()->create(['channel_id' => $channel->id]);
-        $threadNotInChannel = Thread::factory()->create();
+        $threadInChannel = create('Thread', ['channel_id' => $channel->id]);
+        $threadNotInChannel = create('Thread');
     
         $this->get('/threads/' . $channel->slug)
                 ->assertSee($threadInChannel->title)
@@ -69,13 +56,11 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_filter_threads_by_a_user_name()
     {
-        $this->withoutExceptionHandling();
-        
-        $user = User::factory()->create(['name' => 'Janek']);
-        $this->actingAs($user);
+        $user = create('User', ['name' => 'Janek']);
+        $this->signIn($user);
 
-        $threadByJanek = Thread::factory()->create(['user_id' => $user->id]);
-        $threadNotByJanek = Thread::factory()->create();
+        $threadByJanek = create('Thread', ['user_id' => $user->id]);
+        $threadNotByJanek = create('Thread');
 
         $this->get('/threads?by=Janek')
                 ->assertSee($threadByJanek->title)
@@ -85,15 +70,15 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_filter_threads_by_popularity()
     {
-        $threadWithTwoReplies = Thread::factory()->create();
-        Reply::factory()->count(2)->create(['created_at' => new Carbon('-2 minute'),
-                                            'thread_id' => $threadWithTwoReplies->id]);
+        $threadWithTwoReplies = create('Thread');
+        create('Reply', ['created_at' => new Carbon('-2 minute'),
+                        'thread_id' => $threadWithTwoReplies->id], 2);
 
-        $threadWithThreeReplies = Thread::factory()->create();
-        Reply::factory()->count(3)->create(['created_at' => new Carbon('-1 minute'),
-                                            'thread_id' => $threadWithThreeReplies->id]);
+        $threadWithThreeReplies = create('Thread');
+        create('Reply', ['created_at' => new Carbon('-1 minute'),
+                        'thread_id' => $threadWithThreeReplies->id], 3);
 
-        $threadWithNoReplies = Thread::factory()->create();
+        $threadWithNoReplies = create('Thread');
 
         $response = $this->get('threads?popular=1');
 
@@ -107,16 +92,13 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_filter_by_unanswered_threads()
     {
-        $this->withoutExceptionHandling();
-        
-        $threadWithoutReply = Thread::factory()->create();
+        $threadWithoutReply = create('Thread');
 
-        $threadWithReply = Thread::factory()->create();
-        Reply::factory()->count(1)->create(['thread_id' => $threadWithReply->id]);
+        $threadWithReply = create('Thread');
+        create('Reply', ['thread_id' => $threadWithReply->id]);
 
-        $response = $this->get('threads?unanswered=1');
-
-        $response->assertSee($threadWithoutReply->title)
-                    ->assertDontSee($threadWithReply->title);
+        $this->get('threads?unanswered=1')
+                ->assertSee($threadWithoutReply->title)
+                ->assertDontSee($threadWithReply->title);
     }
 }

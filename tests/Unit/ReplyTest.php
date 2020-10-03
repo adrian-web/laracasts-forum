@@ -2,9 +2,6 @@
 
 namespace Tests\Unit;
 
-// use PHPUnit\Framework\TestCase;
-
-use App\Models\Reply;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -17,7 +14,7 @@ class ReplyTest extends TestCase
     /** @test */
     public function has_an_owner()
     {
-        $reply = Reply::factory()->create();
+        $reply = create('Reply');
 
         $this->assertInstanceOf(User::class, $reply->owner);
     }
@@ -25,7 +22,7 @@ class ReplyTest extends TestCase
     /** @test */
     public function a_reply_has_favorites()
     {
-        $reply = Reply::factory()->create();
+        $reply = create('Reply');
 
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $reply->favorites);
     }
@@ -33,10 +30,9 @@ class ReplyTest extends TestCase
     /** @test */
     public function a_reply_can_be_favorited()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
+        $this->signIn();
 
-        $reply = Reply::factory()->create();
+        $reply = create('Reply');
         
         $reply->favorite();
 

@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Models\Thread;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -15,7 +14,7 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_can_make_a_string_path()
     {
-        $thread = Thread::factory()->create();
+        $thread = create('Thread');
 
         $this->assertEquals($thread->path(), '/threads/' . $thread->channel->slug . '/' . $thread->id);
     }
@@ -23,7 +22,7 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_has_a_creator()
     {
-        $thread = Thread::factory()->create();
+        $thread = create('Thread');
 
         $this->assertInstanceOf(User::class, $thread->creator);
     }
@@ -31,7 +30,7 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_has_replies()
     {
-        $thread = Thread::factory()->create();
+        $thread = create('Thread');
 
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $thread->replies);
     }
@@ -39,7 +38,7 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_can_add_a_reply()
     {
-        $thread = Thread::factory()->create();
+        $thread = create('Thread');
         
         $thread->replies()->create([
             'body' => 'Foobar',
@@ -52,7 +51,7 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_has_a_channel()
     {
-        $thread = Thread::factory()->create();
+        $thread = create('Thread');
         
         $this->assertInstanceOf('App\Models\Channel', $thread->channel);
     }
@@ -60,10 +59,9 @@ class ThreadTest extends TestCase
     /** @test */
     public function it_can_be_subscribed_to()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
+        $this->signIn();
 
-        $thread = Thread::factory()->create();
+        $thread = create('Thread');
 
         $this->assertFalse($thread->isSubscribed);
 

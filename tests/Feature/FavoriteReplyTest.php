@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Reply;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -15,19 +13,16 @@ class FavoriteReplyTest extends TestCase
     /** @test */
     public function a_guest_cannot_favorite_anything()
     {
-        $this->withExceptionHandling();
-        
         $this->post('replies/1/favorites')
-            ->assertRedirect('/login');
+                ->assertRedirect('/login');
     }
 
     /** @test */
     public function an_authenticated_user_can_favorite_any_reply()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
+        $this->signIn();
 
-        $reply = Reply::factory()->create();
+        $reply = create('Reply');
 
         $this->post('replies/' . $reply->id . '/favorites');
 
@@ -37,10 +32,9 @@ class FavoriteReplyTest extends TestCase
     /** @test */
     public function an_authenticated_user_may_only_favorite_a_reply_once()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
+       $this->signIn();
 
-        $reply = Reply::factory()->create();
+        $reply = create('Reply');
 
         $this->post('replies/' . $reply->id . '/favorites');
         $this->post('replies/' . $reply->id . '/favorites');
@@ -51,10 +45,9 @@ class FavoriteReplyTest extends TestCase
     /** @test */
     public function an_authenticated_user_can_unfavorite_a_reply()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
+        $this->signIn();
 
-        $reply = Reply::factory()->create();
+        $reply = create('Reply');
     
         $reply->favorite();
     
