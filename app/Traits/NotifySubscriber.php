@@ -8,9 +8,9 @@ trait NotifySubscriber
 {
     protected static function bootNotifySubscriber()
     {
-        // if (auth()->guest()) {
-        //     return;
-        // }
+        if (auth()->guest()) {
+            return;
+        }
 
         foreach (static::getEventsToNotify() as $event) {
             static::$event(function ($model) use ($event) {
@@ -29,11 +29,17 @@ trait NotifySubscriber
         $type = strtolower((new \ReflectionClass($this))->getShortName());
 
         if ($type == 'reply') {
-            foreach ($this->thread->subscriptions as $subscription) {
-                if ($subscription->subscriber->id != $this->user_id) {
-                    $subscription->subscriber->notify(new ReplyNotification($this, $event));
-                }
-            }
+            // foreach ($this->thread->subscriptions as $subscription) {
+            //     if ($subscription->subscriber->id != $this->user_id) {
+            //         $subscription->subscriber->notify(new ReplyNotification($this, $event));
+            //     }
+            // }
+            
+            $this->thread->subscriptions->filter(function ($subscription) {
+                return $subscription->subscriber->id != $this->user_id;
+            })->each(function ($subscription) use ($event) {
+                $subscription->subscriber->notify(new ReplyNotification($this, $event));
+            });
         }
     }
 }

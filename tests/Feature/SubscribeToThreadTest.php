@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Subscription;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -73,5 +74,21 @@ class SubscribeToThreadTest extends TestCase
         $thread->unsubscribe();
     
         $this->assertCount(0, $thread->fresh()->subscriptions);
+    }
+
+    /** @test */
+    public function deleting_a_thread_removes_its_associated_subscriptions()
+    {
+        $this->signIn();
+
+        $thread = create('Thread');
+
+        $thread->subscribe();
+
+        $thread->delete();
+
+        $this->assertDatabaseMissing('threads', $thread->only('id'));
+
+        $this->assertEquals(0, Subscription::count());
     }
 }

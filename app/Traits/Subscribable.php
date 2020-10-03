@@ -6,6 +6,13 @@ use App\Models\Subscription;
 
 trait Subscribable
 {
+    protected static function bootSubscribable()
+    {
+        static::deleting(function($model){
+            $model->subscriptions->each->delete();
+        });
+    }
+
     public function subscriptions()
     {
         return $this->morphMany(Subscription::class, 'subscribed');
