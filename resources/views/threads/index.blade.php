@@ -18,7 +18,13 @@
                                 </a>
                                 {{ ' created ' }}
                                 <a href="{{ $thread->path() }}">
+                                    @if (auth()->check() && auth()->user()->hasSeenUpdatesFor($thread))
+                                    <strong>
+                                        {{ $thread->title }}
+                                    </strong>
+                                    @else
                                     {{ $thread->title }}
+                                    @endif
                                 </a>
                             </h4>
 

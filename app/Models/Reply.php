@@ -23,6 +23,16 @@ class Reply extends Model
 
     protected $appends = ['isFavorited'];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($reply) {
+            $reply->thread->touch();
+            $reply->owner->read($reply->thread);
+        });
+    }
+
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');

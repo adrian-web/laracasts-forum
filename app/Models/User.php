@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -72,5 +72,23 @@ class User extends Authenticatable
     public function activity()
     {
         return $this->hasMany(Activity::class);
+    }
+
+    public function read(Thread $thread)
+    {
+        cache()->forever(
+            $this->visitedCacheKey($thread),
+            Carbon::now()
+        );
+    }
+
+    public function hasSeenUpdatesFor(Thread $thread)
+    {
+        return $thread->updated_at > cache($this->visitedCacheKey($thread));
+    }
+
+    public function visitedCacheKey(Thread $thread)
+    {
+        return sprintf('users.%s.visits.%s', $this->id, $thread->id);
     }
 }
