@@ -30,6 +30,10 @@ class Thread extends Model
         static::deleting(function ($thread) {
             $thread->replies->each->delete();
         });
+
+        static::updated(function ($thread) {
+            $thread->creator->read($thread);
+        });
     }
 
     public function path()
