@@ -45,6 +45,8 @@ class ReplyController extends Controller
             'body' => 'required'
         ]);
 
+        dd(request());
+
         $reply->update(request(['body']));
     }
 }

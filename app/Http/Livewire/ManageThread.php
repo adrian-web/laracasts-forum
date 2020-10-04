@@ -15,12 +15,21 @@ class ManageThread extends Component
 
     public $thread;
 
-    public $body;
+    public $bodyReply;
 
     public $subscribedState;
 
+    public $editState = false;
+
+    public $bodyCache;
+
+    public $titleCache;
+
+    public $confirmingThreadDeletion = false;
+
     protected $rules = [
-        'body' => 'required',
+        'thread.title' => 'required',
+        'thread.body' => 'required',
     ];
 
     protected $listeners = ['deleted' => 'resetPagination', 'created' => 'resetPagination'];
@@ -29,19 +38,25 @@ class ManageThread extends Component
     {
         $this->thread = $thread;
 
+        $this->bodyCache = $thread->body;
+
+        $this->titleCache = $thread->title;
+
         $this->subscribedState = $thread->isSubscribed;
     }
 
-    public function create()
+    public function createReply()
     {
         if (auth()->guest()) {
             return;
         }
 
-        $this->validate();
+        $this->validate([
+            'bodyReply' => 'required'
+        ]);
 
         $this->thread->replies()->create([
-            'body' => $this->body,
+            'body' => $this->bodyReply,
             'user_id' => auth()->id()
         ]);
 
@@ -49,7 +64,7 @@ class ManageThread extends Component
 
         $this->emit('flash', 'created a reply');
 
-        $this->body = '';
+        $this->bodyReply = '';
     }
 
     public function delete()
@@ -61,6 +76,32 @@ class ManageThread extends Component
         $this->emit('flash', 'deleted a thread');
 
         return redirect()->route('threads');
+    }
+
+    public function update()
+    {
+        $this->authorize('update', $this->thread);
+        
+        $this->validate();
+        
+        $this->thread->update();
+
+        $this->emit('flash', 'updated a thread');
+
+        $this->editState = false;
+
+        $this->bodyCache = $this->thread->body;
+
+        $this->titleCache = $this->thread->title;
+    }
+
+    public function return()
+    {
+        $this->editState = false;
+
+        $this->thread->body = $this->bodyCache;
+
+        $this->thread->title = $this->titleCache;
     }
 
     public function subscribe()

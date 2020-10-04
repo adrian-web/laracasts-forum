@@ -71,6 +71,35 @@ class CreateThreadsTest extends TestCase
     }
 
     /** @test */
+    public function an_unauthorized_user_cannot_update_a_forum_thread()
+    {
+        $thread = create('Thread');
+
+        $this->patch($thread->path())
+                ->assertRedirect('/login');
+
+        $this->signIn();
+
+        $this->patch($thread->path())
+                ->assertStatus(403);
+    }
+
+    /** @test */
+    public function an_authorized_user_can_update_a_forum_thread()
+    {
+        $this->signIn();
+
+        $thread = create('Thread', ['user_id' => auth()->id()]);
+
+        $updatedTitle = 'Changed Title.';
+        $updatedBody = 'Changed Body.';
+
+        $this->patch($thread->path(), ['title' => $updatedTitle, 'body' => $updatedBody]);
+    
+        $this->assertDatabaseHas('threads', ['id' => $thread->id, 'title' => $updatedTitle, 'body' => $updatedBody]);
+    }
+
+    /** @test */
     public function a_thread_requires_a_title()
     {
         $this->publishThread(['title' => null])

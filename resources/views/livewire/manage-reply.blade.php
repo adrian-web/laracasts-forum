@@ -14,6 +14,12 @@
             </x-jet-button>
         </form>
 
+        @can('update', $reply)
+        <div class="ml-6">
+            <x-jet-danger-button wire:click="$toggle('editState')">Edit</x-jet-danger-button>
+        </div>
+        @endcan
+
         @can('delete', $reply)
         <form wire:submit.prevent="delete">
             <div class="ml-6">
@@ -23,13 +29,6 @@
             </div>
         </form>
         @endcan
-
-        @can('update', $reply)
-        <div class="ml-6">
-            <x-jet-danger-button wire:click="$toggle('editState')">Edit</x-jet-danger-button>
-        </div>
-        @endcan
-
     </div>
 
     <div class="mt-6" x-data="{ edit: {{ (int) $editState }} }" x-cloak>
@@ -37,8 +36,8 @@
 
         <div x-show="edit">
             <form wire:submit.prevent="update">
-                <textarea class="form-textarea rounded-md shadow-sm mt-1 mb-1 block w-full"
-                    wire:model.defer="reply.body" required></textarea>
+                <textarea class="form-textarea rounded-md shadow-sm mb-2 block w-full" wire:model.defer="reply.body"
+                    required></textarea>
                 <x-jet-button>Update</x-jet-button>
                 <x-jet-danger-button class="ml-3" wire:click="return">Cancel</x-jet-danger-button>
             </form>

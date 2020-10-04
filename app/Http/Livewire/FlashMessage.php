@@ -27,8 +27,6 @@ class FlashMessage extends Component
     public function hide()
     {
         $this->shown = false;
-
-        $this->emit('clear');
     }
 
     public function render()
