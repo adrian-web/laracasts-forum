@@ -11,43 +11,33 @@
 
 ## About a project
 
-Forum with Laravel and TDD (w/ Livewire & Alpine.js).
+Forum with Laravel 8, Livewire and Alpine.js.
 
-Important features
+Features list
 - filter threads (ex. most replies, unanswered, author, channel)
 - create/edit/delete replies to a thread (AJAX)
 - like/unlike a reply (AJAX)
 - activity feed for a user (ex. created a thread, replied to a thread, liked/unliked a reply)
+- thread subscription (creating a reply notifies subscribers)
+- notification bell lists only unique links
+- visiting a thread creates cache key to show updated threads to user
 
-Data structure
-1. Thread entity with at least title, text and creation date fields.
-2. User entity with at least name field.
-3. Threads can have multiple replies.
-4. A reply can be liked by users.
-
-Routes endpoints
-1. Get a thread by some id.
-2. Get all threads for given user.
-3. Sort threads by most popular (most replies).
-4. Get all threads for a given channel.
-
-## How to navigate a project
-
-To visit forum page, manually add '/threads' route or click 'Forum' hyperlink (visible on default '/' page or on '/dashboard' page upon login in to a site).
-
-A guest can freely view and explore threads but to edit/create/delete threads you have to be logged in (registration required).
-
-To login/register, look up to top right corner of a website (visible only to guests) or manually visit '/login' or '/register'. While logged in, profile dropdown menu appears. 
-
-To update a specific thread you have to be authorized (ex. you cannot delete others' people threads).
-
-From a main route '/threads' you can visit specific routes:
-- explore all threads,
-- visit a specific thread,
-- visit users' threads,
-- submit edits to a thread or create a new thread or delete a thread,
-- see a list of most popular threads (by most replies metric),
-- see and add a reply to a given thread.
+To-do list
+- create thread modal (AJAX)
+- delete button with confirmation button (Livewire & Alpine.js)
+- subscription to other models (ex. user, channel)
+- state-button component (for ex. liking/disliking, subscribing)
+- best reply functionality
+- sanitizing user inputs
+- forum roles (ex. admin, moderator etc.)
+- mention '@' users in messages (creates notification)
+- upload images
+- username autocomplete in messages
+- thread views count
+- upvote/downvote thread
+- thread can be locked
+- search bar
+- real-time validation on inputs
 
 ## How to setup a Laravel project from github repository
 
