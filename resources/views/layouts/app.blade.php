@@ -55,9 +55,9 @@
         <!-- Page Content -->
         <main>
             {{ $slot }}
-        </main>
 
-        @livewire('flash-message')
+            @livewire('flash-message')
+        </main>
     </div>
 
     @stack('modals')

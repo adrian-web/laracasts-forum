@@ -10,7 +10,7 @@ class FlashMessage extends Component
 
     public $color = null;
 
-    public $appear = false;
+    public $state = false;
 
     protected $listeners = ['flash'];
 
@@ -20,7 +20,7 @@ class FlashMessage extends Component
 
         $this->color = $color;
 
-        $this->appear = ! $this->appear;
+        $this->state = ! $this->state;
     }
 
     public function render()

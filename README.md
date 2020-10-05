@@ -21,6 +21,8 @@ Features list
 - thread subscription (creating a reply notifies subscribers)
 - notification bell lists only unique links
 - visiting a thread creates cache key to show updated threads to user
+- spam detection on user inputs
+- user cannot create replies or threads too frequently
 
 To-do list
 - create thread modal (AJAX)
