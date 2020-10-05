@@ -16,6 +16,15 @@
 
     @livewireStyles
 
+    <style>
+        [x-cloak] {
+            display: none;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.6.0/dist/alpine.js" defer></script>
 </head>
@@ -47,11 +56,25 @@
         <main>
             {{ $slot }}
         </main>
+
+        @livewire('flash-message')
     </div>
 
     @stack('modals')
 
     @livewireScripts
+
+    <script>
+        let timeout
+    
+        Livewire.on('auto', () => {
+            clearTimeout(timeout)
+
+            timeout = setTimeout(() => {
+                Livewire.emit('hide')
+            }, 3000)
+        }) 
+    </script>
 </body>
 
 </html>

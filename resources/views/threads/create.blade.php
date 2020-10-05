@@ -5,8 +5,8 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="bg-white overflow-hidden shadow-xl rounded-lg">
 
                 <h3 class="mt-8 ml-6 text-2xl">
                     {{ __('Create a thread') }}
@@ -14,7 +14,6 @@
 
                 <form action="/threads" method="POST">
                     @csrf
-
                     <div class="lg:mt-5 md:mt-0 md:col-span-2">
                         <div class="shadow overflow-hidden sm:rounded-md">
                             <div class="px-4 py-5 bg-white sm:p-6">

@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Models\Thread;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -15,7 +14,7 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_can_make_a_string_path()
     {
-        $thread = Thread::factory()->create();
+        $thread = create('Thread');
 
         $this->assertEquals($thread->path(), '/threads/' . $thread->channel->slug . '/' . $thread->id);
     }
@@ -23,7 +22,7 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_has_a_creator()
     {
-        $thread = Thread::factory()->create();
+        $thread = create('Thread');
 
         $this->assertInstanceOf(User::class, $thread->creator);
     }
@@ -31,7 +30,7 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_has_replies()
     {
-        $thread = Thread::factory()->create();
+        $thread = create('Thread');
 
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $thread->replies);
     }
@@ -39,11 +38,11 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_can_add_a_reply()
     {
-        $thread = Thread::factory()->create();
+        $thread = create('Thread');
         
         $thread->replies()->create([
             'body' => 'Foobar',
-            'owner_id' => 1
+            'user_id' => 1
         ]);
 
         $this->assertCount(1, $thread->replies);
@@ -52,8 +51,22 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_has_a_channel()
     {
-        $thread = Thread::factory()->create();
+        $thread = create('Thread');
         
         $this->assertInstanceOf('App\Models\Channel', $thread->channel);
+    }
+
+    /** @test */
+    public function it_can_be_subscribed_to()
+    {
+        $this->signIn();
+
+        $thread = create('Thread');
+
+        $this->assertFalse($thread->isSubscribed);
+
+        $thread->subscribe();
+
+        $this->assertTrue($thread->fresh()->isSubscribed);
     }
 }

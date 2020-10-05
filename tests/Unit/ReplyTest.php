@@ -2,12 +2,11 @@
 
 namespace Tests\Unit;
 
-// use PHPUnit\Framework\TestCase;
-
-use App\Models\Reply;
 use App\Models\User;
+use App\Notifications\ReplyNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class ReplyTest extends TestCase
@@ -17,8 +16,44 @@ class ReplyTest extends TestCase
     /** @test */
     public function has_an_owner()
     {
-        $reply = Reply::factory()->create();
+        $reply = create('Reply');
 
         $this->assertInstanceOf(User::class, $reply->owner);
+    }
+
+    /** @test */
+    public function a_reply_has_favorites()
+    {
+        $reply = create('Reply');
+
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $reply->favorites);
+    }
+
+    /** @test */
+    public function a_reply_can_be_favorited()
+    {
+        $this->signIn();
+
+        $reply = create('Reply');
+        
+        $reply->favorite();
+
+        $this->assertCount(1, $reply->favorites);
+    }
+
+    /** @test */
+    public function a_reply_creation_notifies_a_user_that_subscribed_to_a_given_thread()
+    {
+        Notification::fake();
+
+        $this->signIn();
+
+        $thread = create('Thread');
+
+        $thread->subscribe();
+
+        create('Reply', ['thread_id' => $thread->id]);
+
+        Notification::assertSentTo(auth()->user(), ReplyNotification::class);
     }
 }

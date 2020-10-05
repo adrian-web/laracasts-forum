@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use App\Filters\ThreadFilter;
-use App\Traits\RecordsActivity;
+use App\Traits\RecordActivity;
+use App\Traits\Subscribable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,8 @@ use Illuminate\Database\Eloquent\Model;
 class Thread extends Model
 {
     use HasFactory;
-    use RecordsActivity;
+    use RecordActivity;
+    use Subscribable;
 
     protected $guarded = [];
 
@@ -19,12 +21,18 @@ class Thread extends Model
 
     protected $withCount = ['replies'];
 
+    protected $appends = ['isSubscribed'];
+
     protected static function boot()
     {
         parent::boot();
 
         static::deleting(function ($thread) {
             $thread->replies->each->delete();
+        });
+
+        static::updated(function ($thread) {
+            $thread->creator->read($thread);
         });
     }
 
@@ -35,7 +43,7 @@ class Thread extends Model
 
     public function creator()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
     
     public function replies()

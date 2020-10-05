@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Inspections\Spam;
 use App\Models\Channel;
+use App\Models\Reply;
 use App\Models\Thread;
 use Illuminate\Http\Request;
 
@@ -13,18 +15,41 @@ class ReplyController extends Controller
         $this->middleware('auth');
     }
 
-    public function store(Channel $channel, Thread $thread)
+    public function store(Channel $channel, Thread $thread, Spam $spam)
     {
         $this->validate(request(), [
             'body' => 'required'
         ]);
 
+        $spam->detect(request('body'));
+
         $thread->replies()->create([
             'body' => request('body'),
-            'owner_id' => auth()->id()
+            'user_id' => auth()->id()
         ]);
 
-        return back()
-                 ->with('message', 'You replied to thread');
+        return back();
+    }
+
+    public function destroy(Reply $reply)
+    {
+        $this->authorize('delete', $reply);
+
+        $reply->delete();
+
+        return back();
+    }
+
+    public function update(Reply $reply, Spam $spam)
+    {
+        $this->authorize('update', $reply);
+        
+        $this->validate(request(), [
+            'body' => 'required'
+        ]);
+
+        $spam->detect(request('body'));
+
+        $reply->update(request(['body']));
     }
 }

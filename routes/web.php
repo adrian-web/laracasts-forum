@@ -30,10 +30,14 @@ Route::get('/threads/create', [ThreadController::class, 'create']);
 Route::post('/threads', [ThreadController::class, 'store']);
 Route::get('/threads/{channel}', [ThreadController::class, 'index']);
 Route::get('/threads/{channel}/{thread}', [ThreadController::class, 'show']);
+Route::patch('/threads/{channel}/{thread}', [ThreadController::class, 'update']);
 Route::delete('/threads/{channel}/{thread}', [ThreadController::class, 'destroy']);
 
 Route::post('/threads/{channel}/{thread}/replies', [ReplyController::class, 'store']);
+Route::patch('/replies/{reply}', [ReplyController::class, 'update']);
+Route::delete('/replies/{reply}', [ReplyController::class, 'destroy']);
 
 Route::post('/replies/{reply}/favorites', [FavoriteController::class, 'store']);
+Route::delete('/replies/{reply}/favorites', [FavoriteController::class, 'destroy']);
 
 Route::get('/profiles/{user}', [ProfileController::class, 'show'])->name('profile');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Filters\ThreadFilter;
+use App\Inspections\Spam;
 use App\Models\Channel;
 use App\Models\Thread;
 use Illuminate\Http\Request;
@@ -42,7 +43,7 @@ class ThreadController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Spam $spam)
     {
         $this->validate($request, [
             'title' => 'required',
@@ -50,17 +51,23 @@ class ThreadController extends Controller
             'channel_id' => 'required|exists:channels,id',
         ]);
 
+        try {
+            $spam->detect(request('title'));
+            $spam->detect(request('body'));
+        } catch (\Exception $e) {
+            return response('Your message contains a spam', 422);
+        }
+
         $thread = Thread::create(
             [
-                'creator_id' => auth()->id(),
+                'user_id' => auth()->id(),
                 'channel_id' => request('channel_id'),
                 'title' => request('title'),
                 'body' => request('body'),
             ]
         );
 
-        return redirect($thread->path())
-                    ->with('message', 'You published a thread');
+        return redirect($thread->path());
     }
 
     /**
@@ -71,9 +78,13 @@ class ThreadController extends Controller
      */
     public function show(Channel $channel, Thread $thread)
     {
+        if (auth()->check()) {
+            auth()->user()->read($thread);
+        }
+
         return view('threads.show', [
             'thread' => $thread,
-            'replies' => $thread->replies()->paginate(10)
+            // 'replies' => $thread->replies()->paginate(10)
         ]);
     }
 
@@ -95,9 +106,22 @@ class ThreadController extends Controller
      * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Thread $thread)
+    public function update(Channel $channel, Thread $thread, Spam $spam)
     {
-        //
+        $this->authorize('update', $thread);
+
+        $this->validate(request(), [
+            'title' => 'required',
+            'body' => 'required',
+        ]);
+
+        $spam->detect(request('title'));
+        $spam->detect(request('body'));
+
+        $thread->update([
+            'title' => request('title'),
+            'body' => request('body'),
+        ]);
     }
 
     /**
