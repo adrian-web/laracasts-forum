@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Thread;
+use App\Rules\Spamfree;
 use Livewire\Component;
 
 class CreateReply extends Component
@@ -10,10 +11,6 @@ class CreateReply extends Component
     public $thread;
 
     public $body;
-
-    protected $rules = [
-        'body' => 'required',
-    ];
 
     public function mount(Thread $thread)
     {
@@ -26,13 +23,9 @@ class CreateReply extends Component
             return;
         }
 
-        $this->validate();
-
-        try {
-            (new \App\Inspections\Spam)->detect($this->body);
-        } catch (\Exception $e) {
-            return $this->emit('flash', 'Your message contains a spam', 'red');
-        }
+        $this->validate([
+            'body' => ['required', new Spamfree],
+        ]);
 
         $this->thread->replies()->create([
             'body' => $this->body,

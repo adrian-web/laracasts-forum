@@ -9,7 +9,7 @@
             <x-jet-button class="{{ $favoriteState ? 'text-red-600' : '' }}" id="{{'favorite' . $reply->id}}">
                 <div class="">
                     <span class="fa fa-heart-o" aria-hidden="true"></span>
-                    <span class="ml-1">{{ $reply->favorites_count }}</span>
+                    <span class="ml-1">{{ $favoriteCount }}</span>
                 </div>
             </x-jet-button>
         </form>
@@ -36,10 +36,11 @@
 
         <div x-show="edit">
             <form wire:submit.prevent="update">
-                <textarea class="form-textarea rounded-md shadow-sm mb-2 block w-full" wire:model.defer="reply.body"
+                <textarea class="form-textarea rounded-md shadow-sm mb-2 block w-full" wire:model.defer="body"
                     required></textarea>
                 <x-jet-button>Update</x-jet-button>
                 <x-jet-danger-button class="ml-3" wire:click="return">Cancel</x-jet-danger-button>
+                <x-jet-input-error for="body" class="mt-2" />
             </form>
         </div>
     </div>

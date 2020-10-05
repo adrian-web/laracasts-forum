@@ -30,11 +30,14 @@
 
             <div x-show="edit">
                 <form wire:submit.prevent="update">
-                    <x-jet-input type="text" class="mt-6 block w-full" wire:model.defer="thread.title" required />
-                    <textarea class="form-textarea rounded-md shadow-sm mt-3 mb-2 block w-full"
-                        wire:model.defer="thread.body" required></textarea>
+                    <x-jet-input type="text" class="mt-6 block w-full" wire:model.defer="title" required />
+                    <x-jet-input-error for="title" class="mt-2" />
+
+                    <textarea class="form-textarea rounded-md shadow-sm mt-3 mb-2 block w-full" wire:model.defer="body"
+                        required></textarea>
                     <x-jet-button>Update</x-jet-button>
                     <x-jet-danger-button class="ml-3" wire:click="return">Cancel</x-jet-danger-button>
+                    <x-jet-input-error for="body" class="mt-2" />
                 </form>
             </div>
         </div>

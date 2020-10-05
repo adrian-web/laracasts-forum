@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Reply;
+use App\Rules\Spamfree;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
@@ -14,44 +15,44 @@ class ManageReply extends Component
 
     public $editState = false;
 
+    public $body;
+
     public $bodyCache;
 
-    public $favoriteState;
+    public $favoriteCount;
 
-    protected $rules = [
-        'reply.body' => 'required',
-    ];
+    public $favoriteState;
 
     public function mount(Reply $reply)
     {
         $this->reply = $reply;
 
+        $this->body = $reply->body;
+
         $this->bodyCache = $reply->body;
+
+        $this->favoriteCount = $reply->favorites_count;
 
         $this->favoriteState = $reply->isFavorited;
     }
 
     public function update()
-    {  
+    {
         $this->authorize('update', $this->reply);
         
-        $this->validate();
-
-        try {
-            resolve(\App\Inspections\Spam::class)->detect($this->reply->body);
-        } catch (\Exception $e) {
-            return $this->emit('flash', 'Your message contains a spam', 'red');
-        }
+        $this->validate([
+            'body' => ['required', new Spamfree],
+        ]);
 
         $this->reply->update([
-            'body' => $this->reply->body
+            'body' => $this->body
         ]);
 
         $this->emit('flash', 'updated a reply');
 
         $this->editState = false;
 
-        $this->bodyCache = $this->reply->body;
+        $this->bodyCache = $this->body;
     }
 
     public function delete()
@@ -75,18 +76,22 @@ class ManageReply extends Component
             $this->reply->unfavorite();
             
             $this->emit('flash', 'unliked a reply');
-            
-            $this->reply->favorites_count--;
-            
+
+            $this->favoriteCount = $this->reply->favorites_count;
+                        
             $this->favoriteState = false;
+
+            $this->favoriteCount--;
         } else {
             $this->reply->favorite();
             
             $this->emit('flash', 'liked a reply');
 
-            $this->reply->favorites_count++;
+            $this->favoriteCount = $this->reply->favorites_count;
 
             $this->favoriteState = true;
+
+            $this->favoriteCount++;
         }
     }
 
@@ -94,7 +99,7 @@ class ManageReply extends Component
     {
         $this->editState = false;
 
-        $this->reply->body = $this->bodyCache;
+        $this->body = $this->bodyCache;
     }
 
     public function render()

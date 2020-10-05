@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Inspections\Spam;
 use App\Models\Channel;
 use App\Models\Reply;
 use App\Models\Thread;
+use App\Rules\Spamfree;
 use Illuminate\Http\Request;
 
 class ReplyController extends Controller
@@ -15,13 +15,11 @@ class ReplyController extends Controller
         $this->middleware('auth');
     }
 
-    public function store(Channel $channel, Thread $thread, Spam $spam)
+    public function store(Channel $channel, Thread $thread)
     {
         $this->validate(request(), [
-            'body' => 'required'
+            'body' => ['required', new Spamfree]
         ]);
-
-        $spam->detect(request('body'));
 
         $thread->replies()->create([
             'body' => request('body'),
@@ -40,15 +38,13 @@ class ReplyController extends Controller
         return back();
     }
 
-    public function update(Reply $reply, Spam $spam)
+    public function update(Reply $reply)
     {
         $this->authorize('update', $reply);
         
         $this->validate(request(), [
-            'body' => 'required'
+            'body' => ['required', new Spamfree]
         ]);
-
-        $spam->detect(request('body'));
 
         $reply->update(request(['body']));
     }

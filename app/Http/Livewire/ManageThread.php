@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Thread;
+use App\Rules\Spamfree;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
@@ -14,20 +15,23 @@ class ManageThread extends Component
 
     public $editState = false;
 
+    public $body;
+
+    public $title;
+
     public $bodyCache;
 
     public $titleCache;
 
     public $confirmingThreadDeletion = false;
 
-    protected $rules = [
-        'thread.title' => 'required',
-        'thread.body' => 'required',
-    ];
-
     public function mount(Thread $thread)
     {
         $this->thread = $thread;
+
+        $this->body = $thread->body;
+
+        $this->title = $thread->title;
 
         $this->bodyCache = $thread->body;
 
@@ -49,14 +53,10 @@ class ManageThread extends Component
     {
         $this->authorize('update', $this->thread);
         
-        $this->validate();
-        
-        try {
-            resolve(\App\Inspections\Spam::class)->detect($this->thread->body);
-            resolve(\App\Inspections\Spam::class)->detect($this->thread->title);
-        } catch (\Exception $e) {
-            return $this->emit('flash', 'Your message contains a spam', 'red');
-        }
+        $this->validate([
+            'body' => ['required', new Spamfree],
+            'title' => ['required', new Spamfree],
+        ]);
 
         $this->thread->update([
             'body' => $this->thread->body,
@@ -67,18 +67,18 @@ class ManageThread extends Component
 
         $this->editState = false;
 
-        $this->bodyCache = $this->thread->body;
+        $this->bodyCache = $this->body;
 
-        $this->titleCache = $this->thread->title;
+        $this->titleCache = $this->title;
     }
 
     public function return()
     {
         $this->editState = false;
 
-        $this->thread->body = $this->bodyCache;
+        $this->body = $this->bodyCache;
 
-        $this->thread->title = $this->titleCache;
+        $this->title = $this->titleCache;
     }
 
     public function render()
