@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Filters\Spam;
+use App\Inspections\Spam;
 use App\Models\Channel;
 use App\Models\Reply;
 use App\Models\Thread;
