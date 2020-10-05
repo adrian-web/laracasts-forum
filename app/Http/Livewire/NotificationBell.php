@@ -10,27 +10,27 @@ class NotificationBell extends Component
 {
     public $unreadNotifications;
 
-    public $unreadNotificationsUnique;
+    public $notifications;
 
     public function mount(User $user)
     {
         $this->unreadNotifications = $user->unreadNotifications;
     }
 
-    public function confirm(DatabaseNotification $unreadNotificationUnique)
+    public function confirm(DatabaseNotification $notification)
     {
-        $this->unreadNotifications->filter(function ($unreadNotification) use ($unreadNotificationUnique) {
-            return $unreadNotification->data['link'] == $unreadNotificationUnique->data['link'];
+        $this->unreadNotifications->filter(function ($unreadNotification) use ($notification) {
+            return $unreadNotification->data['link'] == $notification->data['link'];
         })->each(function ($unreadNotification) {
             return $unreadNotification->markAsRead();
         });
 
-        return redirect($unreadNotificationUnique->data['link']);
+        return redirect($notification->data['link']);
     }
 
     public function render()
     {
-        $this->unreadNotificationsUnique = tap($this->unreadNotifications->unique(function ($unreadNotification) {
+        $this->notifications = tap($this->unreadNotifications->unique(function ($unreadNotification) {
             return $unreadNotification->data['link'];
         }))->values();
 

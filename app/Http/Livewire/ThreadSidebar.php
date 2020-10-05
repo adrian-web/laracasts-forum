@@ -11,7 +11,7 @@ class ThreadSidebar extends Component
 
     public $subscribedState;
 
-    protected $listeners = ['refresh'];
+    protected $listeners = ['refresh' => '$refresh'];
 
     public function mount(Thread $thread)
     {
@@ -31,19 +31,14 @@ class ThreadSidebar extends Component
 
             $this->subscribedState = false;
     
-            $this->emit('flash', 'unsubscribed to a thread');
+            $this->emitTo('FlashMessage', 'flash', 'unsubscribed to a thread');
         } else {
             $this->thread->subscribe();
 
             $this->subscribedState = true;
     
-            $this->emit('flash', 'subscribed to a thread');
+            $this->emitTo('FlashMessage', 'flash', 'subscribed to a thread');
         }
-    }
-
-    public function refresh()
-    {
-        return;
     }
 
     public function render()

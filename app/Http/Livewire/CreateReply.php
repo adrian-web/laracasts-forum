@@ -24,7 +24,7 @@ class CreateReply extends Component
         }
 
         if (\Gate::denies('create', new \App\Models\Reply)) {
-            return $this->emit('flash', 'You are posting too frequently', 'red');
+            return $this->emitTo('FlashMessage', 'flash', 'You are posting too frequently', 'red');
         }
 
         $this->validate([
@@ -38,7 +38,7 @@ class CreateReply extends Component
 
         $this->emit('refresh');
 
-        $this->emit('flash', 'created a reply');
+        $this->emitTo('FlashMessage', 'flash', 'created a reply');
 
         $this->body = '';
     }

@@ -63,18 +63,6 @@
     @stack('modals')
 
     @livewireScripts
-
-    <script>
-        let timeout
-    
-        Livewire.on('auto', () => {
-            clearTimeout(timeout)
-
-            timeout = setTimeout(() => {
-                Livewire.emit('hide')
-            }, 3000)
-        }) 
-    </script>
 </body>
 
 </html>

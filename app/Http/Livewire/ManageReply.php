@@ -63,7 +63,7 @@ class ManageReply extends Component
 
         $this->emit('refresh');
 
-        $this->emit('flash', 'deleted a reply');
+        $this->emitTo('FlashMessage', 'flash', 'deleted a reply');
     }
 
     public function favorite()
@@ -75,7 +75,7 @@ class ManageReply extends Component
         if ($this->reply->isFavorited) {
             $this->reply->unfavorite();
             
-            $this->emit('flash', 'unliked a reply');
+            $this->emitTo('FlashMessage', 'flash', 'unliked a reply');
 
             $this->favoriteCount = $this->reply->favorites_count;
                         
@@ -85,7 +85,7 @@ class ManageReply extends Component
         } else {
             $this->reply->favorite();
             
-            $this->emit('flash', 'liked a reply');
+            $this->emitTo('FlashMessage', 'flash', 'liked a reply');
 
             $this->favoriteCount = $this->reply->favorites_count;
 

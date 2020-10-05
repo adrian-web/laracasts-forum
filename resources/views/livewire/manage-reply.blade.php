@@ -38,9 +38,9 @@
             <form wire:submit.prevent="update">
                 <textarea class="form-textarea rounded-md shadow-sm mb-2 block w-full" wire:model.defer="body"
                     required></textarea>
+                <x-jet-input-error for="body" class="mt-2" />
                 <x-jet-button>Update</x-jet-button>
                 <x-jet-danger-button class="ml-3" wire:click="return">Cancel</x-jet-danger-button>
-                <x-jet-input-error for="body" class="mt-2" />
             </form>
         </div>
     </div>

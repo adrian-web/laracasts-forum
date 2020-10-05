@@ -44,7 +44,7 @@ class ManageThread extends Component
 
         $this->thread->delete();
 
-        $this->emit('flash', 'deleted a thread');
+        $this->emitTo('FlashMessage', 'flash', 'deleted a thread');
 
         return redirect()->route('threads');
     }
@@ -63,7 +63,7 @@ class ManageThread extends Component
             'title' => $this->thread->title,
         ]);
 
-        $this->emit('flash', 'updated a thread');
+        $this->emitTo('FlashMessage', 'flash', 'updated a thread');
 
         $this->editState = false;
 

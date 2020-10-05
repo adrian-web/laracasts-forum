@@ -10,12 +10,9 @@ class FlashMessage extends Component
 
     public $color = null;
 
-    public $shown = false;
+    public $appear = false;
 
-    protected function getListeners()
-    {
-        return ['flash', 'hide'];
-    }
+    protected $listeners = ['flash'];
 
     public function flash($message, $color = 'green')
     {
@@ -23,14 +20,7 @@ class FlashMessage extends Component
 
         $this->color = $color;
 
-        $this->shown = true;
-
-        $this->emit('auto');
-    }
-
-    public function hide()
-    {
-        $this->shown = false;
+        $this->appear = ! $this->appear;
     }
 
     public function render()
