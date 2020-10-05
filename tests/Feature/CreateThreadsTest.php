@@ -95,7 +95,7 @@ class CreateThreadsTest extends TestCase
         $updatedBody = 'Changed Body.';
 
         $this->patch($thread->path(), ['title' => $updatedTitle, 'body' => $updatedBody]);
-    
+
         $this->assertDatabaseHas('threads', ['id' => $thread->id, 'title' => $updatedTitle, 'body' => $updatedBody]);
     }
 

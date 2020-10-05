@@ -37,7 +37,9 @@ class ManageReply extends Component
         
         $this->validate();
         
-        $this->reply->update();
+        $this->reply->update([
+            'body' => $this->reply->body
+        ]);
 
         $this->emit('flash', 'updated a reply');
 
@@ -52,7 +54,7 @@ class ManageReply extends Component
 
         $this->reply->delete();
 
-        $this->emitUp('deleted');
+        $this->emit('refresh');
 
         $this->emit('flash', 'deleted a reply');
     }

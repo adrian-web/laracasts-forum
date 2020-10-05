@@ -65,10 +65,11 @@
     @livewireScripts
 
     <script>
-        let timeout;
+        let timeout
     
         Livewire.on('auto', () => {
             clearTimeout(timeout)
+
             timeout = setTimeout(() => {
                 Livewire.emit('hide')
             }, 3000)

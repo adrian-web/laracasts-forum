@@ -4,9 +4,6 @@
         <x-forum-header />
     </x-slot>
 
-    <div>
+    @livewire('show-thread', ['thread' => $thread])
 
-        @livewire('manage-thread', ['thread' => $thread])
-
-    </div>
 </x-app-layout>
