@@ -36,6 +36,8 @@ class ManageReply extends Component
         $this->authorize('update', $this->reply);
         
         $this->validate();
+
+        resolve(\App\Inspections\Spam::class)->detect($this->reply->body);
         
         $this->reply->update([
             'body' => $this->reply->body

@@ -28,6 +28,8 @@ class CreateReply extends Component
 
         $this->validate();
 
+        (new \App\Inspections\Spam)->detect($this->body);
+
         $this->thread->replies()->create([
             'body' => $this->body,
             'user_id' => auth()->id(),

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Filters\ThreadFilter;
+use App\Inspections\Spam;
 use App\Models\Channel;
 use App\Models\Thread;
 use Illuminate\Http\Request;
@@ -42,13 +43,16 @@ class ThreadController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Spam $spam)
     {
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
             'channel_id' => 'required|exists:channels,id',
         ]);
+
+        $spam->detect(request('title'));
+        $spam->detect(request('body'));
 
         $thread = Thread::create(
             [
@@ -98,7 +102,7 @@ class ThreadController extends Controller
      * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function update(Channel $channel, Thread $thread)
+    public function update(Channel $channel, Thread $thread, Spam $spam)
     {
         $this->authorize('update', $thread);
 
@@ -106,6 +110,9 @@ class ThreadController extends Controller
             'title' => 'required',
             'body' => 'required',
         ]);
+
+        $spam->detect(request('title'));
+        $spam->detect(request('body'));
 
         $thread->update([
             'title' => request('title'),
