@@ -11,7 +11,7 @@ class UserTest extends TestCase
     use WithFaker, RefreshDatabase;
     
     /** @test */
-    function an_authenticated_user_can_check_if_he_read_all_replies_to_a_thread()
+    public function an_authenticated_user_can_check_if_he_read_all_replies_to_a_thread()
     {
         $this->signIn();
 
@@ -24,5 +24,25 @@ class UserTest extends TestCase
 
             $this->assertFalse($user->hasSeenUpdatesFor($thread));
         });
+    }
+
+    /** @test */
+    public function a_user_can_fetch_their_most_recent_reply()
+    {
+        $user = create('User');
+
+        $reply = create('Reply', ['user_id' => $user->id]);
+
+        $this->assertEquals($reply->id, $user->lastCreated('reply')->id);
+    }
+    
+    /** @test */
+    public function a_user_can_fetch_their_most_recent_thread()
+    {
+        $user = create('User');
+
+        $thread = create('Thread', ['user_id' => $user->id]);
+
+        $this->assertEquals($thread->id, $user->lastCreated('thread')->id);
     }
 }

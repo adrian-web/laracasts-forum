@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Filters\ThreadFilter;
 use App\Traits\RecordActivity;
 use App\Traits\Subscribable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -66,5 +67,10 @@ class Thread extends Model
     public function scopeFilter($query, ThreadFilter $filters)
     {
         return $filters->apply($query);
+    }
+
+    public function wasJustCreated()
+    {
+        return $this->created_at > Carbon::now()->subMinute();
     }
 }

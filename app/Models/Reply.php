@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\Favorable;
 use App\Traits\NotifySubscriber;
 use App\Traits\RecordActivity;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -46,5 +47,10 @@ class Reply extends Model
     public function path()
     {
         return $this->thread->path();
+    }
+
+    public function wasJustCreated()
+    {
+        return $this->created_at > Carbon::now()->subMinute();
     }
 }

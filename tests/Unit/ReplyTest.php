@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\User;
 use App\Notifications\ReplyNotification;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
@@ -55,5 +56,17 @@ class ReplyTest extends TestCase
         create('Reply', ['thread_id' => $thread->id]);
 
         Notification::assertSentTo(auth()->user(), ReplyNotification::class);
+    }
+
+    /** @test */
+    public function it_knows_if_it_was_just_published()
+    {
+        $reply = create('Reply');
+    
+        $this->assertTrue($reply->wasJustCreated());
+    
+        $reply->created_at = Carbon::now()->subMonth();
+
+        $this->assertFalse($reply->wasJustCreated());
     }
 }

@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -68,5 +69,17 @@ class ThreadTest extends TestCase
         $thread->subscribe();
 
         $this->assertTrue($thread->fresh()->isSubscribed);
+    }
+
+    /** @test */
+    public function it_knows_if_it_was_just_created()
+    {
+        $thread = create('Thread');
+    
+        $this->assertTrue($thread->wasJustCreated());
+    
+        $thread->created_at = Carbon::now()->subMonth();
+
+        $this->assertFalse($thread->wasJustCreated());
     }
 }

@@ -23,6 +23,10 @@ class CreateReply extends Component
             return;
         }
 
+        if (\Gate::denies('create', new \App\Models\Reply)) {
+            return $this->emit('flash', 'You are posting too frequently', 'red');
+        }
+
         $this->validate([
             'body' => ['required', new Spamfree],
         ]);

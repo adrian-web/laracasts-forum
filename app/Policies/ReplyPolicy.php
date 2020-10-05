@@ -13,11 +13,19 @@ class ReplyPolicy
     public function update(User $user, Reply $reply)
     {
         return $reply->user_id == $user->id;
-
     }
 
     public function delete(User $user, Reply $reply)
     {
         return $reply->user_id == $user->id;
+    }
+
+    public function create(User $user, Reply $reply)
+    {
+        if (! $lastReply = $user->fresh()->lastCreated('reply')) {
+            return true;
+        }
+
+        return ! $lastReply->wasJustCreated();
     }
 }

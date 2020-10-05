@@ -91,4 +91,28 @@ class User extends Authenticatable
     {
         return sprintf('users.%s.visits.%s', $this->id, $thread->id);
     }
+
+    public function lastCreated($model)
+    {
+        switch (strtolower($model)) {
+            case "reply":
+                return $this->lastReply;
+                break;
+            case "thread":
+                return $this->lastThread;
+                break;
+            default:
+                return;
+        }
+    }
+
+    public function lastReply()
+    {
+        return $this->hasOne(Reply::class)->latest();
+    }
+
+    public function lastThread()
+    {
+        return $this->hasOne(Thread::class)->latest();
+    }
 }

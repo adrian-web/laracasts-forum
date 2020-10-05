@@ -7,6 +7,7 @@ use App\Models\Channel;
 use App\Models\Thread;
 use App\Rules\Spamfree;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ThreadController extends Controller
 {
@@ -45,6 +46,13 @@ class ThreadController extends Controller
      */
     public function store(Request $request)
     {
+        if (Gate::denies('create', new Thread)) {
+            return response(
+                'You are posting too frequently.',
+                429
+            );
+        }
+
         $this->validate($request, [
             'title' => ['required', new Spamfree],
             'body' => ['required', new Spamfree],

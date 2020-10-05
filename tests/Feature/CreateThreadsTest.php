@@ -100,6 +100,22 @@ class CreateThreadsTest extends TestCase
     }
 
     /** @test */
+    public function users_may_only_create_a_thread_a_maximum_of_once_per_minute()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->signIn();
+    
+        $thread = make('Thread');
+
+        $this->post('/threads', $thread->toArray())
+                ->assertStatus(302);
+    
+        $this->post('/threads', $thread->toArray())
+                ->assertStatus(429);
+    }
+
+    /** @test */
     public function a_thread_requires_a_title()
     {
         $this->publishThread(['title' => null])

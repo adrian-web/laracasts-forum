@@ -41,7 +41,11 @@ class ThreadPolicy
      */
     public function create(User $user)
     {
-        //
+        if (! $lastThread = $user->fresh()->lastCreated('thread')) {
+            return true;
+        }
+
+        return ! $lastThread->wasJustCreated();
     }
 
     /**
