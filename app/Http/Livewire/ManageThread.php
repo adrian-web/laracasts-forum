@@ -50,10 +50,14 @@ class ManageThread extends Component
         $this->authorize('update', $this->thread);
         
         $this->validate();
-
-        resolve(\App\Inspections\Spam::class)->detect($this->thread->body);
-        resolve(\App\Inspections\Spam::class)->detect($this->thread->title);
         
+        try {
+            resolve(\App\Inspections\Spam::class)->detect($this->thread->body);
+            resolve(\App\Inspections\Spam::class)->detect($this->thread->title);
+        } catch (\Exception $e) {
+            return $this->emit('flash', 'Your message contains a spam', 'red');
+        }
+
         $this->thread->update([
             'body' => $this->thread->body,
             'title' => $this->thread->title,

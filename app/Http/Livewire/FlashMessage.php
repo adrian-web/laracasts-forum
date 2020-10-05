@@ -8,6 +8,8 @@ class FlashMessage extends Component
 {
     public $message = null;
 
+    public $color = null;
+
     public $shown = false;
 
     protected function getListeners()
@@ -15,9 +17,11 @@ class FlashMessage extends Component
         return ['flash', 'hide'];
     }
 
-    public function flash($message)
+    public function flash($message, $color = 'green')
     {
-        $this->message = 'Success! You ' . $message . '.';
+        $this->message = $message;
+
+        $this->color = $color;
 
         $this->shown = true;
 

@@ -51,8 +51,12 @@ class ThreadController extends Controller
             'channel_id' => 'required|exists:channels,id',
         ]);
 
-        $spam->detect(request('title'));
-        $spam->detect(request('body'));
+        try {
+            $spam->detect(request('title'));
+            $spam->detect(request('body'));
+        } catch (\Exception $e) {
+            return response('Your message contains a spam', 422);
+        }
 
         $thread = Thread::create(
             [

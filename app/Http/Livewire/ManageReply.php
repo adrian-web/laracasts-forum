@@ -32,13 +32,17 @@ class ManageReply extends Component
     }
 
     public function update()
-    {
+    {  
         $this->authorize('update', $this->reply);
         
         $this->validate();
 
-        resolve(\App\Inspections\Spam::class)->detect($this->reply->body);
-        
+        try {
+            resolve(\App\Inspections\Spam::class)->detect($this->reply->body);
+        } catch (\Exception $e) {
+            return $this->emit('flash', 'Your message contains a spam', 'red');
+        }
+
         $this->reply->update([
             'body' => $this->reply->body
         ]);

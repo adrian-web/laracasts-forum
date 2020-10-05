@@ -28,7 +28,11 @@ class CreateReply extends Component
 
         $this->validate();
 
-        (new \App\Inspections\Spam)->detect($this->body);
+        try {
+            (new \App\Inspections\Spam)->detect($this->body);
+        } catch (\Exception $e) {
+            return $this->emit('flash', 'Your message contains a spam', 'red');
+        }
 
         $this->thread->replies()->create([
             'body' => $this->body,
