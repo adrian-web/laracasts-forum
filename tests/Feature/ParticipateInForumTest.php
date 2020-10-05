@@ -103,4 +103,22 @@ class ParticipateInForumTest extends TestCase
     
         $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => $updatedReply]);
     }
+
+    /** @test */
+    public function replies_that_contain_spam_may_not_be_saved()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->signIn();
+        
+        $thread = create('Thread');
+        
+        $reply = make('Reply', [
+            'body' => 'Yahoo Customer Support'
+        ]);
+
+        $this->expectException(\Exception::class);
+
+        $this->post($thread->path() . '/replies', $reply->toArray());
+    }
 }

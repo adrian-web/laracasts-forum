@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\Spam;
 use App\Models\Channel;
 use App\Models\Reply;
 use App\Models\Thread;
@@ -14,11 +15,13 @@ class ReplyController extends Controller
         $this->middleware('auth');
     }
 
-    public function store(Channel $channel, Thread $thread)
+    public function store(Channel $channel, Thread $thread, Spam $spam)
     {
         $this->validate(request(), [
             'body' => 'required'
         ]);
+
+        $spam->detect(request('body'));
 
         $thread->replies()->create([
             'body' => request('body'),
