@@ -7,11 +7,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ReplyNotification extends Notification
+class YouWereMentioned extends Notification
 {
     use Queueable;
 
-    protected $event;
     protected $reply;
 
     /**
@@ -19,10 +18,9 @@ class ReplyNotification extends Notification
      *
      * @return void
      */
-    public function __construct($reply, $event)
+    public function __construct($reply)
     {
         $this->reply = $reply;
-        $this->event = $event;
     }
 
     /**
@@ -59,8 +57,8 @@ class ReplyNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => $this->reply->thread->title . ' was updated.',
-            'link' => $this->reply->path(),
+            'message' => $this->reply->owner->name . ' mentioned you.',
+            'link' => $this->reply->path()
         ];
     }
 }

@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\User;
-use App\Notifications\ReplyNotification;
+use App\Notifications\ReplyWasCreated;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -55,7 +55,7 @@ class ReplyTest extends TestCase
 
         create('Reply', ['thread_id' => $thread->id]);
 
-        Notification::assertSentTo(auth()->user(), ReplyNotification::class);
+        Notification::assertSentTo(auth()->user(), ReplyWasCreated::class);
     }
 
     /** @test */
@@ -68,5 +68,15 @@ class ReplyTest extends TestCase
         $reply->created_at = Carbon::now()->subMonth();
 
         $this->assertFalse($reply->wasJustCreated());
+    }
+
+    /** @test */
+    public function it_can_detect_all_mentioned_users_in_the_body()
+    {
+        $reply = create('Reply', [
+            'body' => '@JaneDoe wants to talk to @JohnDoe'
+        ]);
+
+        $this->assertEquals(['JaneDoe', 'JohnDoe'], $reply->mentionedUsers());
     }
 }

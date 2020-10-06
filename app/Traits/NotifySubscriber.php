@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\Notifications\ReplyNotification;
+use App\Notifications\ReplyWasCreated;
 
 trait NotifySubscriber
 {
@@ -38,7 +38,7 @@ trait NotifySubscriber
             $this->thread->subscriptions->filter(function ($subscription) {
                 return $subscription->subscriber->id != $this->user_id;
             })->each(function ($subscription) use ($event) {
-                $subscription->subscriber->notify(new ReplyNotification($this, $event));
+                $subscription->subscriber->notify(new ReplyWasCreated($this, $event));
             });
         }
     }
