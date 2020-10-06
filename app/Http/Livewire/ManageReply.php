@@ -15,6 +15,8 @@ class ManageReply extends Component
 
     public $editState = false;
 
+    public $deleteState = false;
+
     public $body;
 
     public $bodyCache;

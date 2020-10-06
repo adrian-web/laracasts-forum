@@ -1,7 +1,7 @@
 <div class="mr-3">
     <x-jet-dropdown align="right" width="80" class="">
         <x-slot name="trigger">
-            <button type="button" class="mr-5">
+            <button type="button" class="mr-3">
                 <span class="fa fa-bell-o"></span>
             </button>
         </x-slot>

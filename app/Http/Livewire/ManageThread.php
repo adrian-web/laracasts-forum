@@ -44,8 +44,9 @@ class ManageThread extends Component
 
         $this->thread->delete();
 
-        $this->emitTo('FlashMessage', 'flash', 'deleted a thread');
-
+        // flash-message.blade.php disapears on redirect
+        // $this->emitTo('FlashMessage', 'flash', 'deleted a thread');
+        
         return redirect()->route('threads');
     }
 
@@ -59,8 +60,8 @@ class ManageThread extends Component
         ]);
 
         $this->thread->update([
-            'body' => $this->thread->body,
-            'title' => $this->thread->title,
+            'body' => $this->body,
+            'title' => $this->title,
         ]);
 
         $this->emitTo('FlashMessage', 'flash', 'updated a thread');
