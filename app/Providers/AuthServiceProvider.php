@@ -28,10 +28,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('profiles-page', function ($user) {
-            return $user->id == auth()->id();
-        });
-
         Gate::before(function ($user) {
             if ($user->username === 'adrian') {
                 return true;

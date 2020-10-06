@@ -11,18 +11,18 @@ class ProfilesPageTest extends TestCase
     use WithFaker, RefreshDatabase;
     
     /** @test */
-    public function only_a_signed_in_user_can_view_his_profiles_page()
+    public function only_a_signed_in_user_can_view_user_profiles_page()
     {
         $user = create('User');
 
-        $this->get('/profiles/' . $user->username)
+        $this->get($user->path())
             ->assertStatus(302); // Redirect to login page
 
         $userOther = create('User');
         $this->signIn($userOther);
 
-        $this->get('/profiles/' . $user->username)
-            ->assertStatus(403); // Unauthorized
+        $this->get($user->path())
+            ->assertStatus(200);
     }
 
     /** @test */
@@ -31,7 +31,7 @@ class ProfilesPageTest extends TestCase
         $user = create('User');
         $this->signIn($user);
 
-        $this->get('/profiles/' . $user->username)
+        $this->get($user->path())
                 ->assertSee($user->name);
     }
 
@@ -42,7 +42,7 @@ class ProfilesPageTest extends TestCase
 
         $thread = create('Thread', ['user_id' => auth()->id()]);
 
-        $this->get('/profiles/' . auth()->user()->username)
+        $this->get(auth()->user()->path())
                 ->assertSee($thread->title)
                 ->assertSee($thread->body);
     }

@@ -5,5 +5,7 @@
 
     @endforeach
 
+    <div class="mt-3"></div>
+
     {{ $replies->links() }}
 </div>

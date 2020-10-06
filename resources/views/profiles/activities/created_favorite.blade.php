@@ -1,3 +1,7 @@
+@php
+$body = $activity->subject->favorited->displayMentionedUsers();
+@endphp
+
 @component('profiles.activities.activity')
 
 @slot('activityHeader')
@@ -9,7 +13,8 @@
 @endslot
 
 @slot('activitySlot')
-{{ $activity->subject->favorited->body }}
+{{-- {{ $activity->subject->favorited->body }} --}}
+{!! $body !!}
 @endslot
 
 @endcomponent

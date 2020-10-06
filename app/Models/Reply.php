@@ -36,6 +36,10 @@ class Reply extends Model
             $reply->owner->read($reply->thread);
             event(new ThreadReceivedNewReply($reply));
         });
+
+        static::updated(function ($reply) {
+            event(new ThreadReceivedNewReply($reply));
+        });
     }
 
     public function owner()
@@ -69,5 +73,18 @@ class Reply extends Model
     {
         $users = User::whereIn('username', $this->mentionedUsers())->get();
         Notification::send($users, new YouWereMentioned($this));
+    }
+
+    public function displayMentionedUsers()
+    {
+        $users = User::whereIn('username', $this->mentionedUsers())->get();
+        
+        $body = $this->body;
+
+        foreach ($users as $user) {
+            $body = str_ireplace("@" . ($user->toArray())["username"], "<a href=\"" . $user->path() . "\" class=\"hover:underline\">@" . ($user->toArray())["username"] . "</a>", $body);
+        }
+
+        return $body;
     }
 }

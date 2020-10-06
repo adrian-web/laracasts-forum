@@ -11,6 +11,14 @@ class UserTest extends TestCase
     use WithFaker, RefreshDatabase;
     
     /** @test */
+    public function a_user_can_make_a_string_path()
+    {
+        $user = create('User');
+
+        $this->assertEquals($user->path(), '/profiles/' . $user->username);
+    }
+
+    /** @test */
     public function an_authenticated_user_can_check_if_he_read_all_replies_to_a_thread()
     {
         $this->signIn();

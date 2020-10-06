@@ -41,6 +41,27 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
+    public function a_user_sees_reply_with_registered_mentioned_users_in_the_body_within_anchor_tags()
+    {
+        $this->signIn();
+
+        create('User', ['username' => 'Janek']);
+
+        $thread = create('Thread');
+
+        $reply = make('Reply', [
+                'body' => "Hello, @Janek. Also, hello fake @Seba"
+            ]);
+    
+        $this->post($thread->path() . '/replies', $reply->toArray());
+    
+        $string = "Hello, <a href=\"/profiles/Janek\" class=\"hover:underline\">@Janek</a>. Also, hello fake @Seba";
+
+        $this->get($thread->path())
+                    ->assertSee($string, $escape = false);
+    }
+
+    /** @test */
     public function a_user_can_filter_threads_according_to_a_channel()
     {
         $channel = create('Channel');

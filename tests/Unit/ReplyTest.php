@@ -80,5 +80,4 @@ class ReplyTest extends TestCase
 
         $this->assertEquals(['Jane-Doe', 'JohnDoe'], $reply->mentionedUsers());
     }
-
 }

@@ -1,3 +1,7 @@
+@php
+$body = $activity->subject->displayMentionedUsers();
+@endphp
+
 @component('profiles.activities.activity')
 
 @slot('activityHeader')
@@ -9,7 +13,8 @@
 @endslot
 
 @slot('activitySlot')
-{{ $activity->subject->body }}
+{{-- {{ $activity->subject->body }} --}}
+{!! $body !!}
 @endslot
 
 @endcomponent

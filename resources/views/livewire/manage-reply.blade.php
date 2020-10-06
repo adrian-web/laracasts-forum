@@ -1,7 +1,11 @@
+@php
+$body = $reply->displayMentionedUsers();
+@endphp
+
 <div>
     <div class="flex items-center mt-6">
         <h4 class="flex-1 text-gray-500">
-            <a href="{{ '/profiles/' . $reply->owner->name }}">{{ $reply->owner->name }}</a>
+            <a href="{{ $reply->owner->path() }}">{{ $reply->owner->name }}</a>
             {{ ' replied ' . $reply->created_at->diffForHumans() }}
         </h4>
 
@@ -64,7 +68,7 @@
     </div>
 
     <div class="mt-6" x-data="{ edit: {{ (int) $editState }} }" x-cloak>
-        <div class="text-gray-500" x-show="!edit">{{ $reply->body }}</div>
+        <div class="text-gray-500" x-show="!edit">{!! $body !!}</div>
 
         <div x-show="edit">
             <form wire:submit.prevent="update">

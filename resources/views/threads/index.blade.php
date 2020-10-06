@@ -13,7 +13,7 @@
                     <article>
                         <div class="flex">
                             <h4 class="flex-1 mt-6 text-xl text-gray-500">
-                                <a href="{{ '/profiles/' . $thread->creator->name }}">
+                                <a href="{{ $thread->creator->path() }}">
                                     {{ $thread->creator->name }}
                                 </a>
                                 {{ ' created ' }}
