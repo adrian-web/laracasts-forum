@@ -19,7 +19,7 @@ duration-150 ease-in-out';
             </x-jet-dropdown-link>
             <div class="border-t border-gray-100"></div>
             @auth
-            <x-jet-dropdown-link href="{{ '/threads?by=' . auth()->user()->name }}">
+            <x-jet-dropdown-link href="{{ '/threads?by=' . auth()->user()->username }}">
                 {{ __('My Threads') }}
             </x-jet-dropdown-link>
             @endauth

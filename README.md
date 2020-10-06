@@ -25,6 +25,7 @@ Features list
 - user cannot create replies or threads too frequently
 - delete button with confirm action (Livewire & Alpine.js)
 - state-button component (for ex. liking/disliking, subscribing)
+- mention '@' users in messages (creates notification) (w/o autocompleting)
 
 To-do list
 - create thread modal (AJAX)
@@ -32,7 +33,6 @@ To-do list
 - best reply functionality
 - sanitizing user inputs
 - forum roles (ex. admin, moderator etc.)
-- mention '@' users in messages (creates notification)
 - upload images
 - username autocomplete in messages
 - thread views count

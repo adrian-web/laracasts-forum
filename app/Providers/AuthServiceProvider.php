@@ -32,10 +32,10 @@ class AuthServiceProvider extends ServiceProvider
             return $user->id == auth()->id();
         });
 
-        // Gate::before(function ($user) {
-        //     if ($user->name === 'adrian') {
-        //         return true;
-        //     }
-        // });
+        Gate::before(function ($user) {
+            if ($user->username === 'adrian') {
+                return true;
+            }
+        });
     }
 }

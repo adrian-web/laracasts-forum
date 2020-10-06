@@ -60,14 +60,14 @@ class Reply extends Model
 
     public function mentionedUsers()
     {
-        preg_match_all('/\@([^\s\.]+)/', $this->body, $matches);
+        preg_match_all('/@([\w\-]+)/', $this->body, $matches);
 
         return $matches[1];
     }
 
     public function notifyMentionedUsers(): void
     {
-        $users = User::whereIn('name', $this->mentionedUsers())->get();
+        $users = User::whereIn('username', $this->mentionedUsers())->get();
         Notification::send($users, new YouWereMentioned($this));
     }
 }

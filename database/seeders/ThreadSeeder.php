@@ -22,9 +22,6 @@ class ThreadSeeder extends Seeder
                 ->count(10)
                 ->create();
 
-        $users->push(User::factory()
-                        ->create(['name' => 'adrian', 'email' => 'adrian@test.com', 'password' => '$2a$04$MJL4ZpY4Nrt1g8tjftUHB.ZOnJkTZstr5SEpwpJLMhdMDEjgYoK3O']));
-
         $channels = Channel::factory()
                     ->count(10)
                     ->create();
@@ -45,5 +42,8 @@ class ThreadSeeder extends Seeder
                         ->create(['user_id' => $id, 'thread_id' => $thread->id]);
             }
         }
+
+        $users->push(User::factory()
+                        ->create(['name' => 'Adrian Polak', 'username' => 'adrian', 'email' => 'adrian@test.com', 'password' => '$2a$04$MJL4ZpY4Nrt1g8tjftUHB.ZOnJkTZstr5SEpwpJLMhdMDEjgYoK3O']));
     }
 }

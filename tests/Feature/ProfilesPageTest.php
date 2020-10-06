@@ -15,13 +15,13 @@ class ProfilesPageTest extends TestCase
     {
         $user = create('User');
 
-        $this->get('/profiles/' . $user->name)
+        $this->get('/profiles/' . $user->username)
             ->assertStatus(302); // Redirect to login page
 
         $userOther = create('User');
         $this->signIn($userOther);
 
-        $this->get('/profiles/' . $user->name)
+        $this->get('/profiles/' . $user->username)
             ->assertStatus(403); // Unauthorized
     }
 
@@ -31,7 +31,7 @@ class ProfilesPageTest extends TestCase
         $user = create('User');
         $this->signIn($user);
 
-        $this->get('/profiles/' . $user->name)
+        $this->get('/profiles/' . $user->username)
                 ->assertSee($user->name);
     }
 
@@ -42,7 +42,7 @@ class ProfilesPageTest extends TestCase
 
         $thread = create('Thread', ['user_id' => auth()->id()]);
 
-        $this->get('/profiles/' . auth()->user()->name)
+        $this->get('/profiles/' . auth()->user()->username)
                 ->assertSee($thread->title)
                 ->assertSee($thread->body);
     }

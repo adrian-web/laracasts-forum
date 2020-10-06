@@ -14,12 +14,12 @@ class MentionUsersTest extends TestCase
     public function mentioned_users_in_a_reply_are_notified()
     {
         // Given we have a user, JohnDoe, who is signed in.
-        $john = create('User', ['name' => 'JohnDoe']);
+        $john = create('User', ['username' => 'JohnDoe']);
 
         $this->signIn($john);
 
         // And we also have a user, JaneDoe.
-        $jane = create('User', ['name' => 'JaneDoe']);
+        $jane = create('User', ['username' => 'JaneDoe']);
 
         // If we have a thread
         $thread = create('Thread');

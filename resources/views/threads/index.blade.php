@@ -49,7 +49,7 @@
                     </p>
                     @endforelse
 
-                    {{ $threads->links() }}
+                    {{ $threads->appends(request()->input())->links() }}
 
                 </div>
             </div>

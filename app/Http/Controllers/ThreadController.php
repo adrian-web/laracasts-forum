@@ -25,7 +25,7 @@ class ThreadController extends Controller
     {
         $threads = $this->getThreads($channel, $filters);
 
-        return view('threads.index', ['threads' => $threads->paginate(10)]);
+        return view('threads.index', ['threads' => $threads]);
     }
 
     /**
@@ -152,6 +152,6 @@ class ThreadController extends Controller
             $threads->where('channel_id', $channel->id);
         }
 
-        return $threads;
+        return $threads->paginate(10);
     }
 }

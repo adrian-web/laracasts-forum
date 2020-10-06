@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Reply;
 use App\Models\User;
 use App\Notifications\ReplyWasCreated;
 use Carbon\Carbon;
@@ -73,10 +74,11 @@ class ReplyTest extends TestCase
     /** @test */
     public function it_can_detect_all_mentioned_users_in_the_body()
     {
-        $reply = create('Reply', [
-            'body' => '@JaneDoe wants to talk to @JohnDoe'
+        $reply = new Reply([
+            'body' => '@Jane-Doe wants to talk to @JohnDoe.'
         ]);
 
-        $this->assertEquals(['JaneDoe', 'JohnDoe'], $reply->mentionedUsers());
+        $this->assertEquals(['Jane-Doe', 'JohnDoe'], $reply->mentionedUsers());
     }
+
 }
