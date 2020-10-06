@@ -52,7 +52,7 @@ duration-150 ease-in-out';
 
         </x-slot>
     </x-jet-dropdown>
-    <x-jet-nav-link href="/threads/create" :active=false class="mr-5">
+    <x-jet-nav-link href="/threads/create" :active="false" class="mr-5">
         {{ __('Create') }}
     </x-jet-nav-link>
 </div>

@@ -6,7 +6,7 @@
         </h4>
 
         <form wire:submit.prevent="favorite">
-            <x-jet-button class="{{ $favoriteState ? 'text-red-600' : '' }}" id="{{'favorite' . $reply->id}}">
+            <x-state-button :state="$favoriteState" id="{{'favorite' . $reply->id}}">
                 <span wire:loading wire:target="favorite">
                     <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
                         fill="none" viewBox="0 0 24 24">
@@ -19,7 +19,7 @@
                 </span>
                 <span class="fa fa-heart-o" aria-hidden="true"></span>
                 <span class="ml-1">{{ $favoriteCount }}</span>
-            </x-jet-button>
+            </x-state-button>
         </form>
 
         @can('update', $reply)

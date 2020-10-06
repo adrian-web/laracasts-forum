@@ -5,7 +5,7 @@
         {{ Str::plural('comment', $thread->replies_count) }}.</p>
     @auth
     <form wire:submit.prevent="subscribe">
-        <x-jet-button class="mt-3 {{ $subscribedState ? 'text-red-600' : '' }}">
+        <x-state-button class="mt-3" :state="$subscribedState">
             <span wire:loading wire:target="subscribe">
                 <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 24 24">
@@ -17,7 +17,7 @@
                 </svg>
             </span>
             {{ __('Subscribe') }}
-        </x-jet-button>
+        </x-state-button>
     </form>
     @endauth
 </div>

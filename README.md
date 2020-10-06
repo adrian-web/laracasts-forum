@@ -23,12 +23,12 @@ Features list
 - visiting a thread creates cache key to show updated threads to user
 - spam detection on user inputs
 - user cannot create replies or threads too frequently
+- delete button with confirm action (Livewire & Alpine.js)
+- state-button component (for ex. liking/disliking, subscribing)
 
 To-do list
 - create thread modal (AJAX)
-- delete button with confirmation button (Livewire & Alpine.js)
 - subscription to other models (ex. user, channel)
-- state-button component (for ex. liking/disliking, subscribing)
 - best reply functionality
 - sanitizing user inputs
 - forum roles (ex. admin, moderator etc.)
