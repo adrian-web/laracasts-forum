@@ -40,6 +40,11 @@
 
                         </div>
                         <div class="mt-6 text-sm text-gray-500">{{ $thread->body }}</div>
+                        <div class="mt-3 text-sm text-gray-500">
+                            <p>
+                                {{ $thread->views . ' ' . Str::plural('view', $thread->views) }}
+                            </p>
+                        </div>
                     </article>
 
                     @if ( $loop->last )
@@ -54,7 +59,7 @@
                     </p>
                     @endforelse
 
-                    {{ $threads->appends(request()->input())->links() }}
+                    {{ $threads->withQueryString()->links() }}
 
                 </div>
             </div>

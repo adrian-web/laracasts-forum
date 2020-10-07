@@ -11,10 +11,6 @@
 
                     @livewire('manage-thread', ['thread' => $thread])
 
-                    <h3 class="mt-8 text-2xl">
-                        {{ __('Replies') }}
-                    </h3>
-
                     @livewire('show-replies', ['thread' => $thread])
 
                     @if (auth()->check())
