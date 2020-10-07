@@ -3,8 +3,10 @@
 namespace App\Http\Livewire;
 
 use App\Models\Thread;
+use App\Models\Trending;
 use App\Rules\Spamfree;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Redis;
 use Livewire\Component;
 
 class ManageThread extends Component
@@ -41,6 +43,8 @@ class ManageThread extends Component
     public function delete()
     {
         $this->authorize('delete', $this->thread);
+
+        (new Trending)->destroy($this->thread);
 
         $this->thread->delete();
 

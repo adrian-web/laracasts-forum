@@ -134,9 +134,11 @@ class ThreadController extends Controller
      * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Channel $channel, Thread $thread)
+    public function destroy(Channel $channel, Thread $thread, Trending $trending)
     {
         $this->authorize('delete', $thread);
+
+        $trending->destroy($thread);
 
         $thread->delete();
 

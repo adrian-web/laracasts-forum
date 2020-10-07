@@ -19,6 +19,14 @@ class Trending
         ]));
     }
 
+    public function destroy($thread)
+    {
+        Redis::zrem($this->cacheKey(), json_encode([
+            'title' => $thread->title,
+            'path' => $thread->path()
+        ]));
+    }
+
     public function reset()
     {
         Redis::del($this->cacheKey());

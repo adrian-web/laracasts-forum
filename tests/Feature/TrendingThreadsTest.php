@@ -28,12 +28,34 @@ class TrendingThreadsTest extends TestCase
 
         $thread = create('Thread');
 
-        $this->call('GET', $thread->path());
+        $this->get($thread->path());
 
         $trending = $this->trending->get();
 
         $this->assertCount(1, $trending);
 
         $this->assertEquals($thread->title, $trending[0]->title);
+    }
+
+    /** @test */
+    public function it_can_remove_trending_thread_on_thread_deletion()
+    {
+        $this->signIn();
+
+        $thread = create('Thread', ['user_id' => auth()->id()]);
+        
+        $this->get($thread->path());
+
+        $trending = $this->trending->get();
+
+        $this->assertCount(1, $trending);
+
+        $this->assertEquals($thread->title, $trending[0]->title);
+
+        $this->delete($thread->path());
+
+        $trendingEmpty = $this->trending->get();
+
+        $this->assertCount(0, $trendingEmpty);
     }
 }
