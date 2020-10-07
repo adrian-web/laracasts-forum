@@ -1,21 +1,25 @@
 <div>
     <article>
-        <div class="flex items-center">
-            <h4 class="flex-1 mt-6 text-gray-500">
-                <a href="{{ $thread->creator->path() }}">
-                    {{ $thread->creator->name }}
-                </a>
-                {{ ' created ' . $thread->created_at->diffForHumans()  }}
-            </h4>
+        <div class="flex  mt-6">
+            <div class="flex-1 items-center inline-flex">
+                <img class="h-8 w-8 rounded-full object-cover" src="{{ $thread->creator->profile_photo_url }}"
+                    alt="{{ $thread->creator->username }}" />
+                <h4 class="ml-3 text-gray-500">
+                    <a href="{{ $thread->creator->path() }}">
+                        {{ $thread->creator->name }}
+                    </a>
+                    {{ ' created ' . $thread->created_at->diffForHumans()  }}
+                </h4>
+            </div>
 
             @can('update', $thread)
-            <div class="mt-6">
+            <div class="">
                 <x-jet-secondary-button wire:click="$toggle('editState')">Edit</x-jet-secondary-button>
             </div>
             @endcan
 
             @can('delete', $thread)
-            <div class="ml-6 mt-6">
+            <div class="ml-6 ">
                 <x-jet-danger-button wire:click="$toggle('confirmingThreadDeletion')">
                     {{ __('Delete') }}
                 </x-jet-danger-button>
@@ -39,7 +43,7 @@
                     <div class="flex items-center">
                         <x-jet-button>
                             <span wire:loading wire:target="update">
-                                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                <svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-white"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
                                         stroke-width="4">

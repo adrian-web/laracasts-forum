@@ -9,9 +9,13 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
 
-                    <h4 class="text-xl text-gray-500">
-                        {{ $user->name . "'s profile page" }}
-                    </h4>
+                    <div class="inline-flex items-center">
+                        <img class="h-8 w-8 rounded-full object-cover" src="{{ $user->profile_photo_url }}"
+                            alt="{{ $user->username }}" />
+                        <h4 class="ml-3 text-xl text-gray-500">
+                            {{ $user->name . "'s profile page" }}
+                        </h4>
+                    </div>
 
                     @forelse ($activities as $date => $activity)
                     <hr class="my-6">

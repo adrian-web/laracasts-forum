@@ -4,15 +4,19 @@ $body = $reply->displayMentionedUsers();
 
 <div>
     <div class="flex items-center mt-6">
-        <h4 class="flex-1 text-gray-500">
-            <a href="{{ $reply->owner->path() }}">{{ $reply->owner->name }}</a>
-            {{ ' replied ' . $reply->created_at->diffForHumans() }}
-        </h4>
+        <div class="flex-1 items-center inline-flex">
+            <img class="h-8 w-8 rounded-full object-cover" src="{{ $reply->owner->profile_photo_url }}"
+                alt="{{ $reply->owner->username }}" />
+            <h4 class="ml-3 text-gray-500">
+                <a href="{{ $reply->owner->path() }}">{{ $reply->owner->name }}</a>
+                {{ ' replied ' . $reply->created_at->diffForHumans() }}
+            </h4>
+        </div>
 
         <form wire:submit.prevent="favorite">
             <x-state-button :state="$favoriteState" id="{{'favorite' . $reply->id}}">
                 <span wire:loading wire:target="favorite">
-                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
+                    <svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
                         fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
                         </circle>
@@ -49,7 +53,7 @@ $body = $reply->displayMentionedUsers();
                     </div>
                     <div x-show="destroying">
                         <x-jet-danger-button>
-                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
+                            <svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
                                 fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
                                     stroke-width="4">
@@ -78,7 +82,7 @@ $body = $reply->displayMentionedUsers();
                 <div class="flex items-center">
                     <x-jet-button>
                         <span wire:loading wire:target="update">
-                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
+                            <svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
                                 fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
                                     stroke-width="4">

@@ -11,24 +11,29 @@
 
                     @forelse ($threads as $thread)
                     <article>
-                        <div class="flex">
-                            <h4 class="flex-1 mt-6 text-xl text-gray-500">
-                                <a href="{{ $thread->creator->path() }}">
-                                    {{ $thread->creator->name }}
-                                </a>
-                                {{ ' created ' }}
-                                <a href="{{ $thread->path() }}">
-                                    @if (auth()->check() && auth()->user()->hasSeenUpdatesFor($thread))
-                                    <strong>
+                        <div class="flex mt-6">
+                            <div class="flex-1 items-center inline-flex">
+                                <img class="h-8 w-8 rounded-full object-cover"
+                                    src="{{ $thread->creator->profile_photo_url }}"
+                                    alt="{{ $thread->creator->username }}" />
+                                <h4 class="ml-3 text-gray-500">
+                                    <a href="{{ $thread->creator->path() }}">
+                                        {{ $thread->creator->name }}
+                                    </a>
+                                    {{ ' created ' }}
+                                    <a href="{{ $thread->path() }}">
+                                        @if (auth()->check() && auth()->user()->hasSeenUpdatesFor($thread))
+                                        <strong>
+                                            {{ $thread->title }}
+                                        </strong>
+                                        @else
                                         {{ $thread->title }}
-                                    </strong>
-                                    @else
-                                    {{ $thread->title }}
-                                    @endif
-                                </a>
-                            </h4>
+                                        @endif
+                                    </a>
+                                </h4>
+                            </div>
 
-                            <strong class="mt-6 text-gray-500">
+                            <strong class="text-gray-500">
                                 <a href="{{ $thread->path() }}">{{ $thread->replies_count }}
                                     {{ Str::plural('reply', $thread->replies_count) }}</a>
                             </strong>
