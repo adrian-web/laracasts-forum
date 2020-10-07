@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Reply;
 use App\Models\Thread;
 use App\Rules\Spamfree;
 use Livewire\Component;
@@ -23,7 +24,7 @@ class CreateReply extends Component
             return;
         }
 
-        if (\Gate::denies('create', new \App\Models\Reply)) {
+        if (\Gate::denies('create', new Reply)) {
             return $this->emitTo('FlashMessage', 'flash', 'You are posting too frequently', 'red');
         }
 

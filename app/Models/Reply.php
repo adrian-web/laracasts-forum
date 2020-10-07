@@ -59,7 +59,7 @@ class Reply extends Model
 
     public function wasJustCreated()
     {
-        return $this->created_at > Carbon::now()->subMinute();
+        return $this->created_at > Carbon::now()->subSeconds(15);
     }
 
     public function mentionedUsers()

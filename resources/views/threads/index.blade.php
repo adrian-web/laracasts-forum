@@ -11,7 +11,7 @@
 
                     @forelse ($threads as $thread)
                     <article>
-                        <div class="flex mt-6">
+                        <div class="flex items-center mt-6">
                             <div class="flex-1 items-center inline-flex">
                                 <img class="h-8 w-8 rounded-full object-cover"
                                     src="{{ $thread->creator->profile_photo_url }}"

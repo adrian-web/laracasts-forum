@@ -64,7 +64,7 @@
         </div>
     </article>
 
-    <x-jet-confirmation-modal wire:model="confirmingThreadDeletion">
+    <x-submit-modal submit="delete" wire:model="confirmingThreadDeletion">
         <x-slot name="title">
             {{ __('Delete Thread') }}
         </x-slot>
@@ -78,9 +78,19 @@
                 {{ __('Nevermind') }}
             </x-jet-secondary-button>
 
-            <x-jet-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
+            <x-jet-danger-button type="submit" class="ml-2" wire:loading.attr="disabled">
+                <span wire:loading wire:target="delete">
+                    <svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+                </span>
                 {{ __('Delete') }}
             </x-jet-danger-button>
         </x-slot>
-    </x-jet-confirmation-modal>
+    </x-submit-modal>
 </div>

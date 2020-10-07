@@ -28,9 +28,9 @@ Features list
 - mention '@' users in messages (creates notification) (w/o autocompleting)
 - thread views count
 - trending threads sidebar (Redis)
+- create thread w/ modal (AJAX)
 
 To-do list
-- create thread modal (AJAX)
 - subscription to other models (ex. user, channel)
 - best reply functionality
 - sanitizing user inputs
