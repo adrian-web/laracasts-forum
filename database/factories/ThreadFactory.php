@@ -29,7 +29,7 @@ class ThreadFactory extends Factory
             'channel_id' => Channel::factory(),
             'title' => $this->faker->sentence,
             'body' => $this->faker->paragraph,
-            'views' => 0,
+            'visits' => 0,
         ];
     }
 }

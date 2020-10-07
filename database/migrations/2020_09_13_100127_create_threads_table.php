@@ -19,7 +19,7 @@ class CreateThreadsTable extends Migration
             $table->foreignId('channel_id');
             $table->string('title');
             $table->text('body');
-            $table->unsignedInteger('views');
+            $table->unsignedInteger('visits')->default(0);
             $table->timestamps();
         });
     }

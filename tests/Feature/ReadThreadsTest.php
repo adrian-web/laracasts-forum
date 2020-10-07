@@ -122,4 +122,16 @@ class ReadThreadsTest extends TestCase
                 ->assertSee($threadWithoutReply->title)
                 ->assertDontSee($threadWithReply->title);
     }
+
+    /** @test */
+    public function record_a_new_visit_each_time_the_thread_is_read()
+    {
+        $thread = create('Thread');
+    
+        $this->assertSame(0, $thread->visits);
+    
+        $this->get($thread->path());
+    
+        $this->assertEquals(1, $thread->fresh()->visits);
+    }
 }
