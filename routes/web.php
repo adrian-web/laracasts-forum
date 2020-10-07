@@ -40,4 +40,4 @@ Route::delete('/replies/{reply}', [ReplyController::class, 'destroy']);
 Route::post('/replies/{reply}/favorites', [FavoriteController::class, 'store']);
 Route::delete('/replies/{reply}/favorites', [FavoriteController::class, 'destroy']);
 
-Route::get('/profiles/{user}', [ProfileController::class, 'show'])->name('profile');
+Route::get('/profiles/{user}', [ProfileController::class, 'show'])->name('profiles');

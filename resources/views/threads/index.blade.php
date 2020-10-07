@@ -4,8 +4,8 @@
         <x-forum-header />
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="lg:flex py-12">
+        <div class="lg:flex-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
 
@@ -55,6 +55,38 @@
                     @endforelse
 
                     {{ $threads->appends(request()->input())->links() }}
+
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:flex-1 sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+
+                    <p class="text-center text-gray-500">
+                        {{ __('Trending Threads') }}
+                    </p>
+                    <hr class="my-3">
+
+                    @forelse ($trending as $thread)
+
+                    <p class="text-sm text-gray-500">
+                        <a href="{{ $thread->path }}">{{ $thread->title }}</a>
+                    </p>
+
+                    @if ( $loop->last )
+                    @else
+                    <hr class="my-3">
+                    @endif
+
+                    @empty
+
+                    <p class="text-sm text-gray-500">
+                        {{ __('There\'s no trending threads...')}}
+                    </p>
+
+                    @endforelse
 
                 </div>
             </div>

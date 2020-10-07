@@ -33,7 +33,7 @@ To-do list
 - best reply functionality
 - sanitizing user inputs
 - forum roles (ex. admin, moderator etc.)
-- upload images
+- upload images to replies
 - username autocomplete in messages
 - thread views count
 - upvote/downvote thread
