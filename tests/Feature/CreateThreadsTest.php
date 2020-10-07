@@ -23,6 +23,27 @@ class CreateThreadsTest extends TestCase
     }
 
     /** @test */
+    public function new_users_must_first_confirm_their_email_address_before_creating_threads()
+    {
+        $user = create('User', ['email_verified_at' => null]);
+        $this->actingAs($user);
+
+        $thread = make('Thread', ['user_id' => $user->id]);
+
+        $this->post('/threads', $thread->toArray())
+                ->assertRedirect('email/verify');
+
+        $userVerified = create('User');
+        $this->actingAs($userVerified);
+
+        $threadVerified = make('Thread', ['user_id' => $userVerified->id]);
+
+        $respone = $this->post('/threads', $threadVerified->toArray());
+
+        $this->get($respone->headers->get('Location'))->assertSee($threadVerified->title);
+    }
+
+    /** @test */
     public function an_authenticated_user_can_create_new_forum_thread()
     {
         $this->signIn();

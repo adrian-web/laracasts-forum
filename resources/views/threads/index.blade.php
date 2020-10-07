@@ -42,7 +42,7 @@
                         <div class="mt-6 text-sm text-gray-500">{{ $thread->body }}</div>
                         <div class="mt-3 text-sm text-gray-500">
                             <p>
-                                {{ $thread->visists . ' ' . Str::plural('visit', $thread->visists) }}
+                                {{ $thread->visits . ' ' . Str::plural('visit', $thread->visits) }}
                             </p>
                         </div>
                     </article>

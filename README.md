@@ -26,6 +26,8 @@ Features list
 - delete button with confirm action (Livewire & Alpine.js)
 - state-button component (for ex. liking/disliking, subscribing)
 - mention '@' users in messages (creates notification) (w/o autocompleting)
+- thread views count
+- trending threads sidebar (Redis)
 
 To-do list
 - create thread modal (AJAX)
@@ -35,7 +37,6 @@ To-do list
 - forum roles (ex. admin, moderator etc.)
 - upload images to replies
 - username autocomplete in messages
-- thread views count
 - upvote/downvote thread
 - thread can be locked
 - search bar

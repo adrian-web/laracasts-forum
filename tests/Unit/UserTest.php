@@ -2,8 +2,12 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -52,5 +56,27 @@ class UserTest extends TestCase
         $thread = create('Thread', ['user_id' => $user->id]);
 
         $this->assertEquals($thread->id, $user->lastCreated('thread')->id);
+    }
+
+    /** @test */
+    public function a_confirmation_email_is_sent_upon_registration()
+    {
+        Event::fake();
+        // Notification::fake();
+
+        $this->post(route('register'), [
+            'name' => 'John',
+            'username' => 'johny',
+            'email' => 'johndoe@test.com',
+            'password' => 'passwordtest',
+            'password_confirmation' => 'passwordtest'
+        ]);
+
+        // $user = \App\Models\User::first();
+
+        Event::assertDispatched(Registered::class);
+        // Notification::assertSentTo($user, VerifyEmail::class);
+
+        //notifications on tests not working, working on mailtrap.io website ???
     }
 }

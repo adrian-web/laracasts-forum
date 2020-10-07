@@ -11,7 +11,14 @@
 
             <div>
                 <x-jet-label value="Name" />
-                <x-jet-input class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                <x-jet-input class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus
+                    autocomplete="name" />
+            </div>
+
+            <div>
+                <x-jet-label value="Username" />
+                <x-jet-input class="block mt-1 w-full" type="text" name="username" :value="old('username')" required
+                    autofocus autocomplete="username" />
             </div>
 
             <div class="mt-4">
@@ -21,12 +28,14 @@
 
             <div class="mt-4">
                 <x-jet-label value="Password" />
-                <x-jet-input class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+                <x-jet-input class="block mt-1 w-full" type="password" name="password" required
+                    autocomplete="new-password" />
             </div>
 
             <div class="mt-4">
                 <x-jet-label value="Confirm Password" />
-                <x-jet-input class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+                <x-jet-input class="block mt-1 w-full" type="password" name="password_confirmation" required
+                    autocomplete="new-password" />
             </div>
 
             <div class="flex items-center justify-end mt-4">
