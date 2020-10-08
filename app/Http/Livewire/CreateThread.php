@@ -28,7 +28,7 @@ class CreateThread extends Component
 
     public function create()
     {
-        if (\Gate::denies('create', new Thread)) {
+        if (\Gate::denies('create-throttle', 'Thread')) {
             return $this->emitTo('FlashMessage', 'flash', 'You are posting too frequently', 'red');
         }
 

@@ -10,11 +10,15 @@ class NotificationBell extends Component
 {
     public $unreadNotifications;
 
+    public $notificationsState = false;
+
     public $notifications;
 
     public function mount(User $user)
     {
         $this->unreadNotifications = $user->unreadNotifications;
+
+        $this->notificationsState = $user->unreadNotifications->isNotEmpty();
     }
 
     public function confirm(DatabaseNotification $notification)

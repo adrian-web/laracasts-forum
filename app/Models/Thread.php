@@ -71,6 +71,6 @@ class Thread extends Model
 
     public function wasJustCreated()
     {
-        return $this->created_at > Carbon::now()->subSeconds(15);
+        return $this->created_at > Carbon::now()->subSeconds(10);
     }
 }

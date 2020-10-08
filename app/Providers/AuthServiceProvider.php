@@ -28,6 +28,13 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        Gate::define('create-throttle', function ($user, $model) {
+            if (! $lastThread = $user->fresh()->lastCreated($model)) {
+                return true;
+            }
+            return ! $lastThread->wasJustCreated();
+        });
+
         // Gate::before(function ($user) {
         //     if ($user->username === 'adrian') {
         //         return true;

@@ -24,7 +24,7 @@ class CreateReply extends Component
             return;
         }
 
-        if (\Gate::denies('create', new Reply)) {
+        if (\Gate::denies('create-throttle', 'Reply')) {
             return $this->emitTo('FlashMessage', 'flash', 'You are posting too frequently', 'red');
         }
 

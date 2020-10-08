@@ -22,10 +22,6 @@ class ReplyPolicy
 
     public function create(User $user, Reply $reply)
     {
-        if (! $lastReply = $user->fresh()->lastCreated('reply')) {
-            return true;
-        }
-
-        return ! $lastReply->wasJustCreated();
+        //
     }
 }

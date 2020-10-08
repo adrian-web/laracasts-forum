@@ -29,13 +29,13 @@ Features list
 - thread views count
 - trending threads sidebar (Redis)
 - create thread w/ modal (AJAX)
+- responsive design - css (Tailwind CSS)
 
 To-do list
 - subscription to other models (ex. user, channel)
 - best reply functionality
 - sanitizing user inputs
 - forum roles (ex. admin, moderator etc.)
-- upload images to replies
 - username autocomplete in messages
 - upvote/downvote thread
 - thread can be locked
