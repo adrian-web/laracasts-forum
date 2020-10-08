@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Reply;
 use App\Models\Thread;
 use App\Rules\Spamfree;
 use Livewire\Component;
@@ -21,7 +20,7 @@ class CreateReply extends Component
     public function create()
     {
         if (auth()->guest()) {
-            return;
+            return redirect('login');
         }
 
         if (\Gate::denies('create-throttle', 'Reply')) {

@@ -16,7 +16,7 @@ class ReadThreadsTest extends TestCase
     {
         $thread = create('Thread');
 
-        $this->get('/threads')
+        $this->get('threads')
                 ->assertSee($thread->title);
     }
 
@@ -49,13 +49,12 @@ class ReadThreadsTest extends TestCase
 
         $thread = create('Thread');
 
-        $reply = make('Reply', [
-                'body' => "Hello, @Janek. Also, hello fake @Seba"
-            ]);
+        $thread->replies()->create([
+            'body' => "Hello, @Janek. Also, hello @Seba. (unregistered)",
+            'user_id' => auth()->id()
+        ]);
     
-        $this->post($thread->path() . '/replies', $reply->toArray());
-    
-        $string = "Hello, <a href=\"/profiles/Janek\" class=\"hover:underline\">@Janek</a>. Also, hello fake @Seba";
+        $string = "Hello, <a href=\"/profiles/Janek\" class=\"hover:underline\">@Janek</a>. Also, hello @Seba. (unregistered)";
 
         $this->get($thread->path())
                     ->assertSee($string, $escape = false);
@@ -69,7 +68,7 @@ class ReadThreadsTest extends TestCase
         $threadInChannel = create('Thread', ['channel_id' => $channel->id]);
         $threadNotInChannel = create('Thread');
     
-        $this->get('/threads/' . $channel->slug)
+        $this->get('threads/' . $channel->slug)
                 ->assertSee($threadInChannel->title)
                 ->assertDontSee($threadNotInChannel->title);
     }
@@ -83,7 +82,7 @@ class ReadThreadsTest extends TestCase
         $threadByJanek = create('Thread', ['user_id' => $user->id]);
         $threadNotByJanek = create('Thread');
 
-        $this->get('/threads?by=janek')
+        $this->get('threads?by=janek')
                 ->assertSee($threadByJanek->title)
                 ->assertDontSee($threadNotByJanek->title);
     }

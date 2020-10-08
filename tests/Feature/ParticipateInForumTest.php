@@ -2,23 +2,49 @@
 
 namespace Tests\Feature;
 
+use App\Http\Livewire\CreateReply;
+use App\Http\Livewire\ManageReply;
+use App\Models\Reply;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Livewire\Livewire;
 use Tests\TestCase;
 
 class ParticipateInForumTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
+    /** @test  */
+    public function guest_cannot_see_reply_creation_containing_livewire_component_on_thread_page()
+    {
+        $thread = create('Thread');
+
+        $this->get($thread->path())->assertDontSeeLivewire('create-reply');
+    }
+
+    /** @test  */
+    public function authenticated_user_sees_reply_creation_containing_livewire_component_on_thread_page()
+    {
+        $this->signIn();
+
+        $thread = create('Thread');
+
+        $this->get($thread->path())->assertSeeLivewire('create-reply');
+    }
+
     /** @test */
     public function unauthenticated_user_may_not_add_a_reply()
     {
         $thread = create('Thread');
 
-        $reply = make('Reply');
+        Livewire::test(CreateReply::class, ['thread' => $thread])
+            ->call('create')
+            ->assertRedirect('login');
 
-        $this->post($thread->path() . '/replies', $reply->toArray())
-                ->assertRedirect('/login');
+        // $reply = make('Reply');
+
+        // $this->post($thread->path() . '/replies', $reply->toArray())
+        //         ->assertRedirect('/login');
     }
 
     /** @test */
@@ -28,12 +54,18 @@ class ParticipateInForumTest extends TestCase
     
         $thread = create('Thread');
 
-        $reply = make('Reply');
+        Livewire::test(CreateReply::class, ['thread' => $thread])
+            ->set('body', 'foobar')
+            ->call('create');
 
-        $this->post($thread->path() . '/replies', $reply->toArray());
+        $this->assertTrue(Reply::whereBody('foobar')->exists());
 
-        $this->get($thread->path())
-                ->assertSee($reply->body);
+        // $reply = make('Reply');
+
+        // $this->post($thread->path() . '/replies', $reply->toArray());
+
+        // $this->get($thread->path())
+        //         ->assertSee($reply->body);
     }
 
     /** @test */
@@ -42,11 +74,16 @@ class ParticipateInForumTest extends TestCase
         $this->signIn();
 
         $thread = create('Thread');
-        
-        $reply = make('Reply', ['body' => null]);
 
-        $this->post($thread->path() . '/replies', $reply->toArray())
-                ->assertSessionHasErrors('body');
+        Livewire::test(CreateReply::class, ['thread' => $thread])
+            ->set('body', '')
+            ->call('create')
+            ->assertHasErrors('body');
+        
+        // $reply = make('Reply', ['body' => null]);
+
+        // $this->post($thread->path() . '/replies', $reply->toArray())
+        //         ->assertSessionHasErrors('body');
     }
 
     /** @test */
@@ -54,14 +91,22 @@ class ParticipateInForumTest extends TestCase
     {
         $reply = create('Reply');
 
-        $this->delete("/replies/{$reply->id}")
-                ->assertRedirect('login');
-    
-        $user = create('User');
+        Livewire::test(ManageReply::class, ['reply' => $reply])
+            ->call('delete')
+            ->assertRedirect('login');
 
-        $this->actingAs($user)
-                ->delete("/replies/{$reply->id}")
-                ->assertStatus(403);
+        // $this->delete("/replies/{$reply->id}")
+        //         ->assertRedirect('login');
+    
+        $this->signIn();
+
+        Livewire::test(ManageReply::class, ['reply' => $reply])
+            ->call('delete')
+            ->assertForbidden();
+
+        // $this->signIn()
+        //         ->delete("/replies/{$reply->id}")
+        //         ->assertStatus(403);
     }
     
     /** @test */
@@ -71,8 +116,11 @@ class ParticipateInForumTest extends TestCase
 
         $reply = create('Reply', ['user_id' => auth()->id()]);
 
-        $this->delete("/replies/{$reply->id}")
-                ->assertStatus(302);
+        Livewire::test(ManageReply::class, ['reply' => $reply])
+            ->call('delete');
+
+        // $this->delete("/replies/{$reply->id}")
+        //         ->assertStatus(302);
     
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
     }
@@ -82,12 +130,22 @@ class ParticipateInForumTest extends TestCase
     {
         $reply = create('Reply');
     
-        $this->patch("/replies/{$reply->id}")
-                ->assertRedirect('login');
+        Livewire::test(ManageReply::class, ['reply' => $reply])
+            ->call('update')
+            ->assertRedirect('login');
+
+        // $this->patch("/replies/{$reply->id}")
+        //         ->assertRedirect('login');
     
-        $this->signIn()
-                ->patch("/replies/{$reply->id}")
-                 ->assertStatus(403);
+        $this->signIn();
+
+        Livewire::test(ManageReply::class, ['reply' => $reply])
+            ->call('update')
+            ->assertForbidden();
+
+        // $this->signIn()
+        //         ->patch("/replies/{$reply->id}")
+        //          ->assertStatus(403);
     }
     
     /** @test */
@@ -99,7 +157,11 @@ class ParticipateInForumTest extends TestCase
     
         $updatedReply = 'Changed.';
 
-        $this->patch("/replies/{$reply->id}", ['body' => $updatedReply]);
+        Livewire::test(ManageReply::class, ['reply' => $reply])
+            ->set('body', $updatedReply)
+            ->call('update');
+
+        // $this->patch("/replies/{$reply->id}", ['body' => $updatedReply]);
     
         $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => $updatedReply]);
     }
@@ -112,14 +174,19 @@ class ParticipateInForumTest extends TestCase
         $this->signIn();
         
         $thread = create('Thread');
+
+        Livewire::test(CreateReply::class, ['thread' => $thread])
+            ->set('body', 'Yahoo Customer Support')
+            ->call('create')
+            ->assertHasErrors('body');
         
-        $reply = make('Reply', [
-            'body' => 'Yahoo Customer Support'
-        ]);
+        // $reply = make('Reply', [
+        //     'body' => 'Yahoo Customer Support'
+        // ]);
 
-        $this->expectException(\Exception::class);
+        // $this->expectException(\Exception::class);
 
-        $this->post($thread->path() . '/replies', $reply->toArray());
+        // $this->post($thread->path() . '/replies', $reply->toArray());
     }
 
     /** @test */
@@ -130,12 +197,25 @@ class ParticipateInForumTest extends TestCase
         $this->signIn();
     
         $thread = create('Thread');
-        $reply = make('Reply');
+        
+        Livewire::test(CreateReply::class, ['thread' => $thread])
+            ->set('body', 'foo')
+            ->call('create');
+
+        $this->assertTrue(Reply::whereBody('foo')->exists());
+
+        Livewire::test(CreateReply::class, ['thread' => $thread])
+            ->set('body', 'bar')
+            ->call('create');
+
+        $this->assertFalse(Reply::whereBody('bar')->exists());
+
+        // $reply = make('Reply');
     
-        $this->post($thread->path() . '/replies', $reply->toArray())
-                ->assertStatus(302);
+        // $this->post($thread->path() . '/replies', $reply->toArray())
+        //         ->assertStatus(302);
     
-        $this->post($thread->path() . '/replies', $reply->toArray())
-                ->assertStatus(429);
+        // $this->post($thread->path() . '/replies', $reply->toArray())
+        //         ->assertStatus(429);
     }
 }

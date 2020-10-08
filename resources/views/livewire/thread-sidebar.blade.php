@@ -4,7 +4,7 @@
         and currently has {{ $thread->replies_count }}
         {{ Str::plural('comment', $thread->replies_count) }}.</p>
     @auth
-    <x-state-button class="mt-3" :state="$subscribedState" wire:click="subscribe">
+    <x-state-button class="mt-3" :state="$subscribedState" id="subscribe1" wire:click="subscribe">
         {{ __('Subscribe') }}
     </x-state-button>
     @endauth

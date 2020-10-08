@@ -17,8 +17,6 @@ class CreateSubscriptionsTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->morphs('subscribed');
-            // $table->unsignedInteger('subscribed_id');
-            // $table->string('subscribed_type');
             $table->timestamps();
 
             $table->unique(['user_id', 'subscribed_id', 'subscribed_type']);

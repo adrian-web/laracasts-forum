@@ -43,7 +43,6 @@ class ProfilesPageTest extends TestCase
         $thread = create('Thread', ['user_id' => auth()->id()]);
 
         $this->get(auth()->user()->path())
-                ->assertSee($thread->title)
-                ->assertSee($thread->body);
+               ->assertSee($thread->title);
     }
 }

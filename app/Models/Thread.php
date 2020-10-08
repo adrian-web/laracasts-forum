@@ -30,6 +30,7 @@ class Thread extends Model
 
         static::deleting(function ($thread) {
             $thread->replies->each->delete();
+            (new \App\Models\Trending)->destroy($thread);
         });
 
         static::updated(function ($thread) {

@@ -8,7 +8,7 @@ trait Subscribable
 {
     protected static function bootSubscribable()
     {
-        static::deleting(function($model){
+        static::deleting(function ($model) {
             $model->subscriptions->each->delete();
         });
     }

@@ -23,7 +23,7 @@ class ThreadSidebar extends Component
     public function subscribe()
     {
         if (auth()->guest()) {
-            return;
+            return redirect('login');
         }
 
         if ($this->thread->isSubscribed) {

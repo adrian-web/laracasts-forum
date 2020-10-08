@@ -40,6 +40,10 @@ class ManageReply extends Component
 
     public function update()
     {
+        if (auth()->guest()) {
+            return redirect('login');
+        }
+        
         $this->authorize('update', $this->reply);
         
         $this->validate([
@@ -59,6 +63,10 @@ class ManageReply extends Component
 
     public function delete()
     {
+        if (auth()->guest()) {
+            return redirect('login');
+        }
+
         $this->authorize('delete', $this->reply);
 
         $this->reply->delete();
@@ -71,7 +79,7 @@ class ManageReply extends Component
     public function favorite()
     {
         if (auth()->guest()) {
-            return;
+            return redirect('login');
         }
 
         if ($this->reply->isFavorited) {

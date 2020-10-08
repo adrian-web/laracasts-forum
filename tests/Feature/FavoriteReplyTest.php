@@ -2,19 +2,37 @@
 
 namespace Tests\Feature;
 
+use App\Http\Livewire\ManageReply;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Livewire\Livewire;
 use Tests\TestCase;
 
 class FavoriteReplyTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
+    /** @test  */
+    public function reply_favoriting_containing_livewire_component_on_thread_page()
+    {
+        $thread = create('Thread');
+
+        create('Reply', ['thread_id' => $thread->id]);
+
+        $this->get($thread->path())->assertSeeLivewire('manage-reply');
+    }
+
     /** @test */
     public function a_guest_cannot_favorite_anything()
     {
-        $this->post('replies/1/favorites')
-                ->assertRedirect('/login');
+        $reply = create('Reply');
+
+        Livewire::test(ManageReply::class, ['reply' => $reply])
+            ->call('favorite')
+            ->assertRedirect('login');
+
+        // $this->post('replies/1/favorites')
+        //         ->assertRedirect('login');
     }
 
     /** @test */
@@ -24,23 +42,26 @@ class FavoriteReplyTest extends TestCase
 
         $reply = create('Reply');
 
-        $this->post('replies/' . $reply->id . '/favorites');
+        Livewire::test(ManageReply::class, ['reply' => $reply])
+            ->call('favorite');
 
-        $this->assertCount(1, $reply->favorites);
+        // $this->post('replies/' . $reply->id . '/favorites');
+
+        $this->assertCount(1, $reply->fresh()->favorites);
     }
 
-    /** @test */
-    public function an_authenticated_user_may_only_favorite_a_reply_once()
-    {
-       $this->signIn();
+    // /** @test */
+    // public function an_authenticated_user_may_only_favorite_a_reply_once()
+    // {
+    //     $this->signIn();
 
-        $reply = create('Reply');
+    //     $reply = create('Reply');
 
-        $this->post('replies/' . $reply->id . '/favorites');
-        $this->post('replies/' . $reply->id . '/favorites');
+    //     $this->post('replies/' . $reply->id . '/favorites');
+    //     $this->post('replies/' . $reply->id . '/favorites');
     
-        $this->assertCount(1, $reply->favorites);
-    }
+    //     $this->assertCount(1, $reply->fresh()->favorites);
+    // }
 
     /** @test */
     public function an_authenticated_user_can_unfavorite_a_reply()
@@ -49,10 +70,20 @@ class FavoriteReplyTest extends TestCase
 
         $reply = create('Reply');
     
-        $reply->favorite();
+        Livewire::test(ManageReply::class, ['reply' => $reply])
+            ->call('favorite');
+
+        $this->assertCount(1, $reply->fresh()->favorites);
+
+        Livewire::test(ManageReply::class, ['reply' => $reply])
+            ->call('favorite');
+
+        $this->assertCount(0, $reply->fresh()->favorites);
+
+        // $reply->favorite();
     
-        $this->delete('replies/' . $reply->id . '/favorites');
+        // $this->delete('replies/' . $reply->id . '/favorites');
     
-        $this->assertCount(0, $reply->favorites);
+        // $this->assertCount(0, $reply->favorites);
     }
 }

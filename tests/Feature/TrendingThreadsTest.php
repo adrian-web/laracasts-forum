@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Trending;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Redis;
 use Tests\TestCase;
 
 class TrendingThreadsTest extends TestCase
@@ -52,7 +51,7 @@ class TrendingThreadsTest extends TestCase
 
         $this->assertEquals($thread->title, $trending[0]->title);
 
-        $this->delete($thread->path());
+        $thread->delete();
 
         $trendingEmpty = $this->trending->get();
 

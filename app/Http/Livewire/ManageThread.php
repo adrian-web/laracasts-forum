@@ -6,7 +6,6 @@ use App\Models\Thread;
 use App\Models\Trending;
 use App\Rules\Spamfree;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Redis;
 use Livewire\Component;
 
 class ManageThread extends Component
@@ -42,6 +41,10 @@ class ManageThread extends Component
 
     public function delete()
     {
+        if (auth()->guest()) {
+            return redirect('login');
+        }
+        
         $this->authorize('delete', $this->thread);
 
         (new Trending)->destroy($this->thread);
@@ -56,6 +59,10 @@ class ManageThread extends Component
 
     public function update()
     {
+        if (auth()->guest()) {
+            return redirect('login');
+        }
+
         $this->authorize('update', $this->thread);
         
         $this->validate([
