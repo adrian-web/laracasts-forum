@@ -9,36 +9,27 @@
         </x-slot>
 
         <x-slot name="content">
-            <div class="grid gap-6">
-                <div class="col-span-6 sm:col-span-4">
-                    <x-jet-label for="channel_id" value="{{ __('Choose a channel') }}" />
-                    <select name="channel_id" id="channel_id" wire:model.defer="channel_id"
-                        class="form-select rounded-md shadow-sm mt-1 block w-full" required>
-                        <option value="">Choose a channel...</option>
-                        @foreach ($channels as $channel)
-                        <option value="{{ $channel->id }}" {{ old('channel_id') == $channel->id ? 'selected' : ''}}>
-                            {{ $channel->slug }}</option>
-                        @endforeach
-                    </select>
-                    <x-jet-input-error for="channel_id" class="mt-2" />
-                </div>
+            <x-jet-label for="channel_id" value="{{ __('Choose a channel') }}" />
+            <select name="channel_id" id="channel_id" wire:model.defer="channel_id"
+                class="form-select rounded-md shadow-sm mt-1 block w-full" required>
+                <option value="">Choose a channel...</option>
+                @foreach ($channels as $channel)
+                <option value="{{ $channel->id }}" {{ old('channel_id') == $channel->id ? 'selected' : ''}}>
+                    {{ $channel->slug }}</option>
+                @endforeach
+            </select>
+            <x-jet-input-error for="channel_id" class="mt-2" />
 
-                <div class="col-span-6 sm:col-span-4">
-                    <x-jet-label for="title" value="{{ __('Title') }}" />
-                    <x-jet-input type="text" id="title" name="title" wire:model.defer="title" class="mt-1 block w-full"
-                        value="{{ old('title') }}" required />
-                    <x-jet-input-error for="title" class="mt-2" />
-                </div>
+            <x-jet-label for="title" value="{{ __('Title') }}" class="mt-2" />
+            <x-jet-input type="text" id="title" name="title" wire:model.defer="title" class="mt-1 block w-full"
+                value="{{ old('title') }}" required />
+            <x-jet-input-error for="title" class="mt-2" />
 
-                <div class="col-span-6 sm:col-span-4">
-                    <x-jet-label for="body" value="{{ __('Body') }}" />
-                    <textarea name="body" id="body" rows="10" wire:model.defer="body"
-                        class="form-textarea rounded-md shadow-sm mt-1 block w-full"
-                        required>{{ old('body') }}</textarea>
-                    <x-jet-input-error for="body" class="mt-2" />
+            <x-jet-label for="body" value="{{ __('Body') }}" class="mt-2" />
+            <textarea name="body" id="body" rows="10" wire:model.defer="body"
+                class="form-textarea rounded-md shadow-sm mt-1 block w-full" required>{{ old('body') }}</textarea>
+            <x-jet-input-error for="body" class="mt-2" />
 
-                </div>
-            </div>
         </x-slot>
 
         <x-slot name="footer">

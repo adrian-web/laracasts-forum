@@ -1,6 +1,6 @@
 <article>
 
-    <div class="inline-flex items-center mt-6">
+    <div class="flex items-center mt-6">
 
         {{ $activityHeader }}
 

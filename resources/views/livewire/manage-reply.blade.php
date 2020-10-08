@@ -3,7 +3,7 @@ $body = $reply->displayMentionedUsers();
 @endphp
 
 <div>
-    <div class="flex items-center mt-6">
+    <div class="flex flex-col sm:flex-row sm:items-center mt-5">
         <div class="flex-1 items-center inline-flex">
             <img class="h-8 w-8 rounded-full object-cover" src="{{ $reply->owner->profile_photo_url }}"
                 alt="{{ $reply->owner->username }}" />
@@ -13,32 +13,20 @@ $body = $reply->displayMentionedUsers();
             </h4>
         </div>
 
-        <form wire:submit.prevent="favorite">
-            <x-state-button :state="$favoriteState" id="{{'favorite' . $reply->id}}">
-                <span wire:loading wire:target="favorite">
-                    <svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-                        </circle>
-                        <path class="opacity-75" fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                        </path>
-                    </svg>
-                </span>
+        <div class="inline-flex items-center mt-3 sm:mt-0">
+            <x-state-button :state="$favoriteState" id="{{'favorite' . $reply->id}}" wire:click="favorite">
                 <span class="fa fa-heart-o" aria-hidden="true"></span>
                 <span class="ml-1">{{ $favoriteCount }}</span>
             </x-state-button>
-        </form>
 
-        @can('update', $reply)
-        <div class="ml-6">
-            <x-jet-secondary-button wire:click="$toggle('editState')">Edit</x-jet-secondary-button>
-        </div>
-        @endcan
+            @can('update', $reply)
+            <div class="ml-4">
+                <x-jet-secondary-button wire:click="$toggle('editState')">Edit</x-jet-secondary-button>
+            </div>
+            @endcan
 
-        @can('delete', $reply)
-        <form wire:submit.prevent="delete">
-            <div class="ml-6" x-data="{ destroy: @entangle('deleteState'), destroying: false }" x-cloak>
+            @can('delete', $reply)
+            <div class="ml-4" x-data="{ destroy: @entangle('deleteState'), destroying: false }" x-cloak>
                 <div x-show="!destroy">
                     <x-jet-danger-button wire:click="$toggle('deleteState')">
                         {{ __('Delete') }}
@@ -46,15 +34,15 @@ $body = $reply->displayMentionedUsers();
                 </div>
                 <div x-show="destroy">
                     <div x-show="!destroying">
-                        <x-jet-danger-button type="submit" x-on:click="destroying = true"
+                        <x-jet-danger-button wire:click="delete" x-on:click="destroying = true"
                             x-on:click.away="destroy = false">
                             {{ __('Confirm') }}
                         </x-jet-danger-button>
                     </div>
                     <div x-show="destroying">
                         <x-jet-danger-button>
-                            <svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 24 24">
+                            <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
                                     stroke-width="4">
                                 </circle>
@@ -62,17 +50,16 @@ $body = $reply->displayMentionedUsers();
                                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                                 </path>
                             </svg>
-                            {{ __('Deleting') }}
                         </x-jet-danger-button>
                     </div>
                 </div>
             </div>
-        </form>
-        @endcan
+            @endcan
+        </div>
     </div>
 
-    <div class="mt-6" x-data="{ edit: {{ (int) $editState }} }" x-cloak>
-        <div class="text-gray-500" x-show="!edit">{!! $body !!}</div>
+    <div class="mt-6 text-gray-500" x-data="{ edit: {{ (int) $editState }} }" x-cloak>
+        <div class="" x-show="!edit">{!! $body !!}</div>
 
         <div x-show="edit">
             <form wire:submit.prevent="update">

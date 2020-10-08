@@ -4,35 +4,31 @@
         <x-forum-header />
     </x-slot>
 
-    <div class="lg:flex py-12">
+    <div class="flex flex-col lg:flex-row py-12">
         <div class="lg:flex-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+            <div class="bg-white p-6 sm:px-20 overflow-hidden shadow-xl sm:rounded-lg">
 
-                    @livewire('manage-thread', ['thread' => $thread])
+                @livewire('manage-thread', ['thread' => $thread])
 
-                    @livewire('show-replies', ['thread' => $thread])
+                @livewire('show-replies', ['thread' => $thread])
 
-                    @if (auth()->check())
-                    @livewire('create-reply', ['thread' => $thread])
+                @if (auth()->check())
+                @livewire('create-reply', ['thread' => $thread])
 
-                    @else
-                    <h4 class="mt-8 text-2xl">
-                        <a href="{{ route('login') }}">Please sign in...</a>
-                    </h4>
-                    @endif
+                @else
+                <h4 class="mt-8 text-2xl">
+                    <a href="{{ route('login') }}">Please sign in...</a>
+                </h4>
+                @endif
 
-                </div>
             </div>
         </div>
 
-        <div class="lg:flex-1 sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+        <div class="order-first lg:order-none mb-6 lg:mt-0 sm:px-6 lg:px-8">
+            <div class="bg-white p-6 sm:px-20 overflow-hidden shadow-xl sm:rounded-lg">
 
-                    @livewire('thread-sidebar', ['thread' => $thread])
+                @livewire('thread-sidebar', ['thread' => $thread])
 
-                </div>
             </div>
         </div>
     </div>
