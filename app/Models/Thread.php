@@ -89,4 +89,9 @@ class Thread extends Model
     {
         $this->update(['best_reply_id' => $reply->id]);
     }
+
+    public function unmarkBestReply()
+    {
+        $this->update(['best_reply_id' => null]);
+    }
 }

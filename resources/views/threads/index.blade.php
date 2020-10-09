@@ -30,14 +30,14 @@
                         </h4>
                     </div>
                     <div class="mt-6 text-sm text-gray-500">{{ $thread->body }}</div>
-                    <div class="flex justify-between mt-3 text-sm text-gray-500">
+                    <div class="flex mt-3 text-sm text-gray-500">
                         <p>
                             {{ $thread->visits . ' ' . Str::plural('visit', $thread->visits) }}
                         </p>
-                        <strong class=" ml-3">
-                            <a href="{{ $thread->path() }}">{{ $thread->replies_count }}
-                                {{ Str::plural('reply', $thread->replies_count) }}</a>
-                        </strong>
+                        <p class="ml-auto "">
+                            <a href=" {{ $thread->path() }}">{{ $thread->replies_count }}
+                            {{ Str::plural('reply', $thread->replies_count) }}</a>
+                        </p>
                     </div>
                 </article>
 

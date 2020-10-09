@@ -53,6 +53,8 @@
     @stack('modals')
 
     @livewireScripts
+
+    <script src="/js/best-reply.js"></script>
 </body>
 
 </html>

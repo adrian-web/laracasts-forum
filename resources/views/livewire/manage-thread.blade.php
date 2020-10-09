@@ -16,14 +16,16 @@
 
                 @can('update', $thread)
                 <div class="">
-                    <x-jet-secondary-button wire:click="$toggle('editState')">Edit</x-jet-secondary-button>
+                    <x-jet-secondary-button wire:click="$toggle('editState')">
+                        <span class="fa fa-chevron-down" aria-hidden="true"></span>
+                    </x-jet-secondary-button>
                 </div>
                 @endcan
 
                 @can('delete', $thread)
                 <div class="ml-4 ">
                     <x-jet-danger-button wire:click="$toggle('confirmingThreadDeletion')">
-                        {{ __('Delete') }}
+                        <span class="fa fa-trash-o" aria-hidden="true"></span>
                     </x-jet-danger-button>
                 </div>
                 @endcan

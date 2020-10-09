@@ -2,9 +2,9 @@
 $body = $reply->displayMentionedUsers();
 @endphp
 
-<div>
-    <div class="flex flex-col sm:flex-row sm:items-center mt-5">
-        <div class="flex-1 items-center inline-flex">
+<div id={{'reply' . $reply->id}} class="">
+    <div class="flex flex-col sm:flex-row sm:items-center mt-5 ">
+        <div class=" flex-1 items-center inline-flex">
             <img class="h-8 w-8 rounded-full object-cover" src="{{ $reply->owner->profile_photo_url }}"
                 alt="{{ $reply->owner->username }}" />
             <h4 class="ml-3 text-gray-500">
@@ -14,14 +14,22 @@ $body = $reply->displayMentionedUsers();
         </div>
 
         <div class="inline-flex items-center mt-3 sm:mt-0">
-            <x-state-button :state="$favoriteState" id="{{'favorite' . $reply->id}}" wire:click="favorite">
-                <span class="fa fa-heart-o" aria-hidden="true"></span>
-                <span class="ml-1">{{ $favoriteCount }}</span>
+            @can('update', $reply)
+            <x-jet-secondary-button id="{{'markAsBest' . $reply->id}}" wire:click="best">
+                <span class="fa fa-star" aria-hidden="true"></span>
+            </x-jet-secondary-button>
+            @endcan
+
+            <x-state-button class="ml-4" :state="$favoriteState" id="{{'favorite' . $reply->id}}" wire:click="favorite">
+                <span class="fa fa-heart" aria-hidden="true"></span>
+                <span class="ml-1 leading-3">{{ $favoriteCount }}</span>
             </x-state-button>
 
             @can('update', $reply)
             <div class="ml-4">
-                <x-jet-secondary-button wire:click="$toggle('editState')">Edit</x-jet-secondary-button>
+                <x-jet-secondary-button wire:click="$toggle('editState')">
+                    <span class="fa fa-chevron-down" aria-hidden="true"></span>
+                </x-jet-secondary-button>
             </div>
             @endcan
 
@@ -29,19 +37,19 @@ $body = $reply->displayMentionedUsers();
             <div class="ml-4" x-data="{ destroy: @entangle('deleteState'), destroying: false }" x-cloak>
                 <div x-show="!destroy">
                     <x-jet-danger-button wire:click="$toggle('deleteState')">
-                        {{ __('Delete') }}
+                        <span class="fa fa-trash-o" aria-hidden="true"></span>
                     </x-jet-danger-button>
                 </div>
                 <div x-show="destroy">
                     <div x-show="!destroying">
                         <x-jet-danger-button wire:click="delete" x-on:click="destroying = true"
                             x-on:click.away="destroy = false">
-                            {{ __('Confirm') }}
+                            <span class="fa fa-check" aria-hidden="true"></span>
                         </x-jet-danger-button>
                     </div>
                     <div x-show="destroying">
                         <x-jet-danger-button>
-                            <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            <svg class="animate-spin h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
                                     stroke-width="4">
@@ -91,5 +99,21 @@ $body = $reply->displayMentionedUsers();
 @guest
 <script>
     document.getElementById("{{'favorite' . $reply->id}}").disabled = true; 
+    document.getElementById("{{'favorite' . $reply->id}}").classList.add("cursor-not-allowed", "disabled:opacity-100");
 </script>
 @endguest
+
+@can('update', $reply)
+@if ($reply->thread->best_reply_id !== null)
+@php
+$best = $reply->thread->best_reply_id;
+@endphp
+
+@if ($best == $reply->id)
+<script>
+    document.getElementById("{{'reply' . $best}}").classList.add("bg-green-200", "rounded-md", "shadow-nd", "p-2");
+</script>
+@endif
+
+@endif
+@endcan
