@@ -11,14 +11,14 @@
 
 ## About a project
 
-Forum with Laravel 8, Livewire and Alpine.js.
+Forum with Laravel 8, Livewire, Alpine.js & Tailwind CSS.
 
 Features list
 - filter threads (ex. most replies, unanswered, author, channel)
 - create/edit/delete replies to a thread (AJAX)
 - like/unlike a reply (AJAX)
 - activity feed for a user (ex. created a thread, replied to a thread, liked/unliked a reply)
-- thread subscription (creating a reply notifies subscribers)
+- thread subscription (creating a reply notifies subscribers) (AJAX)
 - notification bell lists only unique links
 - visiting a thread creates cache key to show updated threads to user
 - spam detection on user inputs
@@ -26,16 +26,16 @@ Features list
 - delete button with confirm action (Livewire & Alpine.js)
 - state-button component (for ex. liking/disliking, subscribing)
 - mention '@' users in messages (creates notification) (w/o autocompleting)
-- thread views count
+- thread visits count
 - trending threads sidebar (Redis)
 - create thread w/ modal (AJAX)
-- responsive design - css (Tailwind CSS)
+- responsive design (Tailwind CSS)
 
 To-do list
 - subscription to other models (ex. user, channel)
 - best reply functionality
 - sanitizing user inputs
-- forum roles (ex. admin, moderator etc.)
+- forum roles (ex. admin, moderator)
 - username autocomplete in messages
 - upvote/downvote thread
 - thread can be locked

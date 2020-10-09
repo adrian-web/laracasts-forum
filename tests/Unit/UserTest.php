@@ -59,7 +59,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function a_confirmation_email_is_sent_upon_registration()
+    public function an_event_is_dispatched_upon_registration()
     {
         Event::fake();
         // Notification::fake();
@@ -77,6 +77,6 @@ class UserTest extends TestCase
         Event::assertDispatched(Registered::class);
         // Notification::assertSentTo($user, VerifyEmail::class);
 
-        //notifications on tests not working, working on mailtrap.io website ???
+        //notifications on registering not working, working on resending an email
     }
 }
