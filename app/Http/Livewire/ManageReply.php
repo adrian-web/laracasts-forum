@@ -105,6 +105,17 @@ class ManageReply extends Component
         }
     }
 
+    public function best()
+    {
+        if (auth()->guest()) {
+            return redirect('login');
+        }
+
+        $this->authorize('update', $this->reply->thread);
+
+        $this->reply->thread->markBestReply($this->reply);
+    }
+
     public function return()
     {
         $this->editState = false;

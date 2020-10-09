@@ -80,4 +80,16 @@ class ReplyTest extends TestCase
 
         $this->assertEquals(['Jane-Doe', 'JohnDoe'], $reply->mentionedUsers());
     }
+
+    /** @test */
+    public function a_reply_may_be_best_in_a_given_thread()
+    {
+        $reply = create('Reply');
+
+        $this->assertFalse($reply->isBest());
+
+        $reply->thread->update(['best_reply_id' => $reply->id]);
+
+        $this->assertTrue($reply->fresh()->isBest());
+    }
 }

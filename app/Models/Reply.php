@@ -10,6 +10,7 @@ use App\Traits\RecordActivity;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Notification;
 
 class Reply extends Model
@@ -86,5 +87,10 @@ class Reply extends Model
         }
 
         return $body;
+    }
+
+    public function isBest()
+    {
+        return $this->id == $this->thread->best_reply_id;
     }
 }
