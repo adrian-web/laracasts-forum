@@ -44,6 +44,6 @@ class ThreadSeeder extends Seeder
         }
 
         $users->push(User::factory()
-                        ->create(['name' => 'Adrian Polak', 'username' => 'adrian', 'email' => 'adrian@test.com', 'password' => '$2a$04$MJL4ZpY4Nrt1g8tjftUHB.ZOnJkTZstr5SEpwpJLMhdMDEjgYoK3O']));
+                        ->create(['name' => 'Adrian Web', 'username' => 'adrian', 'email' => 'adrian@test.com', 'password' => '$2a$04$MJL4ZpY4Nrt1g8tjftUHB.ZOnJkTZstr5SEpwpJLMhdMDEjgYoK3O']));
     }
 }

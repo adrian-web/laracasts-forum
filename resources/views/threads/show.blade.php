@@ -5,7 +5,7 @@
     </x-slot>
 
     <div class="flex flex-col lg:flex-row py-12">
-        <div class="lg:flex-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="lg:flex-grow lg:flex-shrink-0 max-w-7xl sm:px-6 lg:px-8">
             <div class="bg-white p-6 sm:px-20 overflow-hidden shadow-xl sm:rounded-lg">
 
                 @livewire('manage-thread', ['thread' => $thread])
@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div class="order-first lg:order-none mb-6 lg:mt-0 sm:px-6 lg:px-8">
+        <div class="order-first lg:order-none  lg:max-w-2xl mb-6 lg:mt-0 sm:px-6 lg:px-8">
             <div class="bg-white p-6 sm:px-20 overflow-hidden shadow-xl sm:rounded-lg">
 
                 @livewire('thread-sidebar', ['thread' => $thread])

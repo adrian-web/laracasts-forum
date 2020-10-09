@@ -45,6 +45,7 @@ class CreateThread extends Component
             [
                 'user_id' => auth()->id(),
                 'channel_id' => $this->channel_id,
+                'slug' => $this->title,
                 'title' => $this->title,
                 'body' => $this->body,
             ]

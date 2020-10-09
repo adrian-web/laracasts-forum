@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Thread;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -13,11 +14,11 @@ class ThreadTest extends TestCase
     use WithFaker, RefreshDatabase;
 
     /** @test */
-    public function a_thread_can_make_a_string_path()
+    public function a_thread_can_make_a_path()
     {
         $thread = create('Thread');
 
-        $this->assertEquals($thread->path(), '/threads/' . $thread->channel->slug . '/' . $thread->id);
+        $this->assertEquals($thread->path(), 'threads/' . $thread->channel->slug . '/' . $thread->slug);
     }
 
     /** @test */
@@ -81,5 +82,15 @@ class ThreadTest extends TestCase
         $thread->created_at = Carbon::now()->subMonth();
 
         $this->assertFalse($thread->wasJustCreated());
+    }
+
+    /** @test */
+    public function a_thread_requires_a_unique_slug()
+    {
+        $this->signIn();
+    
+        create('Thread', ['title' => 'Foo Bar', 'slug' => 'foo-bar']);
+    
+        $this->assertTrue(Thread::whereSlug('foo-bar' . '-' . time())->exists());
     }
 }

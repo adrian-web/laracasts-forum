@@ -30,9 +30,6 @@ class FavoriteReplyTest extends TestCase
         Livewire::test(ManageReply::class, ['reply' => $reply])
             ->call('favorite')
             ->assertRedirect('login');
-
-        // $this->post('replies/1/favorites')
-        //         ->assertRedirect('login');
     }
 
     /** @test */
@@ -45,23 +42,8 @@ class FavoriteReplyTest extends TestCase
         Livewire::test(ManageReply::class, ['reply' => $reply])
             ->call('favorite');
 
-        // $this->post('replies/' . $reply->id . '/favorites');
-
         $this->assertCount(1, $reply->fresh()->favorites);
     }
-
-    // /** @test */
-    // public function an_authenticated_user_may_only_favorite_a_reply_once()
-    // {
-    //     $this->signIn();
-
-    //     $reply = create('Reply');
-
-    //     $this->post('replies/' . $reply->id . '/favorites');
-    //     $this->post('replies/' . $reply->id . '/favorites');
-    
-    //     $this->assertCount(1, $reply->fresh()->favorites);
-    // }
 
     /** @test */
     public function an_authenticated_user_can_unfavorite_a_reply()
@@ -79,11 +61,5 @@ class FavoriteReplyTest extends TestCase
             ->call('favorite');
 
         $this->assertCount(0, $reply->fresh()->favorites);
-
-        // $reply->favorite();
-    
-        // $this->delete('replies/' . $reply->id . '/favorites');
-    
-        // $this->assertCount(0, $reply->favorites);
     }
 }

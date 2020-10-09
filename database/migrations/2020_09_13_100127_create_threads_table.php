@@ -17,6 +17,7 @@ class CreateThreadsTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('channel_id');
+            $table->string('slug')->unique();
             $table->string('title');
             $table->text('body');
             $table->unsignedInteger('visits')->default(0);

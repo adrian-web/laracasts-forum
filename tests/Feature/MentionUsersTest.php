@@ -26,14 +26,6 @@ class MentionUsersTest extends TestCase
             'user_id' => auth()->id(),
         ]);
 
-        // $thread = create('Thread');
-
-        // $reply = make('Reply', [
-        //     'body' => 'Hey @JaneDoe check this out.'
-        // ]);
-
-        // $this->post($thread->path() . '/replies', $reply->toArray());
-
         $this->assertCount(1, $jane->notifications);
     }
 }

@@ -30,8 +30,6 @@ class SubscribeToThreadTest extends TestCase
             ->call('subscribe')
             ->assertRedirect('login');
 
-        // $thread->subscribe();
-
         $this->assertCount(0, $thread->fresh()->subscriptions);
     }
 
@@ -45,23 +43,8 @@ class SubscribeToThreadTest extends TestCase
         Livewire::test(ThreadSidebar::class, ['thread' => $thread])
             ->call('subscribe');
 
-        // $thread->subscribe();
-
         $this->assertCount(1, $thread->fresh()->subscriptions);
     }
-
-    // /** @test */
-    // public function an_authenticated_user_may_only_subscribe_to_a_thread_once()
-    // {
-    //     $this->signIn();
-
-    //     $thread = create('Thread');
-
-    //     $thread->subscribe();
-    //     $thread->subscribe();
-    
-    //     $this->assertCount(1, $thread->subscriptions);
-    // }
 
     /** @test */
     public function an_authenticated_user_can_unsubscribe_to_a_thread()
@@ -73,14 +56,10 @@ class SubscribeToThreadTest extends TestCase
         Livewire::test(ThreadSidebar::class, ['thread' => $thread])
             ->call('subscribe');
 
-        // $thread->subscribe();
-
         $this->assertCount(1, $thread->fresh()->subscriptions);
 
         Livewire::test(ThreadSidebar::class, ['thread' => $thread])
             ->call('subscribe');
-
-        // $thread->unsubscribe();
     
         $this->assertCount(0, $thread->fresh()->subscriptions);
     }

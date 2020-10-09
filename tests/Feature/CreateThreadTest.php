@@ -41,12 +41,6 @@ class CreateThreadTest extends TestCase
         Livewire::test(CreateThread::class)
             ->call('create')
             ->assertRedirect('login');
-
-        // $this->get("/threads/create")
-        //         ->assertRedirect('login');
-        
-        // $this->post("/threads")
-        //         ->assertRedirect('login');
     }
 
     /** @test */
@@ -58,11 +52,6 @@ class CreateThreadTest extends TestCase
         Livewire::test(CreateThread::class)
             ->call('create')
             ->assertRedirect('email/verify');
-
-        // $thread = make('Thread', ['user_id' => $user->id]);
-
-        // $this->post('/threads', $thread->toArray())
-        //         ->assertRedirect('email/verify');
     }
 
     /** @test */
@@ -77,15 +66,9 @@ class CreateThreadTest extends TestCase
             ->set('body', 'bar')
             ->set('channel_id', $channel->id)
             ->call('create')
-            ->assertRedirect("threads/{$channel->slug}/1");
+            ->assertRedirect("threads/{$channel->slug}/foo" . '-' . time());
 
         $this->assertTrue(Thread::whereTitle('foo')->exists());
-
-        // $thread = make('Thread');
-
-        // $respone = $this->post("threads", $thread->toArray());
-
-        // $this->get($respone->headers->get('Location'))->assertSee($thread->title);
     }
 
     /** @test */
@@ -102,14 +85,6 @@ class CreateThreadTest extends TestCase
         Livewire::test(ManageThread::class, ['thread' => $thread])
             ->call('delete')
             ->assertForbidden();
-
-        // $this->delete($thread->path())
-        //         ->assertRedirect('login');
-
-        // $this->signIn();
-
-        // $this->delete($thread->path())
-        //         ->assertStatus(403);
     }
 
     /** @test */
@@ -125,11 +100,6 @@ class CreateThreadTest extends TestCase
 
         Livewire::test(ManageThread::class, ['thread' => $thread])
             ->call('delete');
-
-        // $this->post('replies/' . $reply->id . '/favorites');
-        
-        // $this->delete($thread->path())
-        //         ->assertRedirect('/threads');
 
         $this->assertDatabaseMissing('threads', $thread->only('id'))
                 ->assertDatabaseMissing('replies', $reply->only('id'));
@@ -153,12 +123,6 @@ class CreateThreadTest extends TestCase
         Livewire::test(ManageThread::class, ['thread' => $thread])
             ->call('update')
             ->assertForbidden();
-
-        // $this->patch($thread->path())
-        //         ->assertRedirect('/login');
-
-        // $this->patch($thread->path())
-        //         ->assertStatus(403);
     }
 
     /** @test */
@@ -175,8 +139,6 @@ class CreateThreadTest extends TestCase
             ->set('title', $updatedTitle)
             ->set('body', $updatedBody)
             ->call('update');
-
-        // $this->patch($thread->path(), ['title' => $updatedTitle, 'body' => $updatedBody]);
 
         $this->assertDatabaseHas('threads', ['id' => $thread->id, 'title' => $updatedTitle, 'body' => $updatedBody]);
     }
@@ -195,7 +157,7 @@ class CreateThreadTest extends TestCase
             ->set('body', 'bar')
             ->set('channel_id', $channel->id)
             ->call('create')
-            ->assertRedirect("threads/{$channel->slug}/1");
+            ->assertRedirect("threads/{$channel->slug}/foo" . '-' . time());
 
         $this->assertTrue(Thread::whereTitle('foo')->exists());
 
@@ -206,15 +168,6 @@ class CreateThreadTest extends TestCase
             ->call('create');
 
         $this->assertFalse(Thread::whereTitle('foofoo')->exists());
-        
-
-        // $thread = make('Thread');
-
-        // $this->post('/threads', $thread->toArray())
-        //         ->assertStatus(302);
-    
-        // $this->post('/threads', $thread->toArray())
-        //         ->assertStatus(429);
     }
 
     /** @test */
@@ -230,9 +183,6 @@ class CreateThreadTest extends TestCase
             ->set('channel_id', $channel->id)
             ->call('create')
             ->assertHasErrors('title');
-
-        // $this->publishThread(['title' => null])
-        //         ->assertSessionHasErrors('title');
     }
 
     /** @test */
@@ -248,9 +198,6 @@ class CreateThreadTest extends TestCase
             ->set('channel_id', $channel->id)
             ->call('create')
             ->assertHasErrors('body');
-
-        // $this->publishThread(['body' => null])
-        //         ->assertSessionHasErrors('body');
     }
 
     /** @test */
@@ -273,20 +220,5 @@ class CreateThreadTest extends TestCase
             ->set('channel_id', 99)
             ->call('create')
             ->assertHasErrors('channel_id');
-
-        // $this->publishThread(['channel_id' => null])
-        //         ->assertSessionHasErrors('channel_id');
-
-        // $this->publishThread(['channel_id' => 99])
-        //         ->assertSessionHasErrors('channel_id');
     }
-
-    // public function publishThread($overrides = [])
-    // {
-    //     $this->signIn();
-
-    //     $thread = make('Thread', $overrides);
-
-    //     return $this->post('/threads', $thread->toArray());
-    // }
 }

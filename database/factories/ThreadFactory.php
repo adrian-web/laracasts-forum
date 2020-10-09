@@ -24,10 +24,13 @@ class ThreadFactory extends Factory
      */
     public function definition()
     {
+        $title = $this->faker->sentence;
+
         return [
             'user_id' => User::factory(),
             'channel_id' => Channel::factory(),
-            'title' => $this->faker->sentence,
+            'slug' => Str::slug($title),
+            'title' => $title,
             'body' => $this->faker->paragraph,
             'visits' => 0,
         ];
