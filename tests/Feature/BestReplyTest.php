@@ -51,4 +51,20 @@ class BestReplyTest extends TestCase
 
         $this->assertTrue($reply->fresh()->isBest());
     }
+
+    /** @test */
+    public function best_reply_deletion_marks_thread_best_reply_as_null()
+    {
+        $this->signIn();
+
+        $reply = create('Reply', ['user_id' => auth()->id()]);
+
+        $reply->thread->markBestReply($reply);
+
+        $this->assertEquals($reply->thread->best_reply_id, $reply->id);
+       
+        $reply->delete();
+
+        $this->assertNull($reply->thread->best_reply_id);
+    }
 }

@@ -41,9 +41,9 @@ class Reply extends Model
             event(new ThreadReceivedNewReply($reply));
         });
 
-        static::deleting(function ($reply) {
+        static::deleted(function ($reply) {
             if ($reply->isBest()) {
-                $reply->thread->best_reply_id = null;
+                $reply->thread->update(['best_reply_id' => null]);
             }
         });
     }

@@ -30,10 +30,10 @@ Features list
 - trending threads sidebar (Redis)
 - create thread w/ modal (AJAX)
 - responsive design (Tailwind CSS)
+- best reply functionality (AJAX)
 
 To-do list
 - subscription to other models (ex. user, channel)
-- best reply functionality
 - sanitizing user inputs
 - forum roles (ex. admin, moderator)
 - username autocomplete in messages
