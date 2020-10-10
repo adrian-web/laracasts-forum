@@ -26,54 +26,25 @@ $classes = "bg-green-200 rounded-md shadow-md p-2";
         </div>
 
         <div class="inline-flex items-center mt-3 sm:mt-0">
-            @can('update', $reply)
-            <x-jet-secondary-button id="{{'markAsBest' . $reply->id}}" wire:click="best">
-                <span class="fa fa-star" aria-hidden="true"></span>
-            </x-jet-secondary-button>
-            @endcan
-
-            <x-state-button class="ml-4" :state="$favoriteState" id="{{'favorite' . $reply->id}}" wire:click="favorite">
+            <x-state-button :state="$favoriteState" id="{{'favorite' . $reply->id}}" wire:click="favorite">
                 <span class="fa fa-heart" aria-hidden="true"></span>
                 <span class="ml-1 leading-3">{{ $favoriteCount }}</span>
             </x-state-button>
 
-            @can('update', $reply)
-            <div class="ml-4">
-                <x-jet-secondary-button wire:click="$toggle('editState')">
-                    <span class="fa fa-chevron-down" aria-hidden="true"></span>
-                </x-jet-secondary-button>
-            </div>
+            @auth
+            @can('update', $reply->thread)
+            <x-jet-secondary-button class="ml-4" id="{{'markAsBest' . $reply->id}}" wire:click="best">
+                <span class="fa fa-star" aria-hidden="true"></span>
+            </x-jet-secondary-button>
             @endcan
+            @endauth
 
-            @can('delete', $reply)
-            <div class="ml-4" x-data="{ destroy: @entangle('deleteState'), destroying: false }" x-cloak>
-                <div x-show="!destroy">
-                    <x-jet-danger-button wire:click="$toggle('deleteState')">
-                        <span class="fa fa-trash-o" aria-hidden="true"></span>
-                    </x-jet-danger-button>
-                </div>
-                <div x-show="destroy">
-                    <div x-show="!destroying">
-                        <x-jet-danger-button wire:click="delete" x-on:click="destroying = true"
-                            x-on:click.away="destroy = false">
-                            <span class="fa fa-check" aria-hidden="true"></span>
-                        </x-jet-danger-button>
-                    </div>
-                    <div x-show="destroying">
-                        <x-jet-danger-button>
-                            <svg class="animate-spin h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
-                                    stroke-width="4">
-                                </circle>
-                                <path class="opacity-75" fill="currentColor"
-                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                                </path>
-                            </svg>
-                        </x-jet-danger-button>
-                    </div>
-                </div>
-            </div>
+            @can('update', $reply)
+            <x-jet-secondary-button class="ml-4" x-data="{ shown: {{ (int) $editState }} }" wire:click="
+                $toggle('editState')">
+                <span class="fa fa-chevron-down" aria-hidden="true" x-show="!shown"></span>
+                <span class="fa fa-chevron-up" aria-hidden="true" x-show="shown"></span>
+            </x-jet-secondary-button>
             @endcan
         </div>
     </div>
@@ -102,6 +73,36 @@ $classes = "bg-green-200 rounded-md shadow-md p-2";
                         {{ __('Update') }}
                     </x-jet-button>
                     <x-jet-secondary-button class="ml-3" wire:click="return">Cancel</x-jet-secondary-button>
+                    @can('delete', $reply)
+                    <div class="ml-auto" x-data="{ destroy: false, destroying: false }" x-cloak>
+                        <div x-show="!destroy">
+                            <x-jet-danger-button x-on:click="destroy = true">
+                                <span class="fa fa-trash-o" aria-hidden="true"></span>
+                            </x-jet-danger-button>
+                        </div>
+                        <div x-show="destroy">
+                            <div x-show="!destroying">
+                                <x-jet-danger-button wire:click="delete" x-on:click="destroying = true"
+                                    x-on:click.away="destroy = false">
+                                    <span class="fa fa-check" aria-hidden="true"></span>
+                                </x-jet-danger-button>
+                            </div>
+                            <div x-show="destroying">
+                                <x-jet-danger-button>
+                                    <svg class="animate-spin h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                            stroke-width="4">
+                                        </circle>
+                                        <path class="opacity-75" fill="currentColor"
+                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                        </path>
+                                    </svg>
+                                </x-jet-danger-button>
+                            </div>
+                        </div>
+                    </div>
+                    @endcan
                 </div>
             </form>
         </div>

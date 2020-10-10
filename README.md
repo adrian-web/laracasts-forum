@@ -32,14 +32,13 @@ Features list
 - responsive design (Tailwind CSS)
 - best reply functionality (AJAX)
 - thread can be locked by an admin
+- search bar
 
 To-do list
 - subscription to other models (ex. user, channel)
 - sanitizing user inputs
 - username autocomplete in messages
 - upvote/downvote thread
-- search bar
-- real-time validation on inputs
 
 ## How to setup a Laravel project from github repository
 

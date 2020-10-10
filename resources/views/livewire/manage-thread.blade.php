@@ -16,17 +16,11 @@
 
                 @can('update', $thread)
                 <div class="">
-                    <x-jet-secondary-button wire:click="$toggle('editState')">
-                        <span class="fa fa-chevron-down" aria-hidden="true"></span>
+                    <x-jet-secondary-button x-data="{ shown: {{ (int) $editState }} }"
+                        wire:click="$toggle('editState')">
+                        <span class="fa fa-chevron-down" aria-hidden="true" x-show="!shown"></span>
+                        <span class="fa fa-chevron-up" aria-hidden="true" x-show="shown"></span>
                     </x-jet-secondary-button>
-                </div>
-                @endcan
-
-                @can('delete', $thread)
-                <div class="ml-4 ">
-                    <x-jet-danger-button wire:click="$toggle('confirmingThreadDeletion')">
-                        <span class="fa fa-trash-o" aria-hidden="true"></span>
-                    </x-jet-danger-button>
                 </div>
                 @endcan
             </div>
@@ -63,6 +57,13 @@
                         <x-jet-secondary-button class="ml-3" wire:click="return">
                             {{ __('Cancel') }}
                         </x-jet-secondary-button>
+                        @can('delete', $thread)
+                        <div class="ml-auto">
+                            <x-jet-danger-button wire:click="$toggle('confirmingThreadDeletion')">
+                                <span class="fa fa-trash-o" aria-hidden="true"></span>
+                            </x-jet-danger-button>
+                        </div>
+                        @endcan
                     </div>
                 </form>
             </div>
