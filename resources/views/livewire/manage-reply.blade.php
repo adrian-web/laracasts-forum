@@ -25,19 +25,18 @@ $classes = "bg-green-200 rounded-md shadow-md p-2";
             </h4>
         </div>
 
+        @if (! $reply->thread->locked)
         <div class="inline-flex items-center mt-3 sm:mt-0">
             <x-state-button :state="$favoriteState" id="{{'favorite' . $reply->id}}" wire:click="favorite">
                 <span class="fa fa-heart" aria-hidden="true"></span>
                 <span class="ml-1 leading-3">{{ $favoriteCount }}</span>
             </x-state-button>
 
-            @auth
             @can('update', $reply->thread)
             <x-jet-secondary-button class="ml-4" id="{{'markAsBest' . $reply->id}}" wire:click="best">
                 <span class="fa fa-star" aria-hidden="true"></span>
             </x-jet-secondary-button>
             @endcan
-            @endauth
 
             @can('update', $reply)
             <x-jet-secondary-button class="ml-4" x-data="{ shown: {{ (int) $editState }} }" wire:click="
@@ -47,6 +46,7 @@ $classes = "bg-green-200 rounded-md shadow-md p-2";
             </x-jet-secondary-button>
             @endcan
         </div>
+        @endif
     </div>
 
     <div class="mt-6 text-gray-500" x-data="{ edit: {{ (int) $editState }} }" x-cloak>

@@ -6,9 +6,11 @@
 
     @auth
     <div class="flex mt-3">
+        @if (! $thread->locked)
         <x-state-button :state="$subscribedState" wire:click="subscribe">
             {{ __('Subscribe') }}
         </x-state-button>
+        @endif
 
         @if (auth()->user()->isAdmin())
         <x-state-button :state="$lockedState" class="ml-auto" wire:click="lock">

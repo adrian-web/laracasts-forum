@@ -25,6 +25,8 @@ class ManageReply extends Component
 
     public $classes;
 
+    protected $listeners = ['lock' => '$refresh', 'unlock' => '$refresh'];
+
     public function mount(Reply $reply)
     {
         $this->reply = $reply;
@@ -40,6 +42,10 @@ class ManageReply extends Component
 
     public function update()
     {
+        if ($this->reply->thread->locked) {
+            return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
+        }
+
         if (auth()->guest()) {
             return redirect('login');
         }
@@ -63,6 +69,10 @@ class ManageReply extends Component
 
     public function delete()
     {
+        if ($this->reply->thread->locked) {
+            return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
+        }
+
         if (auth()->guest()) {
             return redirect('login');
         }
@@ -78,6 +88,10 @@ class ManageReply extends Component
 
     public function favorite()
     {
+        if ($this->reply->thread->locked) {
+            return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
+        }
+
         if (auth()->guest()) {
             return redirect('login');
         }
@@ -107,6 +121,10 @@ class ManageReply extends Component
 
     public function best()
     {
+        if ($this->reply->thread->locked) {
+            return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
+        }
+        
         if (auth()->guest()) {
             return redirect('login');
         }

@@ -13,7 +13,6 @@
             </div>
 
             <div class="inline-flex items-center mt-3 sm:mt-0">
-
                 @can('update', $thread)
                 <div class="">
                     <x-jet-secondary-button x-data="{ shown: {{ (int) $editState }} }"

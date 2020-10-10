@@ -39,7 +39,7 @@ class ThreadSidebar extends Component
                 'locked' => false
             ]);
 
-            $this->emitTo('CreateReply', 'unhide');
+            $this->emit('unlock');
 
             $this->emitTo('FlashMessage', 'flash', 'unlocked a thread');
 
@@ -49,7 +49,7 @@ class ThreadSidebar extends Component
                 'locked' => true
             ]);
 
-            $this->emitTo('CreateReply', 'hide');
+            $this->emit('lock');
 
             $this->emitTo('FlashMessage', 'flash', 'locked a thread');
 

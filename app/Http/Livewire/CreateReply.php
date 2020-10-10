@@ -12,15 +12,15 @@ class CreateReply extends Component
 
     public $body;
 
-    public $hideState;
+    public $lockState;
 
-    protected $listeners = ['hide', 'unhide'];
+    protected $listeners = ['lock', 'unlock'];
 
     public function mount(Thread $thread)
     {
         $this->thread = $thread;
 
-        $this->hideState = $thread->locked;
+        $this->lockState = $thread->locked;
     }
 
     public function create()
@@ -53,14 +53,14 @@ class CreateReply extends Component
         $this->body = '';
     }
 
-    public function hide()
+    public function lock()
     {
-        $this->hideState = true;
+        $this->lockState = true;
     }
 
-    public function unhide()
+    public function unlock()
     {
-        $this->hideState = false;
+        $this->lockState = false;
     }
 
     public function render()

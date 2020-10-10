@@ -59,6 +59,10 @@ class ManageThread extends Component
 
     public function update()
     {
+        if ($this->thread->locked) {
+            return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
+        }
+
         if (auth()->guest()) {
             return redirect('login');
         }

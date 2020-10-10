@@ -1,5 +1,5 @@
 <div>
-    <div x-data="{ hidden: {{ (int) $hideState}} }" x-show="!hidden" x-cloak>
+    <div x-data="{ hidden: {{ (int) $lockState}} }" x-show="!hidden" x-cloak>
         <form wire:submit.prevent="create">
             <div class="mt-5 shadow overflow-hidden shadow-md sm:rounded-md">
                 <div class="px-4 py-5 sm:p-6">
@@ -27,7 +27,7 @@
             </div>
         </form>
     </div>
-    <div x-data="{ hidden: {{ (int) $hideState}} }" x-show="hidden" x-cloak>
+    <div x-data="{ hidden: {{ (int) $lockState}} }" x-show="hidden" x-cloak>
         <h4 class="mt-6 text-2xl">
             <p>{{ __('Thread has been locked...')}}</p>
         </h4>

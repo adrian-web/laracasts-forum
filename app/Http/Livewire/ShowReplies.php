@@ -12,7 +12,7 @@ class ShowReplies extends Component
 
     public $thread;
 
-    protected $listeners = ['refresh' => '$refresh'];
+    protected $listeners = ['refresh' => '$refresh', 'lock' => '$refresh', 'unlock' => '$refresh'];
 
     public function mount(Thread $thread)
     {
