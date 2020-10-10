@@ -25,6 +25,8 @@ class ManageReply extends Component
 
     public $favoriteState;
 
+    public $classes;
+
     public function mount(Reply $reply)
     {
         $this->reply = $reply;
@@ -114,13 +116,11 @@ class ManageReply extends Component
         $this->authorize('update', $this->reply->thread);
 
         if ($this->reply->thread->best_reply_id == $this->reply->id) {
-            $this->emit('best', $this->reply->thread->best_reply_id, null);
-
             $this->reply->thread->unmarkBestReply();
 
             $this->emitTo('FlashMessage', 'flash', 'unmarked the best reply');
         } else {
-            $this->emit('best', $this->reply->thread->best_reply_id, $this->reply->id);
+            $this->emit('previousBest', $this->reply->thread->best_reply_id);
 
             $this->reply->thread->markBestReply($this->reply);
 

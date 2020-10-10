@@ -2,7 +2,19 @@
 $body = $reply->displayMentionedUsers();
 @endphp
 
-<div id={{'reply' . $reply->id}} class="">
+@if ($reply->thread->best_reply_id !== null)
+@php
+$best = $reply->thread->best_reply_id;
+@endphp
+
+@if ($best == $reply->id)
+@php
+$classes = "bg-green-200 rounded-md shadow-md p-2";
+@endphp
+@endif
+@endif
+
+<div id={{'reply' . $reply->id}} class="{{ $classes }}">
     <div class="flex flex-col sm:flex-row sm:items-center mt-5 ">
         <div class=" flex-1 items-center inline-flex">
             <img class="h-8 w-8 rounded-full object-cover" src="{{ $reply->owner->profile_photo_url }}"
@@ -102,18 +114,3 @@ $body = $reply->displayMentionedUsers();
     document.getElementById("{{'favorite' . $reply->id}}").classList.add("cursor-not-allowed", "disabled:opacity-100");
 </script>
 @endguest
-
-@can('update', $reply)
-@if ($reply->thread->best_reply_id !== null)
-@php
-$best = $reply->thread->best_reply_id;
-@endphp
-
-@if ($best == $reply->id)
-<script>
-    document.getElementById("{{'reply' . $best}}").classList.add("bg-green-200", "rounded-md", "shadow-nd", "p-2");
-</script>
-@endif
-
-@endif
-@endcan

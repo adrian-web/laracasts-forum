@@ -10,7 +10,6 @@ use App\Traits\RecordActivity;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Notification;
 
 class Reply extends Model
@@ -40,6 +39,12 @@ class Reply extends Model
 
         static::updated(function ($reply) {
             event(new ThreadReceivedNewReply($reply));
+        });
+
+        static::deleting(function ($reply) {
+            if ($reply->isBest()) {
+                $reply->thread->best_reply_id = null;
+            }
         });
     }
 
