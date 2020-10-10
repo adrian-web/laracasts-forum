@@ -31,14 +31,13 @@ Features list
 - create thread w/ modal (AJAX)
 - responsive design (Tailwind CSS)
 - best reply functionality (AJAX)
+- thread can be locked by an admin
 
 To-do list
 - subscription to other models (ex. user, channel)
 - sanitizing user inputs
-- forum roles (ex. admin, moderator)
 - username autocomplete in messages
 - upvote/downvote thread
-- thread can be locked
 - search bar
 - real-time validation on inputs
 

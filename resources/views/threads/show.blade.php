@@ -13,10 +13,11 @@
                 @livewire('show-replies', ['thread' => $thread])
 
                 @if (auth()->check())
+
                 @livewire('create-reply', ['thread' => $thread])
 
                 @else
-                <h4 class="mt-8 text-2xl">
+                <h4 class="mt-6 text-2xl">
                     <a href="{{ route('login') }}">Please sign in...</a>
                 </h4>
                 @endif

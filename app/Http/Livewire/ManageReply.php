@@ -116,13 +116,17 @@ class ManageReply extends Component
         $this->authorize('update', $this->reply->thread);
 
         if ($this->reply->thread->best_reply_id == $this->reply->id) {
-            $this->reply->thread->unmarkBestReply();
+            $this->reply->thread->update([
+                'best_reply_id' => null
+            ]);
 
             $this->emitTo('FlashMessage', 'flash', 'unmarked the best reply');
         } else {
             $this->emit('previousBest', $this->reply->thread->best_reply_id);
 
-            $this->reply->thread->markBestReply($this->reply);
+            $this->reply->thread->update([
+                'best_reply_id' => $this->reply->id
+            ]);
 
             $this->emitTo('FlashMessage', 'flash', 'marked the best reply');
         }

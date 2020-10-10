@@ -121,4 +121,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Thread::class)->latest();
     }
+
+    public function isAdmin()
+    {
+        return in_array($this->username, ['adrian'], true);
+    }
 }

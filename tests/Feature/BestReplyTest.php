@@ -59,7 +59,9 @@ class BestReplyTest extends TestCase
 
         $reply = create('Reply', ['user_id' => auth()->id()]);
 
-        $reply->thread->markBestReply($reply);
+        $reply->thread->update([
+            'best_reply_id' => $reply->id
+        ]);
 
         $this->assertEquals($reply->thread->best_reply_id, $reply->id);
        

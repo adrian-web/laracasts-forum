@@ -84,14 +84,4 @@ class Thread extends Model
     {
         return $this->created_at > Carbon::now()->subSeconds(10);
     }
-
-    public function markBestReply(Reply $reply)
-    {
-        $this->update(['best_reply_id' => $reply->id]);
-    }
-
-    public function unmarkBestReply()
-    {
-        $this->update(['best_reply_id' => null]);
-    }
 }

@@ -34,11 +34,5 @@ class AuthServiceProvider extends ServiceProvider
             }
             return ! $lastThread->wasJustCreated();
         });
-
-        // Gate::before(function ($user) {
-        //     if ($user->username === 'adrian') {
-        //         return true;
-        //     }
-        // });
     }
 }

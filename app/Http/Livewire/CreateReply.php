@@ -12,13 +12,23 @@ class CreateReply extends Component
 
     public $body;
 
+    public $hideState;
+
+    protected $listeners = ['hide', 'unhide'];
+
     public function mount(Thread $thread)
     {
         $this->thread = $thread;
+
+        $this->hideState = $thread->locked;
     }
 
     public function create()
     {
+        if ($this->thread->locked) {
+            return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
+        }
+
         if (auth()->guest()) {
             return redirect('login');
         }
@@ -41,6 +51,16 @@ class CreateReply extends Component
         $this->emitTo('FlashMessage', 'flash', 'created a reply');
 
         $this->body = '';
+    }
+
+    public function hide()
+    {
+        $this->hideState = true;
+    }
+
+    public function unhide()
+    {
+        $this->hideState = false;
     }
 
     public function render()

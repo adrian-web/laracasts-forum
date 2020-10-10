@@ -11,6 +11,8 @@ class ThreadSidebar extends Component
 
     public $subscribedState;
 
+    public $lockedState;
+
     protected $listeners = ['refresh' => '$refresh'];
 
     public function mount(Thread $thread)
@@ -18,6 +20,41 @@ class ThreadSidebar extends Component
         $this->thread = $thread;
 
         $this->subscribedState = $thread->isSubscribed;
+
+        $this->lockedState = $thread->locked;
+    }
+
+    public function lock()
+    {
+        if (auth()->guest()) {
+            return redirect('login');
+        }
+
+        if (! auth()->user()->isAdmin()) {
+            return $this->emitTo('FlashMessage', 'flash', 'You\'re not an administrator', 'red');
+        }
+
+        if ($this->thread->locked) {
+            $this->thread->update([
+                'locked' => false
+            ]);
+
+            $this->emitTo('CreateReply', 'unhide');
+
+            $this->emitTo('FlashMessage', 'flash', 'unlocked a thread');
+
+            $this->lockedState = false;
+        } else {
+            $this->thread->update([
+                'locked' => true
+            ]);
+
+            $this->emitTo('CreateReply', 'hide');
+
+            $this->emitTo('FlashMessage', 'flash', 'locked a thread');
+
+            $this->lockedState = true;
+        }
     }
 
     public function subscribe()

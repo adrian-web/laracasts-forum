@@ -93,4 +93,18 @@ class ThreadTest extends TestCase
     
         $this->assertTrue(Thread::whereSlug('foo-bar' . '-' . time())->exists());
     }
+
+    /** @test */
+    public function a_thread_can_be_locked()
+    {
+        $thread = create('Thread');
+
+        $this->assertFalse($thread->locked);
+
+        $thread->update([
+            'locked' => true
+        ]);
+
+        $this->assertTrue($thread->locked);
+    }
 }
