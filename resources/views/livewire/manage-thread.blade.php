@@ -26,7 +26,7 @@
         </div>
         <div class="mt-6 text-gray-500" x-data="{ edit: {{ (int) $editState }} }" x-cloak>
             <div x-show="!edit">
-                <p>{{ 'Title: ' . $thread->title }}</p>
+                <p class="font-bold">{{ $thread->title }}</p>
                 <p class="mt-3">{{ $thread->body }}</p>
             </div>
 

@@ -1,7 +1,7 @@
 <div>
 
     @if ($replies->total())
-    <h3 class="mt-5 text-2xl text-gray-500">
+    <h3 class="mt-5 text-xl text-gray-500">
         {{ __('Replies') }}
     </h3>
 

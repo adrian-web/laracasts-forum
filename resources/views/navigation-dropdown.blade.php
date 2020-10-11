@@ -15,10 +15,10 @@
                     <x-jet-nav-link href="/dashboard" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="/threads" :active="request()->routeIs('threads')">
+                    <x-jet-nav-link href="/forum" :active="request()->routeIs('forum')">
                         {{ __('Forum') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ Auth::user()->path() }}" :active="request()->routeIs('profiles')">
+                    <x-jet-nav-link href="{{ Auth::user()->path() }}" :active="request()->routeIs('user')">
                         {{ __('Activity') }}
                     </x-jet-nav-link>
                 </div>
@@ -128,10 +128,10 @@
             <x-jet-responsive-nav-link href="/dashboard" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="/threads" :active="request()->routeIs('threads')">
+            <x-jet-responsive-nav-link href="/forum" :active="request()->routeIs('forum')">
                 {{ __('Forum') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ Auth::user()->path() }}" :active="request()->routeIs('profiles')">
+            <x-jet-responsive-nav-link href="{{ Auth::user()->path() }}" :active="request()->routeIs('user')">
                 {{ __('Activity') }}
             </x-jet-responsive-nav-link>
         </div>

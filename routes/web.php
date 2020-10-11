@@ -24,8 +24,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 
-Route::get('/threads', [ThreadController::class, 'index'])->name('threads');
-Route::get('/threads/{channel}', [ThreadController::class, 'index']);
-Route::get('/threads/{channel}/{thread}', [ThreadController::class, 'show']);
+Route::get('/forum', [ThreadController::class, 'index'])->name('forum');
+Route::get('/forum/{channel}', [ThreadController::class, 'index']);
+Route::get('/forum/{channel}/{thread}', [ThreadController::class, 'show']);
 
-Route::get('/profiles/{user}', [ProfileController::class, 'show'])->name('profiles')->middleware('auth');
+Route::get('/user/{user}', [ProfileController::class, 'show'])->name('user')->middleware('auth');

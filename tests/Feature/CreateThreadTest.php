@@ -19,12 +19,12 @@ class CreateThreadTest extends TestCase
     /** @test  */
     public function guests_and_not_verified_users_cannot_see_thread_creation_modal_containing_livewire_component_on_main_page()
     {
-        $this->get('threads')->assertDontSeeLivewire('create-thread');
+        $this->get('forum')->assertDontSeeLivewire('create-thread');
 
         $user = create('User', ['email_verified_at' => null]);
         $this->actingAs($user);
 
-        $this->get('threads')->assertDontSeeLivewire('create-thread');
+        $this->get('forum')->assertDontSeeLivewire('create-thread');
     }
 
     /** @test  */
@@ -32,7 +32,7 @@ class CreateThreadTest extends TestCase
     {
         $this->signIn();
 
-        $this->get('threads')->assertSeeLivewire('create-thread');
+        $this->get('forum')->assertSeeLivewire('create-thread');
     }
 
     /** @test */
@@ -66,7 +66,7 @@ class CreateThreadTest extends TestCase
             ->set('body', 'bar')
             ->set('channel_id', $channel->id)
             ->call('create')
-            ->assertRedirect("threads/{$channel->slug}/foo" . '-' . time());
+            ->assertRedirect("forum/{$channel->slug}/foo" . '-' . time());
 
         $this->assertTrue(Thread::whereTitle('foo')->exists());
     }
@@ -157,7 +157,7 @@ class CreateThreadTest extends TestCase
             ->set('body', 'bar')
             ->set('channel_id', $channel->id)
             ->call('create')
-            ->assertRedirect("threads/{$channel->slug}/foo" . '-' . time());
+            ->assertRedirect("forum/{$channel->slug}/foo" . '-' . time());
 
         $this->assertTrue(Thread::whereTitle('foo')->exists());
 

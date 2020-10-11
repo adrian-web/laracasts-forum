@@ -415,7 +415,7 @@
         </div>
         @endif
         <div class="fixed top-0 left-0 px-6 py-4">
-            <a href="/threads" class="underline text-gray-700 text-sm dark:text-white">Forum</a>
+            <a href="/forum" class="underline text-gray-700 text-sm dark:text-white">Forum</a>
         </div>
 
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">

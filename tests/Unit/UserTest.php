@@ -19,7 +19,7 @@ class UserTest extends TestCase
     {
         $user = create('User');
 
-        $this->assertEquals($user->path(), '/profiles/' . $user->username);
+        $this->assertEquals($user->path(), '/user/' . $user->username);
     }
 
     /** @test */

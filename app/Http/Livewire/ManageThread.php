@@ -54,7 +54,7 @@ class ManageThread extends Component
         // flash-message.blade.php disapears on redirect
         // $this->emitTo('FlashMessage', 'flash', 'deleted a thread');
         
-        return redirect()->route('threads');
+        return redirect()->route('forum');
     }
 
     public function update()

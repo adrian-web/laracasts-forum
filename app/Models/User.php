@@ -67,7 +67,7 @@ class User extends Authenticatable
 
     public function path()
     {
-        return '/profiles/' . $this->username;
+        return '/user/' . $this->username;
     }
 
     public function threads()

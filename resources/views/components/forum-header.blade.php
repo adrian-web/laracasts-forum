@@ -15,21 +15,21 @@ duration-150 ease-in-out';
 
             <x-slot name="content">
 
-                <x-jet-dropdown-link href="/threads">
+                <x-jet-dropdown-link href="/forum">
                     {{ __('All Threads') }}
                 </x-jet-dropdown-link>
                 <div class="border-t border-gray-100"></div>
                 @auth
-                <x-jet-dropdown-link href="{{ '/threads?by=' . auth()->user()->username }}">
+                <x-jet-dropdown-link href="{{ '/forum?by=' . auth()->user()->username }}">
                     {{ __('My Threads') }}
                 </x-jet-dropdown-link>
                 @endauth
                 <div class="border-t border-gray-100"></div>
-                <x-jet-dropdown-link href="/threads?popular=1">
+                <x-jet-dropdown-link href="/forum?popular">
                     {{ __('Popular Threads') }}
                 </x-jet-dropdown-link>
                 <div class="border-t border-gray-100"></div>
-                <x-jet-dropdown-link href="/threads?unanswered=1">
+                <x-jet-dropdown-link href="/forum?unanswered">
                     {{ __('Unanswered Threads') }}
                 </x-jet-dropdown-link>
 
@@ -45,7 +45,7 @@ duration-150 ease-in-out';
             <x-slot name="content">
 
                 @foreach ($channels as $channel)
-                <x-jet-dropdown-link href="/threads/{{$channel->slug}}">
+                <x-jet-dropdown-link href="/forum/{{$channel->slug}}">
                     {{ $channel->name }}
                 </x-jet-dropdown-link>
                 <div class="border-t border-gray-100"></div>

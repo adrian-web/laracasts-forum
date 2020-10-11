@@ -16,7 +16,7 @@ class ReadThreadsTest extends TestCase
     {
         $thread = create('Thread');
 
-        $this->get('threads')
+        $this->get('forum')
                 ->assertSee($thread->title);
     }
 
@@ -54,7 +54,7 @@ class ReadThreadsTest extends TestCase
             'user_id' => auth()->id()
         ]);
     
-        $string = "Hello, <a href=\"/profiles/Janek\" class=\"hover:underline\">@Janek</a>. Also, hello @Seba. (unregistered)";
+        $string = "Hello, <a href=\"/user/Janek\" class=\"hover:underline\">@Janek</a>. Also, hello @Seba. (unregistered)";
 
         $this->get($thread->path())
                     ->assertSee($string, $escape = false);
@@ -68,7 +68,7 @@ class ReadThreadsTest extends TestCase
         $threadInChannel = create('Thread', ['channel_id' => $channel->id]);
         $threadNotInChannel = create('Thread');
     
-        $this->get('threads/' . $channel->slug)
+        $this->get('forum/' . $channel->slug)
                 ->assertSee($threadInChannel->title)
                 ->assertDontSee($threadNotInChannel->title);
     }
@@ -82,7 +82,7 @@ class ReadThreadsTest extends TestCase
         $threadByJanek = create('Thread', ['user_id' => $user->id]);
         $threadNotByJanek = create('Thread');
 
-        $this->get('threads?by=janek')
+        $this->get('forum?by=janek')
                 ->assertSee($threadByJanek->title)
                 ->assertDontSee($threadNotByJanek->title);
     }
@@ -100,7 +100,7 @@ class ReadThreadsTest extends TestCase
 
         $threadWithNoReplies = create('Thread');
 
-        $response = $this->get('threads?popular=1');
+        $response = $this->get('forum?popular');
 
         $response->assertSeeInOrder([
             $threadWithThreeReplies->title,
@@ -117,7 +117,7 @@ class ReadThreadsTest extends TestCase
         $threadWithReply = create('Thread');
         create('Reply', ['thread_id' => $threadWithReply->id]);
 
-        $this->get('threads?unanswered=1')
+        $this->get('forum?unanswered')
                 ->assertSee($threadWithoutReply->title)
                 ->assertDontSee($threadWithReply->title);
     }

@@ -50,7 +50,7 @@ class Thread extends Model
 
     public function path()
     {
-        return 'threads/' . $this->channel->slug . '/' . $this->slug;
+        return '/forum/' . $this->channel->slug . '/' . $this->slug;
     }
 
     public function creator()

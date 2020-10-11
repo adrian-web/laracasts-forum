@@ -35,10 +35,9 @@ Features list
 - search bar
 
 To-do list
-- subscription to other models (ex. user, channel)
 - sanitizing user inputs
 - username autocomplete in messages
-- upvote/downvote thread
+- trending threads in specific timeframe (Redis)
 
 ## How to setup a Laravel project from github repository
 

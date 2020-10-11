@@ -18,7 +18,7 @@ class ThreadTest extends TestCase
     {
         $thread = create('Thread');
 
-        $this->assertEquals($thread->path(), 'threads/' . $thread->channel->slug . '/' . $thread->slug);
+        $this->assertEquals($thread->path(), '/forum/' . $thread->channel->slug . '/' . $thread->slug);
     }
 
     /** @test */
