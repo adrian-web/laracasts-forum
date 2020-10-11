@@ -6,12 +6,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class ProfilesPageTest extends TestCase
+class UserPageTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
     
     /** @test */
-    public function only_a_signed_in_user_can_view_user_profiles_page()
+    public function only_a_signed_in_user_can_view_users_page()
     {
         $user = create('User');
 
@@ -26,7 +26,7 @@ class ProfilesPageTest extends TestCase
     }
 
     /** @test */
-    public function a_user_has_a_profiles_page()
+    public function a_user_has_a_page()
     {
         $user = create('User');
         $this->signIn($user);
@@ -36,7 +36,7 @@ class ProfilesPageTest extends TestCase
     }
 
     /** @test */
-    public function profiles_page_shows_all_threads_associated_with_a_user()
+    public function users_page_shows_all_threads_associated_with_a_user()
     {
         $this->signIn();
 

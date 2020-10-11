@@ -7,7 +7,7 @@ use App\Models\Channel;
 use App\Models\Thread;
 use App\Models\Trending;
 
-class ThreadController extends Controller
+class ForumController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +18,7 @@ class ThreadController extends Controller
     {
         $threads = $this->getThreads($channel, $filters);
 
-        return view('threads.index', [
+        return view('forum.index', [
             'threads' => $threads,
             'trending' => $trending->get()
         ]);
@@ -40,7 +40,7 @@ class ThreadController extends Controller
 
         $thread->increment('visits');
 
-        return view('threads.show', [
+        return view('forum.show', [
             'thread' => $thread,
             // 'replies' => $thread->replies()->paginate(10)
         ]);

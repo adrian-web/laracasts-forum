@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\ForumController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ThreadController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +24,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 
-Route::get('/forum', [ThreadController::class, 'index'])->name('forum');
-Route::get('/forum/{channel}', [ThreadController::class, 'index']);
-Route::get('/forum/{channel}/{thread}', [ThreadController::class, 'show']);
+Route::get('/forum', [ForumController::class, 'index'])->name('forum');
+Route::get('/forum/{channel}', [ForumController::class, 'index']);
+Route::get('/forum/{channel}/{thread}', [ForumController::class, 'show']);
 
-Route::get('/user/{user}', [ProfileController::class, 'show'])->name('user')->middleware('auth');
+Route::get('/user/{user}', [UserController::class, 'show'])->name('user')->middleware('auth');

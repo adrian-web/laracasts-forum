@@ -12,7 +12,7 @@
                     <img class="h-8 w-8 rounded-full object-cover" src="{{ $user->profile_photo_url }}"
                         alt="{{ $user->username }}" />
                     <h4 class="ml-3 text-xl text-gray-500">
-                        {{ $user->name . "'s profiles page" }}
+                        {{ $user->name . "'s page" }}
                     </h4>
                 </div>
 
@@ -21,8 +21,8 @@
                 <h4 class="text-xl text-gray-500">{{ $date }}</h4>
 
                 @foreach ($activity as $record)
-                @if (view()->exists("profiles.activities.{$record->type}"))
-                @include ("profiles.activities.{$record->type}", ['activity' => $record])
+                @if (view()->exists("user.activities.{$record->type}"))
+                @include ("user.activities.{$record->type}", ['activity' => $record])
                 @endif
 
                 @if ( $loop->last )
