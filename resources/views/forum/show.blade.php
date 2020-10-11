@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <div class="order-first lg:order-none lg:max-w-2xl mb-6 lg:mt-0 sm:px-6 lg:px-8">
+        <div class="order-first lg:order-none lg:max-w-md mb-6 lg:mt-0 sm:px-6 lg:px-8">
             <div class="bg-white p-6 sm:px-20 overflow-hidden shadow-xl sm:rounded-lg">
 
                 @livewire('thread-sidebar', ['thread' => $thread])

@@ -11,13 +11,12 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex sm:items-center">
                     <x-jet-nav-link href="/dashboard" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="/forum" :active="request()->routeIs('forum')">
-                        {{ __('Forum') }}
-                    </x-jet-nav-link>
+
                     <x-jet-nav-link href="{{ Auth::user()->path() }}" :active="request()->routeIs('user')">
                         {{ __('Activity') }}
                     </x-jet-nav-link>
@@ -128,9 +127,7 @@
             <x-jet-responsive-nav-link href="/dashboard" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="/forum" :active="request()->routeIs('forum')">
-                {{ __('Forum') }}
-            </x-jet-responsive-nav-link>
+
             <x-jet-responsive-nav-link href="{{ Auth::user()->path() }}" :active="request()->routeIs('user')">
                 {{ __('Activity') }}
             </x-jet-responsive-nav-link>

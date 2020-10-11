@@ -100,7 +100,7 @@ class ReadThreadsTest extends TestCase
 
         $threadWithNoReplies = create('Thread');
 
-        $response = $this->get('forum?popular');
+        $response = $this->get('forum?popular=1');
 
         $response->assertSeeInOrder([
             $threadWithThreeReplies->title,
@@ -117,7 +117,7 @@ class ReadThreadsTest extends TestCase
         $threadWithReply = create('Thread');
         create('Reply', ['thread_id' => $threadWithReply->id]);
 
-        $this->get('forum?unanswered')
+        $this->get('forum?unanswered=1')
                 ->assertSee($threadWithoutReply->title)
                 ->assertDontSee($threadWithReply->title);
     }

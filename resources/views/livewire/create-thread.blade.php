@@ -1,5 +1,5 @@
 <div>
-    <button type="button" class="{{$classes}}" wire:click="$toggle('confirmingThreadCreation')">
+    <button type="button" class="ml-4 {{$classes}}" wire:click="$toggle('confirmingThreadCreation')">
         {{ __('Create') }}
     </button>
 
