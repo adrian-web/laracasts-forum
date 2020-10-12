@@ -10,9 +10,10 @@ duration-150 ease-in-out';
         <button type="button" class="{{$classes}}">
             <a href="{{ route('forum') }}">{{ __('Forum') }}</a>
         </button>
+
         <x-jet-dropdown align="left" width="48">
             <x-slot name="trigger">
-                <button type="button" class=" ml-4 {{$classes}}">
+                <button type="button" class="ml-4 {{$classes}}">
                     {{ __('Channels') }}
                 </button>
             </x-slot>
@@ -28,6 +29,7 @@ duration-150 ease-in-out';
 
             </x-slot>
         </x-jet-dropdown>
+
         @if(auth()->check() && auth()->user()->hasVerifiedEmail())
         @livewire('create-thread', ['classes' => $classes])
         @endif

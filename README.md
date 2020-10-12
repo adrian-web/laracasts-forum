@@ -34,6 +34,9 @@ Features list
 - thread can be locked by an admin
 - search bar
 
+Working on list
+- 
+
 To-do list
 - sanitizing user inputs
 - username autocomplete in messages

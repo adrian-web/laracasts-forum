@@ -1,11 +1,10 @@
-<x-app-layout>
-
+<div>
     <x-slot name="header">
         <x-forum-header />
     </x-slot>
 
     <div class="flex flex-col lg:flex-row py-12">
-        <div class="lg:flex-grow max-w-7xl sm:px-6 lg:px-8">
+        <div class="lg:flex-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="bg-white p-6 sm:px-20 overflow-hidden shadow-xl sm:rounded-lg">
 
                 @livewire('manage-thread', ['thread' => $thread])
@@ -25,7 +24,7 @@
             </div>
         </div>
 
-        <div class="order-first lg:order-none lg:max-w-md mb-6 lg:mt-0 sm:px-6 lg:px-8">
+        <div class="order-first lg:order-none lg:flex-1 lg:max-w-2xl mb-6 lg:mt-0 sm:px-6 lg:px-8">
             <div class="bg-white p-6 sm:px-20 overflow-hidden shadow-xl sm:rounded-lg">
 
                 @livewire('thread-sidebar', ['thread' => $thread])
@@ -33,5 +32,4 @@
             </div>
         </div>
     </div>
-
-</x-app-layout>
+</div>

@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\ForumController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Livewire\ShowThread;
 use App\Http\Livewire\ShowThreads;
 
 /*
@@ -27,6 +27,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::get('/forum', ShowThreads::class)->name('forum');
 Route::get('/forum/{channel}', ShowThreads::class);
 
-Route::get('/forum/{channel}/{thread}', [ForumController::class, 'show']);
+Route::get('/forum/{channel}/{thread}', ShowThread::class);
 
 Route::get('/user/{user}', [UserController::class, 'show'])->name('user')->middleware('auth');

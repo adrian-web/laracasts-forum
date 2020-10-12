@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Models\Channel;
 use App\Models\Thread;
-use App\Models\Trending;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -25,25 +24,26 @@ class ShowThreads extends Component
 
     public $page = 1;
 
+    public $search = '';
+
     protected $queryString = [
         'popular' => ['except' => 0],
         'unanswered' => ['except' => 0],
         'by' => ['except' => ''],
         'page' => ['except' => 1],
+        'search' => ['except' => ''],
     ];
 
     public function mount(Channel $channel)
     {
-        $this->fill(request()->only('popular', 'unanswered', 'by', 'page'));
+        $this->fill(request()->only('popular', 'unanswered', 'by', 'page', 'search'));
 
         $this->channel = $channel;
     }
 
-    public function filter($type, $value)
+    public function query($type, $value)
     {
-        $this->popular = 0;
-        $this->unanswered = 0;
-        $this->by = '';
+        $this->resetQueries();
 
         if ($type == 'popular') {
             $this->popular = $value;
@@ -52,13 +52,25 @@ class ShowThreads extends Component
         } elseif ($type == 'by') {
             $this->by = $value;
         }
-
-        $this->resetPage();
     }
 
-    protected function getThreads()
+    protected function resetQueries()
     {
-        if ($this->popular == 1) {
+        $this->popular = 0;
+        $this->unanswered = 0;
+        $this->by = '';
+        $this->page = 1;
+        $this->search = '';
+    }
+
+    protected function filterThreads()
+    {
+        if ($this->search != '') {
+            $this->threads = Thread::where(function ($query) {
+                $query->where('body', 'like', '%'.$this->search.'%')
+                      ->orWhere('title', 'like', '%'.$this->search.'%');
+            });
+        } elseif ($this->popular == 1) {
             $this->threads = Thread::orderBy('replies_count', 'desc');
         } elseif ($this->unanswered == 1) {
             $this->threads = Thread::doesntHave('replies');
@@ -78,11 +90,10 @@ class ShowThreads extends Component
 
     public function render()
     {
-        $this->threads = $this->getThreads();
+        $this->threads = $this->filterThreads();
 
         return view('livewire.show-threads', [
             'threads' => $this->threads->paginate(10),
-            'trending' => (new Trending)->get(),
         ]);
     }
 }

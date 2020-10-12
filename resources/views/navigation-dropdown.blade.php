@@ -127,7 +127,9 @@
             <x-jet-responsive-nav-link href="/dashboard" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
-
+            <x-jet-responsive-nav-link href="/forum" :active="request()->routeIs('forum')">
+                {{ __('Forum') }}
+            </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ Auth::user()->path() }}" :active="request()->routeIs('user')">
                 {{ __('Activity') }}
             </x-jet-responsive-nav-link>
