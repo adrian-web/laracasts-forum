@@ -14,8 +14,6 @@ class ManageThread extends Component
 
     public $thread;
 
-    public $editState = false;
-
     public $body;
 
     public $title;
@@ -81,8 +79,6 @@ class ManageThread extends Component
 
         $this->emitTo('FlashMessage', 'flash', 'updated a thread');
 
-        $this->editState = false;
-
         $this->bodyCache = $this->body;
 
         $this->titleCache = $this->title;
@@ -90,8 +86,6 @@ class ManageThread extends Component
 
     public function return()
     {
-        $this->editState = false;
-
         $this->body = $this->bodyCache;
 
         $this->title = $this->titleCache;

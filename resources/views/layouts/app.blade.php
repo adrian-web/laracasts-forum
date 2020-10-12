@@ -54,6 +54,7 @@
 
     @livewireScripts
 
+    <script src="/js/manage-reply.js"></script>
     <script src="/js/best-reply.js"></script>
 </body>
 

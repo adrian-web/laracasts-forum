@@ -32,10 +32,7 @@ Features list
 - responsive design (Tailwind CSS)
 - best reply functionality (AJAX)
 - thread can be locked by an admin
-- search bar
-
-Working on list
-- 
+- search bar instant search (title and body)
 
 To-do list
 - sanitizing user inputs

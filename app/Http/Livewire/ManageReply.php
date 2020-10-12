@@ -13,8 +13,6 @@ class ManageReply extends Component
 
     public $reply;
 
-    public $editState = false;
-
     public $body;
 
     public $bodyCache;
@@ -62,8 +60,6 @@ class ManageReply extends Component
 
         $this->emit('flash', 'updated a reply');
 
-        $this->editState = false;
-
         $this->bodyCache = $this->body;
     }
 
@@ -81,7 +77,8 @@ class ManageReply extends Component
 
         $this->reply->delete();
 
-        $this->emit('refresh');
+        // Alpine.js hides the element
+        // $this->emit('refresh');
 
         $this->emitTo('FlashMessage', 'flash', 'deleted a reply');
     }
@@ -150,8 +147,6 @@ class ManageReply extends Component
 
     public function return()
     {
-        $this->editState = false;
-
         $this->body = $this->bodyCache;
     }
 

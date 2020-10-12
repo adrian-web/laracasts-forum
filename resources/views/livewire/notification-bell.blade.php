@@ -1,5 +1,5 @@
-<div class="">
-    <x-jet-dropdown align="right" width="64" class="">
+<div>
+    <x-jet-dropdown align="right" width="64">
         <x-slot name="trigger">
             <span class="relative mr-3">
                 <button type="button" class="text-gray-500">

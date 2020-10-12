@@ -6,6 +6,7 @@ use App\Filters\ThreadFilter;
 use App\Traits\RecordActivity;
 use App\Traits\Subscribable;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -45,7 +46,7 @@ class Thread extends Model
 
     public function setSlugAttribute($slug)
     {
-        $this->attributes['slug'] = $slug . '-' . time();
+        $this->attributes['slug'] = Str::slug($slug) . '-' . time();
     }
 
     public function path()
