@@ -12,31 +12,33 @@ $classes = "bg-green-200 rounded-md shadow-md p-2";
 
 <div>
     <div id={{'reply' . $reply->id}} class="my-2 {{$classes}}" x-data="{...judging(), ...changing()}" x-show="!killed">
-        <div class="flex flex-col sm:flex-row sm:items-center mt-5 ">
+        <div class="flex flex-col sm:flex-row sm:items-center ">
             <div class=" flex-1 items-center inline-flex">
                 <img class="h-8 w-8 rounded-full object-cover" src="{{ $reply->owner->profile_photo_url }}"
                     alt="{{ $reply->owner->username }}" />
-                <h4 class="ml-3 text-gray-500">
-                    <a href="{{ $reply->owner->path() }}">{{ $reply->owner->name }}</a>
+                <h4 class="ml-2 text-sm text-gray-500">
+                    <a href="{{ $reply->owner->path() }}">
+                        {{ $reply->owner->name }}
+                    </a>
                     {{ ' replied ' . $reply->created_at->diffForHumans() }}
                 </h4>
             </div>
 
             @if (! $reply->thread->locked)
-            <div class="inline-flex items-center mt-3 sm:mt-0">
+            <div class="inline-flex items-center mt-2 sm:mt-0">
                 <x-state-button :state="$favoriteState" wire:click="favorite">
                     <span class="fa fa-heart" aria-hidden="true"></span>
                     <span class="ml-1 leading-3">{{ $favoriteCount }}</span>
                 </x-state-button>
 
                 @can('update', $reply->thread)
-                <x-jet-secondary-button class="ml-4" wire:click="best">
+                <x-jet-secondary-button class="ml-3" wire:click="best">
                     <span class="fa fa-star" aria-hidden="true"></span>
                 </x-jet-secondary-button>
                 @endcan
 
                 @can('update', $reply)
-                <x-jet-secondary-button class="ml-4" x-on:click="show = !show" x-cloak>
+                <x-jet-secondary-button class="ml-3" x-on:click="show = !show" x-cloak>
                     <span class="fa fa-chevron-down" aria-hidden="true" x-show="isClose()"></span>
                     <span class="fa fa-chevron-up" aria-hidden="true" x-show="isOpen()"></span>
                 </x-jet-secondary-button>
@@ -45,7 +47,7 @@ $classes = "bg-green-200 rounded-md shadow-md p-2";
             @endif
         </div>
 
-        <div class="mt-6 text-gray-500" x-cloak>
+        <div class="mt-4 text-gray-500" x-cloak>
             <div x-show="isClose()">{!! $body !!}</div>
 
             <div x-show="isOpen()">

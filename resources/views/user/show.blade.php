@@ -8,17 +8,19 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white p-6 sm:px-20 overflow-hidden shadow-xl sm:rounded-lg">
 
-                <div class="flex items-center">
+                <div class="flex items-center mt-3">
                     <img class="h-8 w-8 rounded-full object-cover" src="{{ $user->profile_photo_url }}"
                         alt="{{ $user->username }}" />
-                    <h4 class="ml-3 text-xl text-gray-500">
+                    <h4 class="ml-3 text-lg text-gray-500">
                         {{ $user->name . "'s page" }}
                     </h4>
                 </div>
+                <hr class="mt-3 mb-6">
 
                 @forelse ($activities as $date => $activity)
-                <hr class="my-6">
-                <h4 class="text-xl text-gray-500">{{ $date }}</h4>
+                <h5 class="text-gray-500">
+                    {{ $date }}
+                </h5>
 
                 @foreach ($activity as $record)
                 @if (view()->exists("user.activities.{$record->type}"))
@@ -26,14 +28,14 @@
                 @endif
 
                 @if ( $loop->last )
-                <div class="mt-6"></div>
+                <div class="my-6"></div>
                 @else
-                <hr class="mt-6">
+                <hr class="my-3">
                 @endif
                 @endforeach
 
                 @empty
-                <p class="mt-6 text-gray-500">
+                <p class="my-3 text-gray-500">
                     There's no activities...
                 </p>
                 @endforelse

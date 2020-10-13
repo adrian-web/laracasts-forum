@@ -12,15 +12,11 @@ class CreateReply extends Component
 
     public $body;
 
-    public $lockState;
-
-    protected $listeners = ['lock', 'unlock'];
+    protected $listeners = ['lock' => '$refresh', 'unlock' => '$refresh'];
 
     public function mount(Thread $thread)
     {
         $this->thread = $thread;
-
-        $this->lockState = $thread->locked;
     }
 
     public function create()
@@ -47,16 +43,6 @@ class CreateReply extends Component
         $this->emitTo('FlashMessage', 'flash', 'created a reply');
 
         $this->body = '';
-    }
-
-    public function lock()
-    {
-        $this->lockState = true;
-    }
-
-    public function unlock()
-    {
-        $this->lockState = false;
     }
 
     public function render()

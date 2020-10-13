@@ -73,8 +73,7 @@ class ManageReply extends Component
 
         $this->reply->delete();
 
-        // Alpine.js hides the element
-        // $this->emit('refresh');
+        $this->emit('refresh');
 
         $this->emitTo('FlashMessage', 'flash', 'deleted a reply');
     }
@@ -112,7 +111,7 @@ class ManageReply extends Component
 
     public function best()
     {
-       if ($this->reply->thread->locked) {
+        if ($this->reply->thread->locked) {
             return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
         } elseif (auth()->guest()) {
             return redirect('login');

@@ -1,7 +1,8 @@
 <div>
-    <div x-data="{ hidden: {{ (int) $lockState}}, words: @entangle('body') }" x-show="!hidden" x-cloak>
+    @if (! $thread->locked)
+    <div x-data="{ words: @entangle('body') }" x-cloak>
         <form wire:submit.prevent="create">
-            <div class="mt-5 shadow overflow-hidden shadow-md sm:rounded-md">
+            <div class="mt-4 shadow overflow-hidden shadow-md sm:rounded-md">
                 <div class="px-4 py-5 sm:p-6">
                     <x-jet-label for="body" value="{{ __('Body') }}" />
                     <textarea name="body" id="body" rows="10" x-model="words"
@@ -27,9 +28,11 @@
             </div>
         </form>
     </div>
-    <div x-data="{ hidden: {{ (int) $lockState}} }" x-show="hidden" x-cloak>
-        <h4 class="mt-6 text-2xl">
+    @else
+    <div>
+        <h4 class="mt-3 text-xl text-gray-500">
             <p>{{ __('Thread has been locked...')}}</p>
         </h4>
     </div>
+    @endif
 </div>

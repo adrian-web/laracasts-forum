@@ -36,16 +36,8 @@
 {{-- Show Threads --}}
 @forelse ($threads as $thread)
 <article>
-    <div class="flex items-center">
-        <img class="h-8 w-8 rounded-full object-cover" src="{{ $thread->creator->profile_photo_url }}"
-            alt="{{ $thread->creator->username }}" />
-        <h4 class="ml-3 text-gray-500">
-            <a href="{{ $thread->creator->path() }}">
-                {{ $thread->creator->name }}
-            </a>
-
-            {{ ' created ' }}
-
+    <div class="flex flex-col">
+        <h4 class="font-medium text-lg text-gray-500">
             <a href="{{ $thread->path() }}">
                 @if (auth()->check() && auth()->user()->hasSeenUpdatesFor($thread))
                 <strong>
@@ -56,11 +48,18 @@
                 @endif
             </a>
         </h4>
+        <h5 class="mt-1 text-xs text-gray-500">
+            {{ 'created by ' }}
+            <a href="{{ $thread->creator->path() }}">
+                {{ $thread->creator->name }}
+            </a>
+            {{ ' ' . $thread->created_at->diffForHumans() }}
+        </h5>
     </div>
 
-    <div class="mt-6 text-sm text-gray-500">{{ $thread->body }}</div>
+    <div class="mt-4 text-gray-500">{{ $thread->body }}</div>
 
-    <div class="flex mt-3 text-sm text-gray-500">
+    <div class="flex mt-2 text-xs text-gray-500">
         <p>
             {{ $thread->visits . ' ' . Str::plural('visit', $thread->visits) }}
         </p>

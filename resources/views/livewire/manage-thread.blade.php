@@ -1,17 +1,22 @@
 <div>
     <article x-data="changing()">
-        <div class="flex flex-col sm:flex-row sm:items-center mt-3">
-            <div class="flex-1 items-center inline-flex">
-                <img class="h-8 w-8 rounded-full object-cover" src="{{ $thread->creator->profile_photo_url }}"
-                    alt="{{ $thread->creator->username }}" />
-                <h4 class="ml-3 text-gray-500">
-                    <a href="{{ $thread->creator->path() }}">
-                        {{ $thread->creator->name }}
-                    </a>
-                    {{ ' created ' . $thread->created_at->diffForHumans()  }}
-                </h4>
+        <div class="flex flex-col sm:flex-row sm:items-center">
+            <div class="flex-1 flex-col">
+                <div x-show="isClose()">
+                    <h4 class="font-medium text-lg text-gray-500">{{ $thread->title }}</h4>
+                    <h5 class="mt-1 text-xs text-gray-500">
+                        {{ 'created by ' }}
+                        <a href="{{ $thread->creator->path() }}">
+                            {{ $thread->creator->name }}
+                        </a>
+                        {{ ' ' . $thread->created_at->diffForHumans()  }}
+                    </h5>
+                </div>
+                <div x-show="isOpen()">
+                </div>
             </div>
 
+            @if (! $thread->locked)
             <div class="inline-flex items-center mt-3 sm:mt-0">
                 @can('update', $thread)
                 <div class="">
@@ -22,10 +27,10 @@
                 </div>
                 @endcan
             </div>
+            @endif
         </div>
-        <div class="mt-6 text-gray-500" x-cloak>
+        <div class="mt-4 text-gray-500" x-cloak>
             <div x-show="isClose()">
-                <p class="font-bold">{{ $thread->title }}</p>
                 <p class="mt-3">{{ $thread->body }}</p>
             </div>
 
