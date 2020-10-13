@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Notification;
+use Stevebauman\Purify\Facades\Purify;
 
 class Reply extends Model
 {
@@ -91,7 +92,7 @@ class Reply extends Model
             $body = str_ireplace("@" . ($user->toArray())["username"], "<a href=\"" . $user->path() . "\" class=\"hover:underline\">@" . ($user->toArray())["username"] . "</a>", $body);
         }
 
-        return $body;
+        return Purify::clean($body);
     }
 
     public function isBest()

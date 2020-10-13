@@ -2,7 +2,7 @@
 $body = $reply->displayMentionedUsers();
 @endphp
 
-@if ($reply->thread->best_reply_id !== null && $reply->thread->best_reply_id == $reply->id)
+@if ($reply->thread->best_reply_id !== null && $reply->isBest)
 
 @php
 $classes = "bg-green-200 rounded-md shadow-md p-2";

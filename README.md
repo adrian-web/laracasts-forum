@@ -33,9 +33,9 @@ Features list
 - best reply functionality (AJAX)
 - thread can be locked by an admin
 - search bar instant search - title & body (Livewire)
+- sanitizing user inputs (Purify)
 
 To-do list
-- sanitizing user inputs
 - username autocomplete in messages
 - trending threads in specific timeframe (Redis)
 
