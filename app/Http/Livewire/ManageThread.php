@@ -39,7 +39,9 @@ class ManageThread extends Component
 
     public function delete()
     {
-        if (auth()->guest()) {
+        if ($this->thread->locked) {
+            return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
+        } elseif (auth()->guest()) {
             return redirect('login');
         }
         
@@ -59,9 +61,7 @@ class ManageThread extends Component
     {
         if ($this->thread->locked) {
             return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
-        }
-
-        if (auth()->guest()) {
+        } elseif (auth()->guest()) {
             return redirect('login');
         }
 

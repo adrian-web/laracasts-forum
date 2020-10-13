@@ -89,7 +89,12 @@ class Reply extends Model
         $body = $this->body;
 
         foreach ($users as $user) {
-            $body = str_ireplace("@" . ($user->toArray())["username"], "<a href=\"" . $user->path() . "\" class=\"hover:underline\">@" . ($user->toArray())["username"] . "</a>", $body);
+            $username = ($user->toArray())["username"];
+            $body = str_ireplace(
+                "@" . $username,
+                "<a href=\"{$user->path()}\">@{$username}</a>",
+                $body
+            );
         }
 
         return Purify::clean($body);

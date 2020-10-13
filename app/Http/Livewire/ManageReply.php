@@ -42,9 +42,7 @@ class ManageReply extends Component
     {
         if ($this->reply->thread->locked) {
             return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
-        }
-
-        if (auth()->guest()) {
+        } elseif (auth()->guest()) {
             return redirect('login');
         }
         
@@ -67,9 +65,7 @@ class ManageReply extends Component
     {
         if ($this->reply->thread->locked) {
             return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
-        }
-
-        if (auth()->guest()) {
+        } elseif (auth()->guest()) {
             return redirect('login');
         }
 
@@ -87,9 +83,7 @@ class ManageReply extends Component
     {
         if ($this->reply->thread->locked) {
             return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
-        }
-
-        if (auth()->guest()) {
+        } elseif (auth()->guest()) {
             return redirect('login');
         }
 
@@ -118,11 +112,9 @@ class ManageReply extends Component
 
     public function best()
     {
-        if ($this->reply->thread->locked) {
+       if ($this->reply->thread->locked) {
             return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
-        }
-        
-        if (auth()->guest()) {
+        } elseif (auth()->guest()) {
             return redirect('login');
         }
 

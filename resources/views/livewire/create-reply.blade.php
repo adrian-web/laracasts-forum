@@ -1,11 +1,11 @@
 <div>
-    <div x-data="{ hidden: {{ (int) $lockState}} }" x-show="!hidden" x-cloak>
+    <div x-data="{ hidden: {{ (int) $lockState}}, words: @entangle('body') }" x-show="!hidden" x-cloak>
         <form wire:submit.prevent="create">
             <div class="mt-5 shadow overflow-hidden shadow-md sm:rounded-md">
                 <div class="px-4 py-5 sm:p-6">
                     <x-jet-label for="body" value="{{ __('Body') }}" />
-                    <textarea name="body" id="body" rows="10" wire:model.defer="body"
-                        class="form-textarea shadow-sm mt-1 block w-full" required></textarea>
+                    <textarea name="body" id="body" rows="10" x-model="words"
+                        class="form-textarea shadow-sm mt-1 block w-full mentionable" required></textarea>
                     <x-jet-input-error for="body" class="mt-2" />
                 </div>
                 <div class="flex items-center justify-end px-4 py-3 bg-gray-50 sm:px-6">

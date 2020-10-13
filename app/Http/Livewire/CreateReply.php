@@ -27,13 +27,9 @@ class CreateReply extends Component
     {
         if ($this->thread->locked) {
             return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
-        }
-
-        if (auth()->guest()) {
+        } elseif (auth()->guest()) {
             return redirect('login');
-        }
-
-        if (\Gate::denies('create-throttle', 'Reply')) {
+        } elseif (\Gate::denies('create-throttle', 'Reply')) {
             return $this->emitTo('FlashMessage', 'flash', 'You are posting too frequently', 'red');
         }
 

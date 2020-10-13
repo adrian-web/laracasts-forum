@@ -34,9 +34,9 @@ Features list
 - thread can be locked by an admin
 - search bar instant search - title & body (Livewire)
 - sanitizing user inputs (Purify)
+- username autocomplete in messages (Tribute)
 
 To-do list
-- username autocomplete in messages
 - trending threads in specific timeframe (Redis)
 
 ## How to setup a Laravel project from github repository

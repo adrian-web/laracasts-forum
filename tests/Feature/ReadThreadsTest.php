@@ -54,7 +54,7 @@ class ReadThreadsTest extends TestCase
             'user_id' => auth()->id()
         ]);
     
-        $string = "Hello, <a href=\"/user/Janek\" class=\"hover:underline\">@Janek</a>. Also, hello @Seba. (unregistered)";
+        $string = "Hello, <a href=\"/user/Janek\">@Janek</a>. Also, hello @Seba. (unregistered)";
 
         $this->get($thread->path())
                     ->assertSee($string, $escape = false);

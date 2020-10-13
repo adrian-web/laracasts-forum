@@ -13,6 +13,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="/css/tribute.css" />
 
     @livewireStyles
 
@@ -27,6 +28,8 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.6.0/dist/alpine.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/tribute.js"></script>
 </head>
 
 <body class="font-sans antialiased">
@@ -54,8 +57,8 @@
 
     @livewireScripts
 
+    <script src="/js/tribute-reply.js"></script>
     <script src="/js/manage-reply.js"></script>
-    <script src="/js/best-reply.js"></script>
 </body>
 
 </html>

@@ -28,9 +28,7 @@ class ThreadSidebar extends Component
     {
         if (auth()->guest()) {
             return redirect('login');
-        }
-
-        if (! auth()->user()->isAdmin()) {
+        } elseif (! auth()->user()->isAdmin()) {
             return $this->emitTo('FlashMessage', 'flash', 'You\'re not an administrator', 'red');
         }
 
@@ -59,7 +57,9 @@ class ThreadSidebar extends Component
 
     public function subscribe()
     {
-        if (auth()->guest()) {
+        if ($this->thread->locked) {
+            return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
+        } elseif (auth()->guest()) {
             return redirect('login');
         }
 
