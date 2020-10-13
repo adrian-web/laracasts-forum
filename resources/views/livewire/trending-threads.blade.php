@@ -18,7 +18,7 @@
     @empty
 
     <p class="my-3 text-sm text-gray-500">
-        {{ __('There\'s no trending threads...')}}
+        {{ __('There\'s no trending threads in the past 24 hours...')}}
     </p>
 
     @endforelse
