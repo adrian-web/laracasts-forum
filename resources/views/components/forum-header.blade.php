@@ -6,7 +6,6 @@ duration-150 ease-in-out';
 
 <div class="flex">
     <div class="flex-1 inline-flex">
-
         <button type="button" class="{{$classes}}">
             <a href="{{ route('forum') }}">{{ __('Forum') }}</a>
         </button>
@@ -29,10 +28,6 @@ duration-150 ease-in-out';
 
             </x-slot>
         </x-jet-dropdown>
-
-        @if(auth()->check() && auth()->user()->hasVerifiedEmail())
-        @livewire('create-thread', ['classes' => $classes])
-        @endif
     </div>
 
     <div>

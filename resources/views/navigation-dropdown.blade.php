@@ -16,7 +16,9 @@
                     <x-jet-nav-link href="/dashboard" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
-
+                    <x-jet-nav-link href="/forum" :active="request()->routeIs('forum')">
+                        {{ __('Forum') }}
+                    </x-jet-nav-link>
                     <x-jet-nav-link href="{{ Auth::user()->path() }}" :active="request()->routeIs('user')">
                         {{ __('Activity') }}
                     </x-jet-nav-link>

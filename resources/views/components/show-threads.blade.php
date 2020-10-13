@@ -3,33 +3,32 @@
 {{-- Filter Threads --}}
 <x-jet-dropdown align="left" width="48">
     <x-slot name="trigger">
-        <button type="button" class="mb-3 px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500
-            hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition
-            duration-150 ease-in-out">
+        <x-jet-secondary-button class="mb-3">
             {{ __('Browse Threads') }}
-        </button>
+        </x-jet-secondary-button>
     </x-slot>
 
     <x-slot name="content">
 
-        <x-jet-dropdown-link href="" wire:click.prevent="query('reset', 1)">
+        <x-jet-dropdown-link href="" wire:click.prevent="query('reset', 1, 'browse')">
             {{ __('All Threads') }}
         </x-jet-dropdown-link>
         <div class="border-t border-gray-100"></div>
-        @auth
-        <x-jet-dropdown-link href="" wire:click.prevent="query('by', '{{auth()->user()->username ?? 'guest'}}')">
-            {{ __('My Threads') }}
-        </x-jet-dropdown-link>
-        @endauth
         <div class="border-t border-gray-100"></div>
-        <x-jet-dropdown-link href="" wire:click.prevent="query('popular', 1)">
+        <x-jet-dropdown-link href="" wire:click.prevent="query('popular', 1, 'browse')">
             {{ __('Popular Threads') }}
         </x-jet-dropdown-link>
         <div class=" border-t border-gray-100">
         </div>
-        <x-jet-dropdown-link href="" wire:click.prevent="query('unanswered', 1)">
+        <x-jet-dropdown-link href="" wire:click.prevent="query('unanswered', 1, 'browse')">
             {{ __('Unanswered Threads') }}
         </x-jet-dropdown-link>
+        @auth
+        <x-jet-dropdown-link href=""
+            wire:click.prevent="query('by', '{{auth()->user()->username ?? 'guest'}}', 'browse')">
+            {{ __('My Threads') }}
+        </x-jet-dropdown-link>
+        @endauth
 
     </x-slot>
 </x-jet-dropdown>
@@ -79,7 +78,7 @@
 @endif
 
 @empty
-<p class="my-6 text-gray-500">
+<p class="my-3 text-gray-500">
     There's no threads...
 </p>
 @endforelse

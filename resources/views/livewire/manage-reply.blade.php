@@ -2,20 +2,16 @@
 $body = $reply->displayMentionedUsers();
 @endphp
 
-@if ($reply->thread->best_reply_id !== null)
-@php
-$bestReplyId = $reply->thread->best_reply_id;
-@endphp
+@if ($reply->thread->best_reply_id !== null && $reply->thread->best_reply_id == $reply->id)
 
-@if ($bestReplyId == $reply->id)
 @php
 $classes = "bg-green-200 rounded-md shadow-md p-2";
 @endphp
-@endif
+
 @endif
 
 <div>
-    <div id={{'reply' . $reply->id}} class="{{$classes}}" x-data="{...judging(), ...changing()}" x-show="!killed">
+    <div id={{'reply' . $reply->id}} class="my-2 {{$classes}}" x-data="{...judging(), ...changing()}" x-show="!killed">
         <div class="flex flex-col sm:flex-row sm:items-center mt-5 ">
             <div class=" flex-1 items-center inline-flex">
                 <img class="h-8 w-8 rounded-full object-cover" src="{{ $reply->owner->profile_photo_url }}"
@@ -28,7 +24,7 @@ $classes = "bg-green-200 rounded-md shadow-md p-2";
 
             @if (! $reply->thread->locked)
             <div class="inline-flex items-center mt-3 sm:mt-0">
-                <x-state-button :state="$favoriteState" id="{{'favorite' . $reply->id}}" wire:click="favorite">
+                <x-state-button :state="$favoriteState" wire:click="favorite">
                     <span class="fa fa-heart" aria-hidden="true"></span>
                     <span class="ml-1 leading-3">{{ $favoriteCount }}</span>
                 </x-state-button>

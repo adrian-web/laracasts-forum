@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Livewire\ShowThread;
-use App\Http\Livewire\ShowThreads;
+use App\Http\Livewire\IndexThreads;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +24,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::get('/forum', ShowThreads::class)->name('forum');
-Route::get('/forum/{channel}', ShowThreads::class);
+Route::get('/forum', IndexThreads::class)->name('forum');
+Route::get('/forum/{channel}', IndexThreads::class);
 
 Route::get('/forum/{channel}/{thread}', ShowThread::class);
 

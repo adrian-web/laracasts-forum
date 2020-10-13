@@ -1,7 +1,6 @@
 <div>
-    <button type="button" class="ml-4 {{$classes}}" wire:click="$toggle('confirmingThreadCreation')">
-        {{ __('Create') }}
-    </button>
+    <x-jet-input type="text" class="min-w-full" wire:click="$toggle('confirmingThreadCreation')"
+        placeholder="Create post..." />
 
     <x-submit-modal submit="create" wire:model="confirmingThreadCreation">
         <x-slot name="title">
