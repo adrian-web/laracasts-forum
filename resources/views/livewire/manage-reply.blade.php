@@ -4,7 +4,7 @@ $body = $reply->displayMentionedUsers();
 
 <div>
     <div id="{{"reply{$reply->id}"}}" class="my-2"
-        x-bind:class="{ 'bg-green-200 rounded-md shadow-md p-2': {{ (int) $reply->isBest}} }"
+        x-bind:class="{ 'bg-green-200 rounded-md shadow-md p-2': {{ (int) $reply->isBest }} }"
         x-data="{...judging(), ...changing()}" x-show="!killed">
         <div class="flex flex-col sm:flex-row sm:items-center ">
             <div class=" flex-1 items-center inline-flex">

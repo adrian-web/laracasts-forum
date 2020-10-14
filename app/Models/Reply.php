@@ -97,7 +97,7 @@ class Reply extends Model
             );
         }
 
-        return Purify::clean($body);
+        return $body;
     }
 
     public function getBodyAttribute($body)

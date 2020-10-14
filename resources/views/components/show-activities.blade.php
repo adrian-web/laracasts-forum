@@ -6,13 +6,13 @@ switch ($record->type) {
         $activityText = ' favorited a ';
         $activityPath = $record->subject->favorited->path();
         $activitySubject = 'reply';
-        $activitySlot = $record->subject->favorited->displayMentionedUsers();
+        $activitySlot = $record->subject->favorited->body;
         break;
     case 'created_reply':
         $activityText = ' replied to ';
         $activityPath = $record->subject->thread->path();
         $activitySubject = $record->subject->thread->title;
-        $activitySlot = $record->subject->displayMentionedUsers();
+        $activitySlot = $record->subject->body;
         break;
     case 'created_thread':
         $activityText = ' published ';
