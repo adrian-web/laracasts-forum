@@ -12,9 +12,9 @@ trait ThreadQueries
      *
      * @return Builder
      */
-    protected function search($search)
+    protected function search($source, $search)
     {
-        return Thread::where(function ($query) use ($search) {
+        return $source->where(function ($query) use ($search) {
             $query->where('body', 'like', '%'.$search.'%')
                   ->orWhere('title', 'like', '%'.$search.'%');
         });

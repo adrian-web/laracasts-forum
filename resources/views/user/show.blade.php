@@ -23,6 +23,7 @@
                 </h5>
 
                 @foreach ($activity as $record)
+
                 @if (view()->exists("user.activities.{$record->type}"))
                 @include ("user.activities.{$record->type}", ['activity' => $record])
                 @endif

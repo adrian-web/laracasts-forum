@@ -7,7 +7,7 @@
     @auth
     <div class="flex mt-3">
         @if (! $thread->locked)
-        <x-state-button :state="$subscribedState" class="lg:mr-3" wire:click="subscribe">
+        <x-state-button :state="$subscribedState" wire:click="subscribe">
             {{ __('Subscribe') }}
         </x-state-button>
         @endif

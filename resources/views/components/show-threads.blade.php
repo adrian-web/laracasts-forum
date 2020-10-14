@@ -10,22 +10,21 @@
 
     <x-slot name="content">
 
-        <x-jet-dropdown-link href="" wire:click.prevent="query('reset', 1, 'browse')">
+        <x-jet-dropdown-link href="" wire:click.prevent="query('reset', 1)">
             {{ __('All Threads') }}
         </x-jet-dropdown-link>
         <div class="border-t border-gray-100"></div>
         <div class="border-t border-gray-100"></div>
-        <x-jet-dropdown-link href="" wire:click.prevent="query('popular', 1, 'browse')">
+        <x-jet-dropdown-link href="" wire:click.prevent="query('popular', 1)">
             {{ __('Popular Threads') }}
         </x-jet-dropdown-link>
         <div class=" border-t border-gray-100">
         </div>
-        <x-jet-dropdown-link href="" wire:click.prevent="query('unanswered', 1, 'browse')">
+        <x-jet-dropdown-link href="" wire:click.prevent="query('unanswered', 1)">
             {{ __('Unanswered Threads') }}
         </x-jet-dropdown-link>
         @auth
-        <x-jet-dropdown-link href=""
-            wire:click.prevent="query('by', '{{auth()->user()->username ?? 'guest'}}', 'browse')">
+        <x-jet-dropdown-link href="" wire:click.prevent="query('by', '{{auth()->user()->username ?? 'guest'}}')">
             {{ __('My Threads') }}
         </x-jet-dropdown-link>
         @endauth

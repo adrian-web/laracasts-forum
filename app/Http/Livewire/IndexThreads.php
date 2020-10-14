@@ -26,43 +26,47 @@ class IndexThreads extends Component
 
     public $page = 1;
 
-    protected $filters = ['popular' => 0, 'unanswered' => 0, 'by' => '', 'search' => ''];
+    protected $filters = ['by' => '', 'popular' => 0, 'unanswered' => 0];
 
     protected $queryString = [
+        'search' => ['except' => ''],
+        'by' => ['except' => ''],
         'popular' => ['except' => 0],
         'unanswered' => ['except' => 0],
-        'by' => ['except' => ''],
-        'search' => ['except' => ''],
         'page' => ['except' => 1],
     ];
 
     public function mount(Channel $channel)
     {
-        $this->fill(request()->only('popular', 'unanswered', 'by', 'page', 'search'));
+        $this->fill(request()->only('search', 'by', 'popular', 'unanswered', 'page'));
 
         $this->channel = $channel;
     }
 
-    public function query($method, $value, $source)
+    public function query($method, $value)
     {
-        $this->resetQueries($source);
+        $this->resetQueries();
 
         foreach (array_keys($this->filters) as $filter) {
             if ($filter == $method) {
                 $this->$filter = $value;
+                break;
             }
         }
     }
 
-    protected function resetQueries($source)
+    protected function resetQueries()
     {
+        $this->search = '';
+        $this->by = '';
         $this->popular = 0;
         $this->unanswered = 0;
-        $this->by = '';
         $this->page = 1;
-        if ($source != 'search') {
-            $this->search = '';
-        }
+    }
+
+    public function resetPage()
+    {
+        $this->page = 1;
     }
 
     protected function filterThreads()
@@ -70,6 +74,7 @@ class IndexThreads extends Component
         foreach ($this->filters as $filter => $default) {
             if ($this->$filter != $default) {
                 $this->threads = $this->$filter($this->$filter);
+                break;
             }
         }
 
@@ -79,6 +84,10 @@ class IndexThreads extends Component
 
         if ($this->channel->exists) {
             $this->threads->where('channel_id', $this->channel->id);
+        }
+
+        if ($this->search != '') {
+            $this->search($this->threads, $this->search);
         }
 
         return $this->threads;

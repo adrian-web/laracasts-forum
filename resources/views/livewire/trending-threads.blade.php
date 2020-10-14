@@ -2,7 +2,7 @@
     <p class="text-center text-gray-500">
         {{ __('Trending Threads') }}
     </p>
-    <hr class="my-3">
+    <hr class="my-3 ">
 
     @forelse ($trending as $thread)
 
