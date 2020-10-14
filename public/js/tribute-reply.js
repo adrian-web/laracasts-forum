@@ -3,7 +3,7 @@ function users() {
         .then(function (response) {
             let tribute = new Tribute({
                 // column to search against in the object (accepts function or string)
-                lookup: 'value',
+                lookup: 'key',
 
                 // column that contains the content to insert by default
                 fillAttr: 'value',

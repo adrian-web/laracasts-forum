@@ -15,13 +15,11 @@ class ManageReply extends Component
 
     public $body;
 
-    public $bodyCache;
+    protected $bodyCache;
 
     public $favoriteCount;
 
     public $favoriteState;
-
-    public $classes;
 
     protected $listeners = ['lock' => '$refresh', 'unlock' => '$refresh'];
 

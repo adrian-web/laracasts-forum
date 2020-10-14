@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/users', function () {
-    return User::all()->pluck('username')->map(function ($username) {
-        return ['value' => $username];
+    return User::all()->map(function ($user) {
+        return ['key' => $user->name, 'value' => $user->username];
     });
 });

@@ -66,7 +66,7 @@ class Reply extends Model
 
     public function wasJustCreated()
     {
-        return $this->created_at > Carbon::now()->subSeconds(10);
+        return $this->created_at > Carbon::now()->subSeconds(5);
     }
 
     public function mentionedUsers()
@@ -97,6 +97,11 @@ class Reply extends Model
             );
         }
 
+        return Purify::clean($body);
+    }
+
+    public function getBodyAttribute($body)
+    {
         return Purify::clean($body);
     }
 

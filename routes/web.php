@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Livewire\ShowThread;
 use App\Http\Livewire\IndexThreads;
+use App\Http\Livewire\ShowUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +30,4 @@ Route::get('/forum/{channel}', IndexThreads::class);
 
 Route::get('/forum/{channel}/{thread}', ShowThread::class);
 
-Route::get('/user/{user}', [UserController::class, 'show'])->name('user')->middleware('auth');
+Route::get('/user/{user}', ShowUser::class)->name('user')->middleware('auth');

@@ -38,7 +38,7 @@ trait ThreadQueries
      *
      * @return $this
      */
-    protected function popular($blank)
+    protected function popular($blank = null)
     {
         return Thread::orderBy('replies_count', 'desc');
     }
@@ -48,7 +48,7 @@ trait ThreadQueries
      *
      * @return $this
      */
-    protected function unanswered($blank)
+    protected function unanswered($blank = null)
     {
         return Thread::doesntHave('replies');
     }

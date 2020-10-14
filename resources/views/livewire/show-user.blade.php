@@ -1,5 +1,4 @@
-<x-app-layout>
-
+<div>
     <x-slot name="header">
         <x-forum-header />
     </x-slot>
@@ -24,15 +23,14 @@
 
                 @foreach ($activity as $record)
 
-                @if (view()->exists("user.activities.{$record->type}"))
-                @include ("user.activities.{$record->type}", ['activity' => $record])
-                @endif
+                <x-show-activities :record="$record" :user="$user" />
 
                 @if ( $loop->last )
                 <div class="my-6"></div>
                 @else
                 <hr class="my-3">
                 @endif
+
                 @endforeach
 
                 @empty
@@ -44,7 +42,4 @@
             </div>
         </div>
     </div>
-
-
-
-</x-app-layout>
+</div>

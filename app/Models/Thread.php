@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Stevebauman\Purify\Facades\Purify;
 
 class Thread extends Model
 {
@@ -83,6 +84,11 @@ class Thread extends Model
 
     public function wasJustCreated()
     {
-        return $this->created_at > Carbon::now()->subSeconds(10);
+        return $this->created_at > Carbon::now()->subSeconds(5);
+    }
+
+    public function getBodyAttribute($body)
+    {
+        return Purify::clean($body);
     }
 }
