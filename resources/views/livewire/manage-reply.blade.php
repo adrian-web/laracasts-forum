@@ -3,9 +3,10 @@ $body = $reply->displayMentionedUsers();
 @endphp
 
 <div>
-    <div id="{{"reply{$reply->id}"}}" class="my-2"
-        x-bind:class="{ 'bg-green-200 rounded-md shadow-md p-2': {{ (int) $reply->isBest }} }"
-        x-data="{...judging(), ...changing()}" x-show="!killed">
+    <div class="my-2"
+        x-data="{...judging(), ...changing(), id: {{$reply->id}}, bestId: {{$reply->thread->best_reply_id}}}"
+        @besting.window="bestId = $event.detail"
+        x-bind:class="{ 'bg-green-200 rounded-md shadow-md p-2': id == bestId }" x-show="!killed">
         <div class="flex flex-col sm:flex-row sm:items-center ">
             <div class=" flex-1 items-center inline-flex">
                 <img class="h-8 w-8 rounded-full object-cover" src="{{ $reply->owner->profile_photo_url }}"
@@ -26,7 +27,7 @@ $body = $reply->displayMentionedUsers();
                 </x-state-button>
 
                 @can('update', $reply->thread)
-                <x-jet-secondary-button class="ml-3" wire:click="best">
+                <x-jet-secondary-button class="ml-3" x-on:click="$dispatch('besting', id)" wire:click="best">
                     <span class="fa fa-star" aria-hidden="true"></span>
                 </x-jet-secondary-button>
                 @endcan

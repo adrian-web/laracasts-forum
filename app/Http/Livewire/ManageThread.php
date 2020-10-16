@@ -18,9 +18,9 @@ class ManageThread extends Component
 
     public $title;
 
-    protected $bodyCache;
+    public $bodyCache;
 
-    protected $titleCache;
+    public $titleCache;
 
     public $confirmingThreadDeletion = false;
 

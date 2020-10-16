@@ -15,7 +15,7 @@ class ManageReply extends Component
 
     public $body;
 
-    protected $bodyCache;
+    public $bodyCache;
 
     public $favoriteCount;
 
@@ -124,8 +124,6 @@ class ManageReply extends Component
 
             $this->emitTo('FlashMessage', 'flash', 'unmarked the best reply');
         } else {
-            $this->emit('previousBest', $this->reply->thread->best_reply_id);
-
             $this->reply->thread->update([
                 'best_reply_id' => $this->reply->id
             ]);
