@@ -47,7 +47,7 @@
         <main>
             {{ $slot }}
 
-            @livewire('flash-message')
+            <x-flash-alpine />
         </main>
     </div>
 

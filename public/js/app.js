@@ -19347,6 +19347,34 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/alpinejs/flash-message.js":
+/*!************************************************!*\
+  !*** ./resources/js/alpinejs/flash-message.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+window.flashing = function () {
+  return {
+    paint: function paint(color) {
+      switch (color) {
+        case 'green':
+          document.getElementById('flash').className = 'fixed right-5 bottom-5 cursor-pointer px-4 py-2 bg-green-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-green-400 active:bg-green-600 focus:outline-none focus:border-green-700 focus:shadow-outline-green';
+          break;
+
+        case 'red':
+          document.getElementById('flash').className = 'fixed right-5 bottom-5 cursor-pointer px-4 py-2 bg-red-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-red-400 active:bg-red-600 focus:outline-none focus:border-red-700 focus:shadow-outline-red';
+          break;
+
+        default:
+          document.getElementById('flash').className = 'fixed right-5 bottom-5 cursor-pointer px-4 py-2 bg-green-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-green-400 active:bg-green-600 focus:outline-none focus:border-green-700 focus:shadow-outline-green';
+      }
+    }
+  };
+};
+
+/***/ }),
+
 /***/ "./resources/js/alpinejs/manage-reply.js":
 /*!***********************************************!*\
   !*** ./resources/js/alpinejs/manage-reply.js ***!
@@ -19407,9 +19435,12 @@ window.changing = function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _alpinejs_manage_reply__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./alpinejs/manage-reply */ "./resources/js/alpinejs/manage-reply.js");
 /* harmony import */ var _alpinejs_manage_reply__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_alpinejs_manage_reply__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _alpinejs_flash_message__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alpinejs/flash-message */ "./resources/js/alpinejs/flash-message.js");
+/* harmony import */ var _alpinejs_flash_message__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_alpinejs_flash_message__WEBPACK_IMPORTED_MODULE_1__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! ./tribute */ "./resources/js/tribute.js");
+
 
 
 

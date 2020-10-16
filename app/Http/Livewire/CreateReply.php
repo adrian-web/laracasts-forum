@@ -22,11 +22,11 @@ class CreateReply extends Component
     public function create()
     {
         if ($this->thread->locked) {
-            return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
+            return $this->dispatchBrowserEvent('flash', ['message' => 'thread is locked', 'color' => 'red']);
         } elseif (auth()->guest()) {
             return redirect('login');
         } elseif (\Gate::denies('create-throttle', 'Reply')) {
-            return $this->emitTo('FlashMessage', 'flash', 'You are posting too frequently', 'red');
+            return $this->dispatchBrowserEvent('flash', ['message' => 'posting too frequently', 'color' => 'red']);
         }
 
         $this->validate([
@@ -40,7 +40,7 @@ class CreateReply extends Component
 
         $this->emit('refresh');
 
-        $this->emitTo('FlashMessage', 'flash', 'created a reply');
+        $this->dispatchBrowserEvent('flash', ['message' => 'created a reply', 'color' => 'green']);
 
         $this->body = '';
     }

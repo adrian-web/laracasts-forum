@@ -39,7 +39,7 @@ class ManageReply extends Component
     public function update()
     {
         if ($this->reply->thread->locked) {
-            return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
+            return $this->dispatchBrowserEvent('flash', ['message' => 'thread is locked', 'color' => 'red']);
         } elseif (auth()->guest()) {
             return redirect('login');
         }
@@ -54,7 +54,7 @@ class ManageReply extends Component
             'body' => $this->body
         ]);
 
-        $this->emit('flash', 'updated a reply');
+        $this->dispatchBrowserEvent('flash', ['message' => 'updated a reply', 'color' => 'green']);
 
         $this->bodyCache = $this->body;
     }
@@ -62,7 +62,7 @@ class ManageReply extends Component
     public function delete()
     {
         if ($this->reply->thread->locked) {
-            return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
+            return $this->dispatchBrowserEvent('flash', ['message' => 'thread is locked', 'color' => 'red']);
         } elseif (auth()->guest()) {
             return redirect('login');
         }
@@ -73,13 +73,13 @@ class ManageReply extends Component
 
         $this->emit('refresh');
 
-        $this->emitTo('FlashMessage', 'flash', 'deleted a reply');
+        $this->dispatchBrowserEvent('flash', ['message' => 'deleted a reply', 'color' => 'red']);
     }
 
     public function favorite()
     {
         if ($this->reply->thread->locked) {
-            return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
+            return $this->dispatchBrowserEvent('flash', ['message' => 'thread is locked', 'color' => 'red']);
         } elseif (auth()->guest()) {
             return redirect('login');
         }
@@ -87,7 +87,7 @@ class ManageReply extends Component
         if ($this->reply->isFavorited) {
             $this->reply->unfavorite();
             
-            $this->emitTo('FlashMessage', 'flash', 'unliked a reply');
+            $this->dispatchBrowserEvent('flash', ['message' => 'unliked a reply', 'color' => 'red']);
 
             $this->favoriteCount = $this->reply->favorites_count;
                         
@@ -97,7 +97,7 @@ class ManageReply extends Component
         } else {
             $this->reply->favorite();
             
-            $this->emitTo('FlashMessage', 'flash', 'liked a reply');
+            $this->dispatchBrowserEvent('flash', ['message' => 'liked a reply', 'color' => 'green']);
 
             $this->favoriteCount = $this->reply->favorites_count;
 
@@ -110,7 +110,7 @@ class ManageReply extends Component
     public function best()
     {
         if ($this->reply->thread->locked) {
-            return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
+            return $this->dispatchBrowserEvent('flash', ['message' => 'thread is locked', 'color' => 'red']);
         } elseif (auth()->guest()) {
             return redirect('login');
         }
@@ -122,13 +122,13 @@ class ManageReply extends Component
                 'best_reply_id' => null
             ]);
 
-            $this->emitTo('FlashMessage', 'flash', 'unmarked the best reply');
+            $this->dispatchBrowserEvent('flash', ['message' => 'unmarked the best reply', 'color' => 'red']);
         } else {
             $this->reply->thread->update([
                 'best_reply_id' => $this->reply->id
             ]);
 
-            $this->emitTo('FlashMessage', 'flash', 'marked the best reply');
+            $this->dispatchBrowserEvent('flash', ['message' => 'marked the best reply', 'color' => 'green']);
         }
     }
 

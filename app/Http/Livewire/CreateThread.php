@@ -28,7 +28,7 @@ class CreateThread extends Component
         } elseif (! auth()->user()->hasVerifiedEmail()) {
             return redirect('email/verify');
         } elseif (\Gate::denies('create-throttle', 'Thread')) {
-            return $this->emitTo('FlashMessage', 'flash', 'You are posting too frequently', 'red');
+            return $this->dispatchBrowserEvent('flash', ['message' => 'posting too frequently', 'color' => 'red']);
         }
 
         $this->validate([

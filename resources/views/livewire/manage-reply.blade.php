@@ -4,9 +4,9 @@ $body = $reply->displayMentionedUsers();
 
 <div>
     <div class="my-2"
-        x-data="{...judging(), ...changing(), id: {{$reply->id}}, bestId: {{$reply->thread->best_reply_id}}}"
+        x-data="{...judging(), ...changing(), id: {{$reply->id}}, bestId: {{$reply->thread->best_reply_id ?? 0}}, logged: {{(int) auth()->check()}}}"
         @besting.window="bestId = $event.detail"
-        x-bind:class="{ 'bg-green-200 rounded-md shadow-md p-2': id == bestId }" x-show="!killed">
+        x-bind:class="{ 'bg-green-200 rounded-md shadow-md p-2': id == bestId }" x-show="!killed" x-cloak>
         <div class="flex flex-col sm:flex-row sm:items-center ">
             <div class=" flex-1 items-center inline-flex">
                 <img class="h-8 w-8 rounded-full object-cover" src="{{ $reply->owner->profile_photo_url }}"
@@ -21,7 +21,7 @@ $body = $reply->displayMentionedUsers();
 
             @if (! $reply->thread->locked)
             <div class="inline-flex items-center mt-2 sm:mt-0">
-                <x-state-button :state="$favoriteState" wire:click="favorite">
+                <x-state-button :state="$favoriteState" x-bind:disabled="!logged" wire:click="favorite">
                     <span class="fa fa-heart" aria-hidden="true"></span>
                     <span class="ml-1 leading-3">{{ $favoriteCount }}</span>
                 </x-state-button>
@@ -33,7 +33,7 @@ $body = $reply->displayMentionedUsers();
                 @endcan
 
                 @can('update', $reply)
-                <x-jet-secondary-button class="ml-3" x-on:click="show = !show" x-cloak>
+                <x-jet-secondary-button class="ml-3" x-on:click="show = !show">
                     <span class="fa fa-chevron-down" aria-hidden="true" x-show="isClose()"></span>
                     <span class="fa fa-chevron-up" aria-hidden="true" x-show="isOpen()"></span>
                 </x-jet-secondary-button>
@@ -42,7 +42,7 @@ $body = $reply->displayMentionedUsers();
             @endif
         </div>
 
-        <div class="mt-4 text-gray-500" x-cloak>
+        <div class="mt-4 text-gray-500">
             <div x-show="isClose()">{!! $body !!}</div>
 
             <div x-show="isOpen()">
@@ -58,7 +58,7 @@ $body = $reply->displayMentionedUsers();
                             {{ __('Cancel') }}
                         </x-jet-secondary-button>
                         @can('delete', $reply)
-                        <div class="ml-auto" x-cloak>
+                        <div class="ml-auto">
                             <div x-show="isAlive()">
                                 <x-jet-danger-button x-on:click="judge">
                                     <span class="fa fa-trash-o" aria-hidden="true"></span>

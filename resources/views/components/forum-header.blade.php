@@ -6,13 +6,13 @@ duration-150 ease-in-out';
 
 <div class="flex">
     <div class="flex-1 inline-flex">
-        <button type="button" class="{{$classes}}">
+        <button type="button" class="mr-4 {{$classes}}">
             <a href="{{ route('forum') }}">{{ __('Forum') }}</a>
         </button>
 
         <x-jet-dropdown align="left" width="48">
             <x-slot name="trigger">
-                <button type="button" class="ml-4 {{$classes}}">
+                <button type="button" class="{{$classes}}">
                     {{ __('Channels') }}
                 </button>
             </x-slot>

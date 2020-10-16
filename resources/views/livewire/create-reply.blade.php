@@ -1,6 +1,6 @@
 <div>
-    @if (! $thread->locked)
     <div x-data="{ words: @entangle('body') }" x-cloak>
+        @if (! $thread->locked)
         <form wire:submit.prevent="create">
             <div class="mt-4 shadow overflow-hidden shadow-md sm:rounded-md">
                 <div class="px-4 py-5 sm:p-6">
@@ -27,12 +27,10 @@
                 </div>
             </div>
         </form>
-    </div>
-    @else
-    <div>
-        <h4 class="mt-3 text-xl text-gray-500">
+        @else
+        <div class="mt-3 text-xl text-gray-500">
             <p>{{ __('Thread has been locked...')}}</p>
-        </h4>
+        </div>
+        @endif
     </div>
-    @endif
 </div>

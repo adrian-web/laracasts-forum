@@ -42,7 +42,7 @@ class ManageThread extends Component
     public function delete()
     {
         if ($this->thread->locked) {
-            return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
+            return $this->dispatchBrowserEvent('flash', ['message' => 'thread is locked', 'color' => 'red']);
         } elseif (auth()->guest()) {
             return redirect('login');
         }
@@ -52,9 +52,6 @@ class ManageThread extends Component
         (new Trending)->destroy($this->thread);
 
         $this->thread->delete();
-
-        // flash-message.blade.php disapears on redirect
-        // $this->emitTo('FlashMessage', 'flash', 'deleted a thread');
         
         return redirect()->route('forum');
     }
@@ -62,7 +59,7 @@ class ManageThread extends Component
     public function update()
     {
         if ($this->thread->locked) {
-            return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
+            return $this->dispatchBrowserEvent('flash', ['message' => 'thread is locked', 'color' => 'red']);
         } elseif (auth()->guest()) {
             return redirect('login');
         }
@@ -79,7 +76,7 @@ class ManageThread extends Component
             'title' => $this->title,
         ]);
 
-        $this->emitTo('FlashMessage', 'flash', 'updated a thread');
+        $this->dispatchBrowserEvent('flash', ['message' => 'updated a thread', 'color' => 'green']);
 
         $this->bodyCache = $this->body;
 

@@ -5,10 +5,8 @@
                 <button type="button" class="text-gray-500">
                     <span class="fa fa-bell-o"></span>
                 </button>
-                <span x-data="{ shown: {{ (int) $notificationsState }} }" x-show="shown" x-cloak
-                    class="flex absolute top-0 right-0 h-2 w-2">
-                    <span
-                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+                <span x-data="{ shown: {{ (int) $notificationsState }} }" x-show="shown" class="flex absolute top-0 right-0 h-2 w-2" x-cloak>
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-pink-500"></span>
                 </span>
             </span>

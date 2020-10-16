@@ -29,7 +29,7 @@ class ThreadSidebar extends Component
         if (auth()->guest()) {
             return redirect('login');
         } elseif (! auth()->user()->isAdmin()) {
-            return $this->emitTo('FlashMessage', 'flash', 'You\'re not an administrator', 'red');
+            return $this->dispatchBrowserEvent('flash', ['message' => 'not an administrator', 'color' => 'red']);
         }
 
         if ($this->thread->locked) {
@@ -39,7 +39,7 @@ class ThreadSidebar extends Component
 
             $this->emit('unlock');
 
-            $this->emitTo('FlashMessage', 'flash', 'unlocked a thread');
+            $this->dispatchBrowserEvent('flash', ['message' => 'unlocked a thread', 'color' => 'green']);
 
             $this->lockedState = false;
         } else {
@@ -49,7 +49,7 @@ class ThreadSidebar extends Component
 
             $this->emit('lock');
 
-            $this->emitTo('FlashMessage', 'flash', 'locked a thread');
+            $this->dispatchBrowserEvent('flash', ['message' => 'locked a thread', 'color' => 'red']);
 
             $this->lockedState = true;
         }
@@ -58,7 +58,7 @@ class ThreadSidebar extends Component
     public function subscribe()
     {
         if ($this->thread->locked) {
-            return $this->emitTo('FlashMessage', 'flash', 'thread is locked', 'red');
+            return $this->dispatchBrowserEvent('flash', ['message' => 'thread is locked', 'color' => 'red']);
         } elseif (auth()->guest()) {
             return redirect('login');
         }
@@ -68,13 +68,13 @@ class ThreadSidebar extends Component
 
             $this->subscribedState = false;
     
-            $this->emitTo('FlashMessage', 'flash', 'unsubscribed to a thread');
+            $this->dispatchBrowserEvent('flash', ['message' => 'unsubscribed to a thread', 'color' => 'red']);
         } else {
             $this->thread->subscribe();
 
             $this->subscribedState = true;
-    
-            $this->emitTo('FlashMessage', 'flash', 'subscribed to a thread');
+
+            $this->dispatchBrowserEvent('flash', ['message' => 'subscribed to a thread', 'color' => 'green']);
         }
     }
 
